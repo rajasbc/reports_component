@@ -9,11 +9,13 @@ export interface StatGridProps {
   color?: string;
 }
 
+const CARD_COLORS = ['#3b5fc0', '#2a9d5c', '#8b3fc8', '#e07b00'];
+
 const StatGrid: React.FC<StatGridProps> = ({
   title,
   data,
   columns = 2,
-  backgroundColor = '#ffffff',
+  backgroundColor = '#f0f2f5',
   color,
 }) => {
   const stats = Object.entries(data).map(([key, value]) => ({
@@ -27,28 +29,31 @@ const StatGrid: React.FC<StatGridProps> = ({
       backgroundColor,
       borderRadius: '16px',
       padding: '12px',
-      paddingBottom: '24px',
       fontFamily: 'Arial, sans-serif',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
       width: '100%',
       boxSizing: 'border-box',
     }}>
       {title && (
-        <h6 style={{ margin: '0 0 20px 0', fontSize: fs(12), fontWeight: 'bold', color: '#003357' }}>
+        <h6 style={{ margin: '0 0 12px 0', fontSize: fs(12), fontWeight: 'bold', color: '#003357' }}>
           {title}
         </h6>
       )}
       <div style={{
         display: 'grid',
         gridTemplateColumns: `repeat(${columns}, 1fr)`,
-        gap: '24px 16px',
+        gap: '10px',
       }}>
         {stats.map((stat, i) => (
-          <div key={i}>
-            <div style={{ fontSize: fs(30), fontWeight: 'bold', color: color ?? '#6c3fc5', lineHeight: 1 }}>
+          <div key={i} style={{
+            backgroundColor: '#ffffff',
+            borderRadius: '12px',
+            padding: '14px 16px',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+          }}>
+            <div style={{ fontSize: fs(28), fontWeight: 'bold', color: color ?? CARD_COLORS[i % CARD_COLORS.length], lineHeight: 1 }}>
               {stat.value}
             </div>
-            <div style={{ fontSize: fs(11), color: '#888', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: '4px' }}>
+            <div style={{ fontSize: fs(11), color: '#999', textTransform: 'uppercase', letterSpacing: '0.05em', marginTop: '6px' }}>
               {stat.label}
             </div>
           </div>
