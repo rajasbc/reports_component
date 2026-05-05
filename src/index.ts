@@ -28,5 +28,6 @@ export * from "./components/AdvanceMapWidget";
 export * from "./components/DonutChart";
 export * from "./components/StatGrid";
 export * from "./components/TrendLinechart";
+export * from "./components/TrendBarChart";
 
 export { useContainerSize } from "./components/useContainerSize";
