@@ -5,7 +5,7 @@ export interface MetricConfig {
     color: string;
     icon?: any;
 }
-export interface TrendLinechartProps {
+export interface TrendBarChartProps {
     title?: string;
     subtitle?: string;
     dateRangeBadge?: string;
@@ -16,6 +16,6 @@ export interface TrendLinechartProps {
     referenceLineLabel?: string;
     daysInMonthMap?: Record<string, number>;
 }
-declare const TrendLinechart: React.FC<TrendLinechartProps>;
-export default TrendLinechart;
-//# sourceMappingURL=TrendLinechart.d.ts.map
+declare const TrendBarChart: React.FC<TrendBarChartProps>;
+export default TrendBarChart;
+//# sourceMappingURL=TrendBarChart.d.ts.map
