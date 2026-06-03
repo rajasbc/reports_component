@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import { 
     AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, 
-    ResponsiveContainer, LabelList, ReferenceLine 
+    ResponsiveContainer, LabelList 
 } from 'recharts';
 
 // SVG Icons
@@ -71,7 +71,7 @@ export interface TrendLinechartProps {
     daysInMonthMap?: Record<string, number>;
 }
 
-const CustomTooltip = ({ active, payload, label, metricsConfig, daysInMonthMap }: any) => {
+const CustomTooltip = ({ active, payload, label, metricsConfig }: any) => {
     if (active && payload && payload.length) {
         const filteredPayload = payload.filter((entry: any) => {
             if (entry.dataKey.endsWith('_Proj')) {
@@ -92,10 +92,10 @@ const CustomTooltip = ({ active, payload, label, metricsConfig, daysInMonthMap }
                         
                         // Calculate Daily Average if map is provided
                         let avgLabel = null;
-                        if (daysInMonthMap && daysInMonthMap[label]) {
-                            const dailyAvg = Math.ceil(entry.value / daysInMonthMap[label]);
-                            avgLabel = <span style={{ color: '#64748b', fontWeight: 400, fontSize: '10px' }}>(DA - {dailyAvg})</span>;
-                        }
+                        // if (daysInMonthMap && daysInMonthMap[label]) {
+                        //     const dailyAvg = Math.ceil(entry.value / daysInMonthMap[label]);
+                        //     avgLabel = <span style={{ color: '#64748b', fontWeight: 400, fontSize: '10px' }}>(DA - {dailyAvg})</span>;
+                        // }
                         
                         return (
                             <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '24px' }}>
@@ -121,13 +121,13 @@ const CustomTooltip = ({ active, payload, label, metricsConfig, daysInMonthMap }
 
 const TrendLinechart: React.FC<TrendLinechartProps> = ({ 
     title = 'Annual Patient Trends',
-    subtitle = 'Aug 2025 - Dec 2026 Volume & Projections',
-    dateRangeBadge = 'Aug 25 - Dec 26',
+    // subtitle = 'Aug 2025 - Dec 2026 Volume & Projections',
+    // dateRangeBadge = 'Aug 25 - Dec 26',
     data: dataProp = defaultData,
     xAxisKey = 'month',
     metricsConfig = defaultMetricsConfig,
-    referenceLineValue = 200,
-    referenceLineLabel = 'Beds (200)',
+    // referenceLineValue = 200,
+    // referenceLineLabel = 'Beds (200)',
     daysInMonthMap = defaultDaysInMonthMap
 }) => {
     const data = dataProp ?? defaultData;
@@ -154,11 +154,11 @@ const TrendLinechart: React.FC<TrendLinechartProps> = ({
                         <h1 style={{ margin: 0, fontSize: '24px', fontWeight: 700, color: '#0f172a' }}>
                             {title}
                         </h1>
-                        {subtitle && (
+                        {/* {subtitle && (
                             <p style={{ margin: '4px 0 0 0', color: '#64748b', fontSize: '14px' }}>
                                 {subtitle}
                             </p>
-                        )}
+                        )} */}
                     </div>
                     
                     {/* Interactive Toggles */}
@@ -173,9 +173,9 @@ const TrendLinechart: React.FC<TrendLinechartProps> = ({
                                     onClick={() => toggleMetric(key)}
                                     style={{ 
                                         display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px', borderRadius: '9999px', fontSize: '12px', fontWeight: 500, cursor: 'pointer', border: '1px solid',
-                                        backgroundColor: isActive ? '#f1f5f9' : 'transparent',
-                                        color: isActive ? '#0f172a' : '#64748b',
-                                        borderColor: isActive ? '#cbd5e1' : '#e2e8f0',
+                                        backgroundColor: isActive ? `${config.color}18` : 'transparent',
+                                        color: isActive ? config.color : '#64748b',
+                                        borderColor: isActive ? config.color : '#e2e8f0',
                                         transition: 'all 0.2s ease-out'
                                     }}
                                 >
@@ -226,14 +226,14 @@ const TrendLinechart: React.FC<TrendLinechartProps> = ({
                             <Tooltip content={<CustomTooltip metricsConfig={metricsConfig} daysInMonthMap={daysInMonthMap} />} />
                             
                             {/* Threshold Lines */}
-                            {Number.isFinite(referenceLineValue) && (
+                            {/* {Number.isFinite(referenceLineValue) && (
                                 <ReferenceLine 
                                     y={referenceLineValue} 
                                     stroke="#ef4444" 
                                     strokeDasharray="4 4" 
                                     label={referenceLineLabel ? { position: 'insideTopLeft', value: referenceLineLabel, fill: '#ef4444', fontSize: 10, fontWeight: 600, offset: 5 } : undefined} 
                                 />
-                            )}
+                            )} */}
                             
                             {/* Render lines based on active toggles */}
                             {Object.entries(metricsConfig as Record<string, any>).map(([key, config]: [string, any]) => (
@@ -300,11 +300,11 @@ const TrendLinechart: React.FC<TrendLinechartProps> = ({
                     <div style={{ padding: '16px', borderTop: '1px solid #e2e8f0', color: '#0f172a' }}>
                         <h2 style={{ fontSize: '14px', fontWeight: 700, margin: '0 0 8px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
                             {title}
-                            {dateRangeBadge && (
+                            {/* {dateRangeBadge && (
                                 <span style={{ fontSize: '9px', fontWeight: 400, color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' }}>
                                     {dateRangeBadge}
                                 </span>
-                            )}
+                            )} */}
                         </h2>
                         <div style={{ overflowX: 'auto', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
                             <table style={{ width: '100%', fontSize: '12px', textAlign: 'left', whiteSpace: 'nowrap', borderCollapse: 'collapse', tableLayout: 'fixed' }}>
@@ -322,9 +322,9 @@ const TrendLinechart: React.FC<TrendLinechartProps> = ({
                                                 <th key={idx} style={{ padding: '6px 2px', fontWeight: 600, textAlign: 'center', backgroundColor: isProjected ? 'rgba(241, 245, 249, 0.5)' : 'transparent' }}>
                                                     <div style={{ letterSpacing: '-0.05em' }}>{row[xAxisKey]}</div>
                                                     <div style={{ marginTop: '2px' }}>
-                                                        <span style={{ padding: '1px 4px', fontSize: '8px', textTransform: 'uppercase', fontWeight: 700, borderRadius: '2px', backgroundColor: isProjected ? '#e2e8f0' : '#d1fae5', color: isProjected ? '#64748b' : '#047857', display: 'inline-block' }}>
+                                                        {/* <span style={{ padding: '1px 4px', fontSize: '8px', textTransform: 'uppercase', fontWeight: 700, borderRadius: '2px', backgroundColor: isProjected ? '#e2e8f0' : '#d1fae5', color: isProjected ? '#64748b' : '#047857', display: 'inline-block' }}>
                                                             {isProjected ? 'Prj' : 'Act'}
-                                                        </span>
+                                                        </span> */}
                                                     </div>
                                                 </th>
                                             );
@@ -353,6 +353,23 @@ const TrendLinechart: React.FC<TrendLinechartProps> = ({
                                             </tr>
                                         );
                                     })}
+                                    <tr style={{ borderTop: '2px solid #e2e8f0', backgroundColor: '#f8fafc', fontWeight: 700 }}>
+                                        <td style={{ padding: '4px 8px', color: '#0f172a', borderRight: '1px solid #e2e8f0', position: 'sticky', left: 0, backgroundColor: '#f8fafc', zIndex: 10 }}>
+                                            Total
+                                        </td>
+                                        {data.map((row, idx) => {
+                                            const total = Object.keys(metricsConfig).reduce((sum, key) => {
+                                                if (!activeMetrics[key]) return sum;
+                                                return sum + (Number(row[key] ?? row[`${key}_Proj`] ?? 0));
+                                            }, 0);
+                                            const isProjected = Object.keys(metricsConfig).every(k => !row.hasOwnProperty(k) && row.hasOwnProperty(`${k}_Proj`));
+                                            return (
+                                                <td key={idx} style={{ padding: '4px 2px', textAlign: 'center', color: isProjected ? '#64748b' : '#0f172a' }}>
+                                                    {total || '-'}
+                                                </td>
+                                            );
+                                        })}
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
