@@ -182,16 +182,28 @@ const DonutChart: React.FC<DonutChartProps> = ({ data, title, total, baseColor }
       <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
         <svg width={svgWidth} height={svgHeight} viewBox={`0 ${vbTop} ${svgWidth} ${svgHeight}`} style={{ overflow: 'visible', display: 'block' }}>
           {/* Donut slices */}
-          {slices.map((s, i) => (
-            <g key={i}
-              onMouseEnter={e => setTooltip({ x: e.clientX, y: e.clientY, label: s.label, value: s.value, pct: s.pct })}
+          {data.length === 1 ? (
+            <g
+              onMouseEnter={e => setTooltip({ x: e.clientX, y: e.clientY, label: slices[0].label, value: slices[0].value, pct: 100 })}
               onMouseMove={e => setTooltip(t => t ? { ...t, x: e.clientX, y: e.clientY } : null)}
               onMouseLeave={() => setTooltip(null)}
               style={{ cursor: 'pointer' }}
             >
-              <path d={s.path} fill={s.color} stroke="#fff" strokeWidth="2" />
+              <circle cx={cx} cy={cy} r={outerR} fill={slices[0].color} stroke="#fff" strokeWidth="2" />
+              <circle cx={cx} cy={cy} r={innerR} fill="#fff" />
             </g>
-          ))}
+          ) : (
+            slices.map((s, i) => (
+              <g key={i}
+                onMouseEnter={e => setTooltip({ x: e.clientX, y: e.clientY, label: s.label, value: s.value, pct: s.pct })}
+                onMouseMove={e => setTooltip(t => t ? { ...t, x: e.clientX, y: e.clientY } : null)}
+                onMouseLeave={() => setTooltip(null)}
+                style={{ cursor: 'pointer' }}
+              >
+                <path d={s.path} fill={s.color} stroke="#fff" strokeWidth="2" />
+              </g>
+            ))
+          )}
 
           {/* Center total */}
           <text x={cx} y={cy - 8} textAnchor="middle" dominantBaseline="middle"
