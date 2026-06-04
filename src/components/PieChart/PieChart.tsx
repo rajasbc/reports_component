@@ -94,19 +94,30 @@ const PieChart: React.FC<PieChartProps> = ({
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
         {size > 0 && (
           <svg width={containerW} height={size} style={{ display: 'block' }}>
-            {slices.map((slice, index) => (
-              <path
-                key={index}
-                d={slice.path}
-                fill={slice.color}
-                stroke="#fff"
-                strokeWidth="2"
-                onMouseEnter={(e) => setTooltip({ x: e.clientX, y: e.clientY, label: slice.label, value: slice.value, percentage: slice.percentage })}
+            {data.length === 1 ? (
+              <circle
+                cx={centerX} cy={centerY} r={radius}
+                fill={slices[0].color} stroke="#fff" strokeWidth="2"
+                onMouseEnter={(e) => setTooltip({ x: e.clientX, y: e.clientY, label: slices[0].label, value: slices[0].value, percentage: 100 })}
                 onMouseMove={(e) => setTooltip(t => t ? { ...t, x: e.clientX, y: e.clientY } : null)}
                 onMouseLeave={() => setTooltip(null)}
                 style={{ cursor: 'pointer' }}
               />
-            ))}
+            ) : (
+              slices.map((slice, index) => (
+                <path
+                  key={index}
+                  d={slice.path}
+                  fill={slice.color}
+                  stroke="#fff"
+                  strokeWidth="2"
+                  onMouseEnter={(e) => setTooltip({ x: e.clientX, y: e.clientY, label: slice.label, value: slice.value, percentage: slice.percentage })}
+                  onMouseMove={(e) => setTooltip(t => t ? { ...t, x: e.clientX, y: e.clientY } : null)}
+                  onMouseLeave={() => setTooltip(null)}
+                  style={{ cursor: 'pointer' }}
+                />
+              ))
+            )}
           </svg>
         )}
         {showLegend && (
