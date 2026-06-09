@@ -51,6 +51,28 @@ const defaultDaysInMonthMap: Record<string, number> = {
     'Nov 26': 30, 'Dec 26': 31,
 };
 
+/** Abbreviate large numbers so Y-axis labels always fit (e.g. 1373060 → "1.4M") */
+function formatYAxisTick(value: number): string {
+    if (Math.abs(value) >= 1_000_000_000) return `${(value / 1_000_000_000).toFixed(1)}B`;
+    if (Math.abs(value) >= 1_000_000)     return `${(value / 1_000_000).toFixed(1)}M`;
+    if (Math.abs(value) >= 1_000)         return `${(value / 1_000).toFixed(1)}K`;
+    return String(value);
+}
+
+/** Estimate px width needed for the widest formatted Y-axis label. */
+function calcYAxisWidth(data: any[], metricsConfig: Record<string, any>): number {
+    let maxVal = 0;
+    data.forEach(row => {
+        Object.keys(metricsConfig).forEach(key => {
+            const v = Number(row[key] ?? row[`${key}_Proj`] ?? 0);
+            if (v > maxVal) maxVal = v;
+        });
+    });
+    const formatted = formatYAxisTick(maxVal);
+    // ~7px per character + 16px padding
+    return Math.max(40, formatted.length * 7 + 16);
+}
+
 export interface MetricConfig {
     label: string;
     shortLabel: string;
@@ -182,7 +204,7 @@ const TrendBarChart: React.FC<TrendBarChartProps> = ({
                 {/* Chart */}
                 <div style={{ padding: '16px', minHeight: 320, flexShrink: 0, width: '100%', boxSizing: 'border-box' }}>
                     <ResponsiveContainer width="99%" height={320}>
-                        <BarChart data={data} margin={{ top: 20, right: 30, left: -25, bottom: 0 }} barCategoryGap="20%" barGap={2}>
+                        <BarChart data={data} margin={{ top: 20, right: 30, left: calcYAxisWidth(data, metricsConfig) - 40, bottom: 0 }} barCategoryGap="20%" barGap={2}>
                             <defs>
                                 {Object.entries(metricsConfig as Record<string, any>).map(([key, config]: [string, any]) => (
                                     <pattern key={`pat${key}`} id={`pat${key}`} patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
@@ -192,7 +214,15 @@ const TrendBarChart: React.FC<TrendBarChartProps> = ({
                             </defs>
                             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
                             <XAxis dataKey={xAxisKey} stroke="#64748b" tick={{ fill: '#64748b', fontSize: 10 }} tickMargin={8} axisLine={false} tickLine={false} />
-                            <YAxis stroke="#64748b" tick={{ fill: '#64748b', fontSize: 10 }} tickMargin={8} axisLine={false} tickLine={false} />
+                            <YAxis
+                                stroke="#64748b"
+                                tick={{ fill: '#64748b', fontSize: 10 }}
+                                tickMargin={8}
+                                axisLine={false}
+                                tickLine={false}
+                                width={calcYAxisWidth(data, metricsConfig)}
+                                tickFormatter={formatYAxisTick}
+                            />
                             <Tooltip content={<CustomTooltip metricsConfig={metricsConfig} daysInMonthMap={daysInMonthMap} />} />
                             {/* {Number.isFinite(referenceLineValue) && (
                                 <ReferenceLine
