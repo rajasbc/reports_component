@@ -155,7 +155,15 @@ const BarChart: React.FC<BarChartProps> = ({
                     textAnchor="end"
                     transform={`rotate(-40, ${x + barWidth / 2}, ${paddingTop + chartHeight + 8})`}
                   >
-                    {point.label}
+                    {point.label.includes(' | ') ? (
+                      point.label.split(' | ').map((line, lineIdx) => (
+                        <tspan key={lineIdx} x={x + barWidth / 2} dy={lineIdx === 0 ? 0 : 12}>
+                          {line}
+                        </tspan>
+                      ))
+                    ) : (
+                      point.label
+                    )}
                   </text>
                 ) : (
                   <text
@@ -165,7 +173,15 @@ const BarChart: React.FC<BarChartProps> = ({
                     fontSize={fs(10)}
                     fill="#666"
                   >
-                    {point.label}
+                    {point.label.includes(' | ') ? (
+                      point.label.split(' | ').map((line, lineIdx) => (
+                        <tspan key={lineIdx} x={x + barWidth / 2} dy={lineIdx === 0 ? 0 : 12}>
+                          {line}
+                        </tspan>
+                      ))
+                    ) : (
+                      point.label
+                    )}
                   </text>
                 )}
               </g>
