@@ -18,14 +18,14 @@ const KpiWidget: React.FC<KpiWidgetProps> = ({
   value,
   prefix = '',
   suffix = '',
-  trend,
-  trendLabel,
+  // trend,
+  // trendLabel,
   icon,
   color = '#003357',
   backgroundColor = '#ffffff'
 }) => {
   const { ref, fs } = useContainerSize();
-  const isPositiveTrend = trend !== undefined && trend >= 0;
+  // const isPositiveTrend = trend !== undefined && trend >= 0;
   const uniqueId = useId();
   const safeId = uniqueId.replace(/:/g, '_');
 
@@ -47,7 +47,7 @@ const KpiWidget: React.FC<KpiWidgetProps> = ({
   const glassyBg = `rgba(${bgRgb.r}, ${bgRgb.g}, ${bgRgb.b}, 0.55)`;
   
   const subtitleColor = isDark ? 'rgba(255,255,255,0.75)' : 'rgba(0,0,0,0.55)';
-  const trendLabelColor = isDark ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.45)';
+  // const trendLabelColor = isDark ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.45)';
   const shimmerColor = isDark
     ? 'rgba(255,255,255,0.15)'
     : 'rgba(255,255,255,0.85)';
@@ -226,7 +226,7 @@ const KpiWidget: React.FC<KpiWidgetProps> = ({
           </div>
 
           {/* Trend pill */}
-          {trend !== undefined && (
+          {/* {trend !== undefined && (
             <div
               style={{
                 display: 'inline-flex',
@@ -273,7 +273,7 @@ const KpiWidget: React.FC<KpiWidgetProps> = ({
                 </span>
               )}
             </div>
-          )}
+          )} */}
 
           {/* Bottom accent line */}
           <div
