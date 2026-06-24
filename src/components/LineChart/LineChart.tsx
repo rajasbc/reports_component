@@ -132,11 +132,27 @@ const LineChart: React.FC<LineChartProps> = ({
                 textAnchor="end"
                 transform={`rotate(-40, ${point.x}, ${paddingTop + chartHeight + 8})`}
               >
-                {point.label}
+                {point.label.includes(' | ') ? (
+                  point.label.split(' | ').map((line, lineIdx) => (
+                    <tspan key={lineIdx} x={point.x} dy={lineIdx === 0 ? 0 : 12}>
+                      {line}
+                    </tspan>
+                  ))
+                ) : (
+                  point.label
+                )}
               </text>
             ) : (
               <text key={index} x={point.x} y={paddingTop + chartHeight + 20} textAnchor="middle" fontSize={fs(10)} fill="#666">
-                {point.label}
+                {point.label.includes(' | ') ? (
+                  point.label.split(' | ').map((line, lineIdx) => (
+                    <tspan key={lineIdx} x={point.x} dy={lineIdx === 0 ? 0 : 12}>
+                      {line}
+                    </tspan>
+                  ))
+                ) : (
+                  point.label
+                )}
               </text>
             )
           ))}
