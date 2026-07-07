@@ -30,5 +30,6 @@ export * from './components/StatGrid';
 export * from './components/TrendLinechart';
 export * from './components/TrendBarChart';
 export * from './components/MultiChart';
+export * from './components/MultiTrendChart';
 export { useContainerSize } from './components/useContainerSize';
 //# sourceMappingURL=index.d.ts.map
