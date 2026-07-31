@@ -90,6 +90,8 @@ export interface TrendBarChartProps {
     referenceLineValue?: number;
     referenceLineLabel?: string;
     daysInMonthMap?: Record<string, number>;
+    className?: string;
+    height?: number | string;
 }
 
 const CustomTooltip = ({ active, payload, label, metricsConfig }: any) => {
@@ -104,8 +106,8 @@ const CustomTooltip = ({ active, payload, label, metricsConfig }: any) => {
     });
 
     return (
-        <div style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', padding: '12px', borderRadius: '8px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)', zIndex: 50, position: 'relative', color: '#0f172a' }}>
-            <p style={{ margin: '0 0 8px 0', fontWeight: 600, borderBottom: '1px solid #f1f5f9', paddingBottom: '4px', fontSize: '14px', color: '#1e293b' }}>{label}</p>
+        <div style={{ backgroundColor: 'var(--chart-bg, #ffffff)', border: '1px solid var(--chart-border, #e2e8f0)', padding: '12px', borderRadius: '8px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)', zIndex: 50, position: 'relative', color: 'var(--chart-text, #0f172a)' }}>
+            <p style={{ margin: '0 0 8px 0', fontWeight: 600, borderBottom: '1px solid var(--chart-border-light, #f1f5f9)', paddingBottom: '4px', fontSize: '14px', color: 'var(--chart-text-strong, #1e293b)' }}>{label}</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                 {filteredPayload.map((entry: any, index: number) => {
                     const isProj = entry.dataKey.endsWith('_Proj');
@@ -120,11 +122,11 @@ const CustomTooltip = ({ active, payload, label, metricsConfig }: any) => {
                         <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '24px' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                 <div style={{ width: '10px', height: '10px', borderRadius: '9999px', backgroundColor: entry.color }} />
-                                <span style={{ color: '#475569', fontSize: '12px', fontWeight: 500 }}>
-                                    {config.label} {isProj && <span style={{ color: '#94a3b8', fontSize: '10px', fontStyle: 'italic', marginLeft: '2px' }}>(Projected)</span>}
+                                <span style={{ color: 'var(--chart-text-muted, #475569)', fontSize: '12px', fontWeight: 500 }}>
+                                    {config.label} {isProj && <span style={{ color: 'var(--chart-text-lighter, #94a3b8)', fontSize: '10px', fontStyle: 'italic', marginLeft: '2px' }}>(Projected)</span>}
                                 </span>
                             </div>
-                            <span style={{ color: '#0f172a', fontWeight: 700, fontSize: '14px', display: 'flex', alignItems: 'baseline', gap: '6px' }}>
+                            <span style={{ color: 'var(--chart-text, #0f172a)', fontWeight: 700, fontSize: '14px', display: 'flex', alignItems: 'baseline', gap: '6px' }}>
                                 {entry.value} {avgLabel}
                             </span>
                         </div>
@@ -146,14 +148,12 @@ const ProjectedBar = (props: any) => {
 
 const TrendBarChart: React.FC<TrendBarChartProps> = ({
     title = 'Annual Patient Trends',
-    // subtitle = 'Aug 2025 - Dec 2026 Volume & Projections',
-    // dateRangeBadge = 'Aug 25 - Dec 26',
     data = defaultData,
     xAxisKey = 'month',
     metricsConfig = defaultMetricsConfig,
-    // referenceLineValue = 200,
-    // referenceLineLabel = 'Beds (200)',
     daysInMonthMap = defaultDaysInMonthMap,
+    className,
+    height
 }) => {
     const [activeMetrics, setActiveMetrics] = useState<Record<string, boolean>>(() => {
         const initial: Record<string, boolean> = {};
@@ -167,13 +167,13 @@ const TrendBarChart: React.FC<TrendBarChartProps> = ({
     const activeKeys = Object.keys(metricsConfig).filter(k => activeMetrics[k]);
 
     return (
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', fontFamily: 'sans-serif', boxSizing: 'border-box' }}>
-            <div style={{ width: '100%', maxWidth: '1400px', backgroundColor: '#ffffff', color: '#0f172a', border: '1px solid #e2e8f0', borderRadius: '12px', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+        <div className={className} style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', fontFamily: 'sans-serif', boxSizing: 'border-box', height: height === '100%' ? '100%' : 'auto' }}>
+            <div style={{ width: '100%', maxWidth: '1400px', backgroundColor: 'var(--chart-bg, #ffffff)', color: 'var(--chart-text, #0f172a)', border: '1px solid var(--chart-border, #e2e8f0)', borderRadius: '12px', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', overflow: 'hidden', display: 'flex', flexDirection: 'column', height: '100%' }}>
 
                 {/* Header */}
-                <div style={{ padding: '16px', borderBottom: '1px solid #e2e8f0', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+                <div style={{ padding: '16px', borderBottom: '1px solid var(--chart-border-light, #e2e8f0)', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                     <div>
-                        <h1 style={{ margin: 0, fontSize: '24px', fontWeight: 700, color: '#0f172a' }}>{title}</h1>
+                        <h1 style={{ margin: 0, fontSize: '24px', fontWeight: 700, color: 'var(--chart-text-strong, #0f172a)' }}>{title}</h1>
                         {/* {subtitle && <p style={{ margin: '4px 0 0 0', color: '#64748b', fontSize: '14px' }}>{subtitle}</p>} */}
                     </div>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -188,8 +188,8 @@ const TrendBarChart: React.FC<TrendBarChartProps> = ({
                                         display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px',
                                         borderRadius: '9999px', fontSize: '12px', fontWeight: 500, cursor: 'pointer', border: '1px solid',
                                         backgroundColor: isActive ? `${config.color}18` : 'transparent',
-                                        color: isActive ? config.color : '#64748b',
-                                        borderColor: isActive ? config.color : '#e2e8f0',
+                                        color: isActive ? config.color : 'var(--chart-text-muted, #64748b)',
+                                        borderColor: isActive ? config.color : 'var(--chart-border, #e2e8f0)',
                                         transition: 'all 0.2s ease-out',
                                     }}
                                 >
@@ -202,8 +202,8 @@ const TrendBarChart: React.FC<TrendBarChartProps> = ({
                 </div>
 
                 {/* Chart */}
-                <div style={{ padding: '16px', minHeight: 320, flexShrink: 0, width: '100%', boxSizing: 'border-box' }}>
-                    <ResponsiveContainer width="99%" height={320}>
+                <div style={{ padding: '16px', minHeight: height === '100%' ? 250 : 320, flex: 1, width: '100%', boxSizing: 'border-box' }}>
+                    <ResponsiveContainer width="99%" height="100%" minHeight={320}>
                         <BarChart data={data} margin={{ top: 20, right: 30, left: calcYAxisWidth(data, metricsConfig) - 40, bottom: 0 }} barCategoryGap="20%" barGap={2}>
                             <defs>
                                 {Object.entries(metricsConfig as Record<string, any>).map(([key, config]: [string, any]) => (
@@ -212,11 +212,11 @@ const TrendBarChart: React.FC<TrendBarChartProps> = ({
                                     </pattern>
                                 ))}
                             </defs>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
-                            <XAxis dataKey={xAxisKey} stroke="#64748b" tick={{ fill: '#64748b', fontSize: 10 }} tickMargin={8} axisLine={false} tickLine={false} />
+                            <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid, #e2e8f0)" vertical={false} />
+                            <XAxis dataKey={xAxisKey} stroke="var(--chart-text-muted, #64748b)" tick={{ fill: 'var(--chart-text-muted, #64748b)', fontSize: 10 }} tickMargin={8} axisLine={false} tickLine={false} />
                             <YAxis
-                                stroke="#64748b"
-                                tick={{ fill: '#64748b', fontSize: 10 }}
+                                stroke="var(--chart-text-muted, #64748b)"
+                                tick={{ fill: 'var(--chart-text-muted, #64748b)', fontSize: 10 }}
                                 tickMargin={8}
                                 axisLine={false}
                                 tickLine={false}
@@ -254,27 +254,22 @@ const TrendBarChart: React.FC<TrendBarChartProps> = ({
 
                 {/* Table */}
                 {data.length > 0 && (
-                    <div style={{ padding: '16px', borderTop: '1px solid #e2e8f0', color: '#0f172a' }}>
+                    <div style={{ padding: '16px', borderTop: '1px solid var(--chart-border, #e2e8f0)', color: 'var(--chart-text, #0f172a)' }}>
                         <h2 style={{ fontSize: '14px', fontWeight: 700, margin: '0 0 8px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
                             {title}
-                            {/* {dateRangeBadge && (
-                                <span style={{ fontSize: '9px', fontWeight: 400, color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' }}>
-                                    {dateRangeBadge}
-                                </span>
-                            )} */}
                         </h2>
-                        <div style={{ overflowX: 'auto', boxShadow: '0 1px 2px 0 rgba(0,0,0,0.05)', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
+                        <div style={{ overflowX: 'auto', boxShadow: '0 1px 2px 0 rgba(0,0,0,0.05)', border: '1px solid var(--chart-border, #e2e8f0)', borderRadius: '8px' }}>
                             <table style={{ width: '100%', fontSize: '12px', textAlign: 'left', whiteSpace: 'nowrap', borderCollapse: 'collapse', tableLayout: 'fixed' }}>
-                                <thead style={{ fontSize: '10px', color: '#64748b', textTransform: 'uppercase', backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
+                                <thead style={{ fontSize: '10px', color: 'var(--chart-text-muted, #64748b)', textTransform: 'uppercase', backgroundColor: 'var(--chart-bg-light, #f8fafc)', borderBottom: '1px solid var(--chart-border, #e2e8f0)' }}>
                                     <tr>
-                                        <th style={{ padding: '6px 8px', fontWeight: 600, borderRight: '1px solid #e2e8f0', width: '80px', position: 'sticky', left: 0, backgroundColor: '#f8fafc', zIndex: 10 }}>
+                                        <th style={{ padding: '6px 8px', fontWeight: 600, borderRight: '1px solid var(--chart-border, #e2e8f0)', width: '80px', position: 'sticky', left: 0, backgroundColor: 'var(--chart-bg-light, #f8fafc)', zIndex: 10 }}>
                                             Metric
                                         </th>
                                         {data.map((row, idx) => {
                                             const firstActiveKey = Object.keys(metricsConfig)[0];
                                             const isProjected = firstActiveKey && !row.hasOwnProperty(firstActiveKey) && row.hasOwnProperty(`${firstActiveKey}_Proj`);
                                             return (
-                                                <th key={idx} style={{ padding: '6px 2px', fontWeight: 600, textAlign: 'center', backgroundColor: isProjected ? 'rgba(241,245,249,0.5)' : 'transparent' }}>
+                                                <th key={idx} style={{ padding: '6px 2px', fontWeight: 600, textAlign: 'center', backgroundColor: isProjected ? 'var(--chart-bg-proj, rgba(241,245,249,0.5))' : 'transparent' }}>
                                                     <div style={{ letterSpacing: '-0.05em' }}>{row[xAxisKey]}</div>
                                                     <div style={{ marginTop: '2px' }}>
                                                         {/* <span style={{ padding: '1px 4px', fontSize: '8px', textTransform: 'uppercase', fontWeight: 700, borderRadius: '2px', backgroundColor: isProjected ? '#e2e8f0' : '#d1fae5', color: isProjected ? '#64748b' : '#047857', display: 'inline-block' }}>
@@ -290,15 +285,15 @@ const TrendBarChart: React.FC<TrendBarChartProps> = ({
                                     {Object.entries(metricsConfig as Record<string, any>).map(([key, config]: [string, any]) => {
                                         if (!activeMetrics[key]) return null;
                                         return (
-                                            <tr key={key} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                                                <td style={{ padding: '4px 8px', fontWeight: 500, color: '#0f172a', borderRight: '1px solid #e2e8f0', position: 'sticky', left: 0, backgroundColor: '#ffffff', zIndex: 10 }}>
+                                            <tr key={key} style={{ borderBottom: '1px solid var(--chart-border-light, #f1f5f9)' }}>
+                                                <td style={{ padding: '4px 8px', fontWeight: 500, color: 'var(--chart-text, #0f172a)', borderRight: '1px solid var(--chart-border, #e2e8f0)', position: 'sticky', left: 0, backgroundColor: 'var(--chart-bg, #ffffff)', zIndex: 10 }}>
                                                     {config.shortLabel}
                                                 </td>
                                                 {data.map((row, idx) => {
                                                     const val = row[key] ?? row[`${key}_Proj`];
                                                     const isProjected = !row.hasOwnProperty(key) && row.hasOwnProperty(`${key}_Proj`);
                                                     return (
-                                                        <td key={idx} style={{ padding: '4px 2px', textAlign: 'center', color: isProjected ? '#64748b' : '#0f172a', backgroundColor: isProjected ? 'rgba(248,250,252,0.3)' : 'transparent', fontWeight: isProjected ? 400 : 500 }}>
+                                                        <td key={idx} style={{ padding: '4px 2px', textAlign: 'center', color: isProjected ? 'var(--chart-text-muted, #64748b)' : 'var(--chart-text, #0f172a)', backgroundColor: isProjected ? 'var(--chart-bg-proj, rgba(248,250,252,0.3))' : 'transparent', fontWeight: isProjected ? 400 : 500 }}>
                                                             {val !== undefined ? val : '-'}
                                                         </td>
                                                     );
@@ -306,8 +301,8 @@ const TrendBarChart: React.FC<TrendBarChartProps> = ({
                                             </tr>
                                         );
                                     })}
-                                    <tr style={{ borderTop: '2px solid #e2e8f0', backgroundColor: '#f8fafc', fontWeight: 700 }}>
-                                        <td style={{ padding: '4px 8px', color: '#0f172a', borderRight: '1px solid #e2e8f0', position: 'sticky', left: 0, backgroundColor: '#f8fafc', zIndex: 10 }}>
+                                    <tr style={{ borderTop: '2px solid var(--chart-border, #e2e8f0)', backgroundColor: 'var(--chart-bg-light, #f8fafc)', fontWeight: 700 }}>
+                                        <td style={{ padding: '4px 8px', color: 'var(--chart-text, #0f172a)', borderRight: '1px solid var(--chart-border, #e2e8f0)', position: 'sticky', left: 0, backgroundColor: 'var(--chart-bg-light, #f8fafc)', zIndex: 10 }}>
                                             Total
                                         </td>
                                         {data.map((row, idx) => {
@@ -317,7 +312,7 @@ const TrendBarChart: React.FC<TrendBarChartProps> = ({
                                             }, 0);
                                             const isProjected = Object.keys(metricsConfig).every(k => !row.hasOwnProperty(k) && row.hasOwnProperty(`${k}_Proj`));
                                             return (
-                                                <td key={idx} style={{ padding: '4px 2px', textAlign: 'center', color: isProjected ? '#64748b' : '#0f172a' }}>
+                                                <td key={idx} style={{ padding: '4px 2px', textAlign: 'center', color: isProjected ? 'var(--chart-text-muted, #64748b)' : 'var(--chart-text, #0f172a)' }}>
                                                     {total || '-'}
                                                 </td>
                                             );

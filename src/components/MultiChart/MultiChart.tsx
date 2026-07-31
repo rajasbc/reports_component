@@ -50,8 +50,9 @@ export interface MultiChartProps {
     onEndpointSelect?: (endpoint: string) => void;
     isLoading?: boolean;
     defaultChart?: ChartType;
-    height?: number;
+    height?: number | string;
     defaultColor?: string;
+    className?: string;
 }
 
 const CHART_TYPES: { type: ChartType; label: string; icon: React.ReactNode }[] = [
@@ -61,7 +62,6 @@ const CHART_TYPES: { type: ChartType; label: string; icon: React.ReactNode }[] =
     { type: 'donut', label: 'Donut', icon: <DonutIcon /> },
 ];
 
-// ── Component ────────────────────────────────────────────────────────────────
 const MultiChart: React.FC<MultiChartProps> = ({
     data = [],
     apis = [],
@@ -71,6 +71,7 @@ const MultiChart: React.FC<MultiChartProps> = ({
     defaultChart = 'bar',
     height = 220,
     defaultColor = '#003357',
+    className,
 }) => {
     const [chartType, setChartType] = useState<ChartType>(defaultChart);
 
@@ -105,7 +106,7 @@ const MultiChart: React.FC<MultiChartProps> = ({
 
     const renderChart = () => {
         if (isLoading) return (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height, color: '#94a3b8', fontSize: 12, gap: 8 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: height === '100%' ? '100%' : height, color: '#94a3b8', fontSize: 12, gap: 8 }}>
                 <div style={{
                     width: 18, height: 18, border: '2px solid #e2e8f0',
                     borderTopColor: defaultColor, borderRadius: '50%',
@@ -115,20 +116,20 @@ const MultiChart: React.FC<MultiChartProps> = ({
             </div>
         );
         if (!data.length) return (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height, color: '#94a3b8', fontSize: 13 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: height === '100%' ? '100%' : height, color: '#94a3b8', fontSize: 13 }}>
                 {activeEndpoint ? 'No data' : 'Select an endpoint above'}
             </div>
         );
         switch (chartType) {
-            case 'bar':   return <BarChart   data={data} height={height} defaultColor={defaultColor} />;
-            case 'line':  return <LineChart  data={data} height={height} defaultColor={defaultColor} />;
-            case 'pie':   return <PieChart   data={data} />;
-            case 'donut': return <DonutChart data={data} />;
+            case 'bar':   return <BarChart   data={data} height={height as any} defaultColor={defaultColor} className={height === '100%' ? 'h-full flex-1' : ''} />;
+            case 'line':  return <LineChart  data={data} height={height as any} defaultColor={defaultColor} className={height === '100%' ? 'h-full flex-1' : ''} />;
+            case 'pie':   return <PieChart   data={data} className={height === '100%' ? 'h-full flex-1' : ''} />;
+            case 'donut': return <DonutChart data={data} className={height === '100%' ? 'h-full flex-1' : ''} />;
         }
     };
 
     return (
-        <div style={{ width: '100%', fontFamily: 'sans-serif', boxSizing: 'border-box' }}>
+        <div className={className} style={{ width: '100%', height: height === '100%' ? '100%' : 'auto', fontFamily: 'sans-serif', boxSizing: 'border-box', display: 'flex', flexDirection: 'column' }}>
 {/* ── Single toolbar row: API buttons + chart toggles ── */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px', flexWrap: 'wrap', gap: '8px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
@@ -154,7 +155,7 @@ const MultiChart: React.FC<MultiChartProps> = ({
                 )}
             </div>
             {/* ── Chart area ── */}
-            <div style={{ width: '100%', boxSizing: 'border-box' }}>
+            <div style={{ width: '100%', boxSizing: 'border-box', flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
                 {renderChart()}
             </div>
             <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>

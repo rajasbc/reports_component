@@ -9,11 +9,12 @@ interface DataPoint {
 
 export interface BarChartProps {
   data: DataPoint[];
-  height?: number;
+  height?: number | string;
   defaultColor?: string;
   showValues?: boolean;
   showGrid?: boolean;
   title?: string;
+  className?: string;
 }
 
 /** Abbreviate large numbers for axis labels (e.g. 1373060 → "1.4M") */
@@ -37,13 +38,19 @@ const BarChart: React.FC<BarChartProps> = ({
   defaultColor = '#003357',
   showValues = true,
   showGrid = true,
-  title
+  title,
+  className
 }) => {
-  const { ref, width, fs, scale } = useContainerSize();
+  const { ref, width, height: containerHeight, fs, scale } = useContainerSize();
 
   const paddingTop = 20;
   const paddingBottom = 15;
   const paddingRight = 10;
+
+  // Resolve responsive height
+  const isResponsive = typeof height === 'string';
+  const paddingOffset = isResponsive ? (title ? 48 : 0) : 0; 
+  const resolvedHeight = isResponsive ? (containerHeight > 0 ? containerHeight - paddingOffset : 200) : (height as number);
 
   const maxValue = data.length > 0 ? Math.max(...data.map(d => d.value), 0) : 1;
 
@@ -53,39 +60,43 @@ const BarChart: React.FC<BarChartProps> = ({
 
   const svgWidth = width || 600;
   const chartWidth = svgWidth - paddingLeft - paddingRight;
-  const chartHeight = height - paddingTop - paddingBottom;
-
-  const barWidth = (chartWidth / (data.length || 1)) * 0.7;
-  const barSpacing = chartWidth / (data.length || 1);
-
+  
   const estCharWidth = 10 * scale * 0.6;
   const maxLabelLen = data.length > 0 ? Math.max(...data.map(d => d.label.length)) : 0;
+  const barSpacing = chartWidth / (data.length || 1);
   const needsRotation = maxLabelLen * estCharWidth > barSpacing;
-  const rotatedLabelHeight = needsRotation ? maxLabelLen * estCharWidth * 0.7 : 20;
+  const rotatedLabelHeight = needsRotation ? maxLabelLen * estCharWidth * 1.2 : 20;
+  
+  const bottomSpace = needsRotation ? rotatedLabelHeight + 20 : paddingBottom;
+  const chartHeight = Math.max(resolvedHeight - paddingTop - bottomSpace, 50);
+  const barWidth = (chartWidth / (data.length || 1)) * 0.7;
 
   // Y-axis grid lines & labels at 0%, 25%, 50%, 75%, 100%
   const yRatios = [0, 0.25, 0.5, 0.75, 1];
 
   return (
-    <div ref={ref} style={{
-      backgroundColor: '#ffffff',
+    <div ref={ref} className={className} style={{
+      backgroundColor: 'var(--chart-bg, #ffffff)',
       borderRadius: '16px',
       padding: '12px',
       paddingBottom: '24px',
       fontFamily: 'Arial, sans-serif',
       boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
       width: '100%',
+      height: isResponsive ? '100%' : 'auto',
+      minHeight: isResponsive ? '250px' : undefined,
       boxSizing: 'border-box'
     }}>
       {title && (
-        <h6 style={{ margin: '0 0 20px 0', fontSize: fs(12), fontWeight: 'bold', color: '#003357' }}>
+        <h6 style={{ margin: '0 0 20px 0', fontSize: fs(12), lineHeight: 1.5, fontWeight: 'bold', color: 'var(--chart-text-strong, #003357)' }}>
           {title}
         </h6>
       )}
       {svgWidth > 0 && (
         <svg
           width={svgWidth}
-          height={height + paddingBottom + (needsRotation ? rotatedLabelHeight - 20 : 0)}
+          height={resolvedHeight}
+          style={{ overflow: 'visible' }}
         >
           {/* Y-axis labels + grid lines */}
           {yRatios.map((ratio, i) => {
@@ -100,7 +111,7 @@ const BarChart: React.FC<BarChartProps> = ({
                     y1={y}
                     x2={svgWidth - paddingRight}
                     y2={y}
-                    stroke="#e0e0e0"
+                    stroke="var(--chart-grid, #e0e0e0)"
                     strokeWidth="1"
                   />
                 )}
@@ -111,7 +122,7 @@ const BarChart: React.FC<BarChartProps> = ({
                   textAnchor="end"
                   dominantBaseline="middle"
                   fontSize={fs(10)}
-                  fill="#888"
+                  fill="var(--chart-text-muted, #888)"
                 >
                   {label}
                 </text>
@@ -140,7 +151,7 @@ const BarChart: React.FC<BarChartProps> = ({
                     y={y - 5}
                     textAnchor="middle"
                     fontSize={fs(10)}
-                    fill="#555"
+                    fill="var(--chart-text-muted, #555)"
                     fontWeight="bold"
                   >
                     {formatAxisTick(point.value)}
@@ -151,7 +162,7 @@ const BarChart: React.FC<BarChartProps> = ({
                     x={x + barWidth / 2}
                     y={paddingTop + chartHeight + 8}
                     fontSize={fs(10)}
-                    fill="#666"
+                    fill="#000000"
                     textAnchor="end"
                     transform={`rotate(-40, ${x + barWidth / 2}, ${paddingTop + chartHeight + 8})`}
                   >
@@ -171,7 +182,7 @@ const BarChart: React.FC<BarChartProps> = ({
                     y={paddingTop + chartHeight + 20}
                     textAnchor="middle"
                     fontSize={fs(10)}
-                    fill="#666"
+                    fill="#000000"
                   >
                     {point.label.includes(' | ') ? (
                       point.label.split(' | ').map((line, lineIdx) => (

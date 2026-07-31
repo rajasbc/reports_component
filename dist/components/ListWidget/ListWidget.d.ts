@@ -7,6 +7,7 @@ export interface ListItem {
     icon?: React.ReactNode;
     status?: 'success' | 'warning' | 'error' | 'info';
     color?: string;
+    details?: Record<string, any>;
 }
 export interface ListWidgetProps {
     items: ListItem[];

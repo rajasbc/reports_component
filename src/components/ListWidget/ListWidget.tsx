@@ -9,6 +9,7 @@ export interface ListItem {
   icon?: React.ReactNode;
   status?: 'success' | 'warning' | 'error' | 'info';
   color?: string;
+  details?: Record<string, any>;
 }
 
 export interface ListWidgetProps {
@@ -76,7 +77,16 @@ const ListWidget: React.FC<ListWidgetProps> = ({
               )}
               <div style={{ flex: 1 }}>
                 <div style={{ fontWeight: '600', color: '#333', marginBottom: '4px', fontSize: fs(14) }}>{item.title}</div>
-                {item.subtitle && <div style={{ fontSize: fs(13), color: '#666' }}>{item.subtitle}</div>}
+                {item.subtitle && <div style={{ fontSize: fs(13), color: '#666', marginBottom: item.details ? '8px' : 0 }}>{item.subtitle}</div>}
+                {item.details && (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '4px' }}>
+                    {Object.entries(item.details).map(([key, value]) => (
+                      <div key={key} style={{ backgroundColor: '#f0f4f8', padding: '4px 8px', borderRadius: '4px', fontSize: fs(11), color: '#475569' }}>
+                        <strong style={{ color: '#0f172a' }}>{key.replace(/_/g, ' ')}:</strong> {String(value)}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
               {item.timestamp && (
                 <div style={{ fontSize: fs(12), color: '#999', whiteSpace: 'nowrap' }}>{item.timestamp}</div>

@@ -31,5 +31,6 @@ export * from './components/TrendLinechart';
 export * from './components/TrendBarChart';
 export * from './components/MultiChart';
 export * from './components/MultiTrendChart';
+export * from './components/ContactCardGrid';
 export { useContainerSize } from './components/useContainerSize';
 //# sourceMappingURL=index.d.ts.map

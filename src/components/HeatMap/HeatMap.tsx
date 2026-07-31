@@ -12,15 +12,17 @@ export interface HeatMapProps {
   showValues?: boolean;
   colorScale?: [string, string];
   title?: string;
+  className?: string;
 }
 
 const HeatMap: React.FC<HeatMapProps> = ({
   data,
   showValues = true,
   colorScale = ['#e3f2fd', '#003357'],
-  title
+  title,
+  className
 }) => {
-  const { ref, width, fs } = useContainerSize();
+  const { ref, width, height: containerHeight, fs } = useContainerSize();
 
   const xLabels = Array.from(new Set(data.map(d => d.x)));
   const yLabels = Array.from(new Set(data.map(d => d.y)));
@@ -49,13 +51,14 @@ const HeatMap: React.FC<HeatMapProps> = ({
   const svgHeight = yLabels.length * cellSize + labelOffset;
 
   return (
-    <div ref={ref} style={{
+    <div ref={ref} className={className} style={{
       backgroundColor: '#ffffff',
       borderRadius: '16px',
       padding: '24px',
       fontFamily: 'Arial, sans-serif',
       boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
       width: '100%',
+      height: containerHeight > 0 ? '100%' : 'auto',
       boxSizing: 'border-box'
     }}>
       {title && (

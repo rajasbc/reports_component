@@ -12,6 +12,7 @@ export interface DonutChartProps {
   title?: string;
   total?: number;
   baseColor?: string;
+  className?: string;
 }
 
 function hexToRgb(hex: string) {
@@ -60,8 +61,8 @@ const MIN_GAP   = 24; // px minimum between label rows
 const HORIZ_LEN = 15; // px horizontal cap length
 const ELBOW_R_OFFSET = 20; // px beyond outerR for elbow
 
-const DonutChart: React.FC<DonutChartProps> = ({ data, title, total, baseColor }) => {
-  const { ref, width, fs } = useContainerSize();
+const DonutChart: React.FC<DonutChartProps> = ({ data, title, total, baseColor, className }) => {
+  const { ref, width, height: containerHeight, fs } = useContainerSize();
   const [tooltip, setTooltip] = useState<{ x: number; y: number; label: string; value: number; pct: number } | null>(null);
 
   const containerW = width || 600;
@@ -82,7 +83,8 @@ const DonutChart: React.FC<DonutChartProps> = ({ data, title, total, baseColor }
   let angle = -90;
   const raw = data.map((d, idx) => {
     const pct = (d.value / sum) * 100;
-    const sweep = (d.value / sum) * 360;
+    const rawSweep = (d.value / sum) * 360;
+    const sweep = rawSweep === 360 ? 359.99 : rawSweep;
     const start = angle;
     const end = angle + sweep;
     const mid = toRad(start + sweep / 2);
@@ -165,13 +167,15 @@ const DonutChart: React.FC<DonutChartProps> = ({ data, title, total, baseColor }
   });
 
   return (
-    <div ref={ref} style={{
+    <div ref={ref} className={className} style={{
       backgroundColor: '#ffffff',
       borderRadius: '16px',
       padding: '24px',
       fontFamily: 'Arial, sans-serif',
       boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
       width: '100%',
+      height: containerHeight > 0 ? '100%' : 'auto',
+      minHeight: '250px',
       boxSizing: 'border-box',
     }}>
       {title && (

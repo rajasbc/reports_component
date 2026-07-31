@@ -13,6 +13,7 @@ export interface PieChartProps {
   showPercentages?: boolean;
   title?: string;
   baseColor?: string;
+  className?: string;
 }
 
 function hexToRgb(hex: string) {
@@ -42,13 +43,16 @@ const PieChart: React.FC<PieChartProps> = ({
   data,
   showLegend = true,
   title,
-  baseColor
+  baseColor,
+  className
 }) => {
-  const { ref, width, fs } = useContainerSize();
+  const { ref, width, height: containerHeight, fs } = useContainerSize();
   const [tooltip, setTooltip] = useState<{ x: number; y: number; label: string; value: number; percentage: number } | null>(null);
 
   const containerW = width || 400;
-  const size = Math.max(100, Math.min(containerW, 400));
+  // Account for legend and title space if responsive height is available
+  const availableHeight = containerHeight > 0 ? containerHeight - (title ? 40 : 0) - (showLegend ? 60 : 0) : 400;
+  const size = Math.max(50, Math.min(containerW, availableHeight, 400));
   const centerX = containerW / 2;
   const centerY = size / 2;
   const radius = size / 2 - 20;
@@ -59,7 +63,8 @@ const PieChart: React.FC<PieChartProps> = ({
   let currentAngle = -90;
   const slices = data.map(point => {
     const percentage = (point.value / total) * 100;
-    const angle = (point.value / total) * 360;
+    const rawAngle = (point.value / total) * 360;
+    const angle = rawAngle === 360 ? 359.99 : rawAngle;
     const startAngle = currentAngle;
     const endAngle = currentAngle + angle;
     const startRad = (startAngle * Math.PI) / 180;
@@ -76,18 +81,20 @@ const PieChart: React.FC<PieChartProps> = ({
   });
 
   return (
-    <div ref={ref} style={{
-      backgroundColor: '#ffffff',
+    <div ref={ref} className={className} style={{
+      backgroundColor: 'var(--chart-bg, #ffffff)',
       borderRadius: '16px',
       padding: '24px',
       fontFamily: 'Arial, sans-serif',
       boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
       position: 'relative',
       width: '100%',
+      height: containerHeight > 0 ? '100%' : 'auto',
+      minHeight: '250px',
       boxSizing: 'border-box'
     }}>
       {title && (
-        <h6 style={{ margin: '0 0 20px 0', fontSize: fs(12), fontWeight: 'bold', color: '#003357' }}>
+        <h6 style={{ margin: '0 0 20px 0', fontSize: fs(12), fontWeight: 'bold', color: 'var(--chart-text-strong, #003357)' }}>
           {title}
         </h6>
       )}
@@ -125,7 +132,7 @@ const PieChart: React.FC<PieChartProps> = ({
             {slices.map((slice, index) => (
               <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <div style={{ width: '12px', height: '12px', backgroundColor: slice.color, borderRadius: '3px', flexShrink: 0 }} />
-                <span style={{ fontSize: fs(12), color: '#333' }}>
+                <span style={{ fontSize: fs(12), color: '#000000' }}>
                   {slice.label}: {slice.value.toLocaleString('en-IN')}
                 </span>
               </div>

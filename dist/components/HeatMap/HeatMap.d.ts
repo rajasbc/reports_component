@@ -9,6 +9,7 @@ export interface HeatMapProps {
     showValues?: boolean;
     colorScale?: [string, string];
     title?: string;
+    className?: string;
 }
 declare const HeatMap: React.FC<HeatMapProps>;
 export default HeatMap;

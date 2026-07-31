@@ -10,6 +10,7 @@ export interface PieChartProps {
     showPercentages?: boolean;
     title?: string;
     baseColor?: string;
+    className?: string;
 }
 declare const PieChart: React.FC<PieChartProps>;
 export default PieChart;

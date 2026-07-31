@@ -9,6 +9,7 @@ export interface DonutChartProps {
     title?: string;
     total?: number;
     baseColor?: string;
+    className?: string;
 }
 declare const DonutChart: React.FC<DonutChartProps>;
 export default DonutChart;

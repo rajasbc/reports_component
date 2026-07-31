@@ -6,12 +6,13 @@ interface DataPoint {
 }
 export interface LineChartProps {
     data: DataPoint[];
-    height?: number;
+    height?: number | string;
     defaultColor?: string;
     strokeWidth?: number;
     showDots?: boolean;
     showGrid?: boolean;
     title?: string;
+    className?: string;
 }
 declare const LineChart: React.FC<LineChartProps>;
 export default LineChart;

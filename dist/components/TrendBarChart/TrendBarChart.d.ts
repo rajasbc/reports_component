@@ -15,6 +15,8 @@ export interface TrendBarChartProps {
     referenceLineValue?: number;
     referenceLineLabel?: string;
     daysInMonthMap?: Record<string, number>;
+    className?: string;
+    height?: number | string;
 }
 declare const TrendBarChart: React.FC<TrendBarChartProps>;
 export default TrendBarChart;

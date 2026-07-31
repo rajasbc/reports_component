@@ -19,8 +19,9 @@ export interface MultiChartProps {
     onEndpointSelect?: (endpoint: string) => void;
     isLoading?: boolean;
     defaultChart?: ChartType;
-    height?: number;
+    height?: number | string;
     defaultColor?: string;
+    className?: string;
 }
 declare const MultiChart: React.FC<MultiChartProps>;
 export default MultiChart;

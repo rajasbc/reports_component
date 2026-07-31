@@ -9,12 +9,13 @@ interface DataPoint {
 
 export interface LineChartProps {
   data: DataPoint[];
-  height?: number;
+  height?: number | string;
   defaultColor?: string;
   strokeWidth?: number;
   showDots?: boolean;
   showGrid?: boolean;
   title?: string;
+  className?: string;
 }
 
 const LineChart: React.FC<LineChartProps> = ({
@@ -24,18 +25,23 @@ const LineChart: React.FC<LineChartProps> = ({
   strokeWidth = 2,
   showDots = true,
   showGrid = true,
-  title
+  title,
+  className
 }) => {
-  const { ref, width, fs, scale } = useContainerSize();
+  const { ref, width: svgWidth, height: containerHeight, fs, scale } = useContainerSize();
   const [tooltip, setTooltip] = useState<{ x: number; y: number; label: string; value: number } | null>(null);
+  
+  const isResponsive = typeof height === 'string';
+  const paddingOffset = isResponsive ? (title ? 48 : 0) : 0; 
+  const resolvedHeight = isResponsive ? (containerHeight > 0 ? containerHeight - paddingOffset : 200) : (height as number);
+  
   const paddingTop = 20;
   const paddingBottom = 15;
-  const svgWidth = width || 600;
 
   const maxValue = Math.max(...data.map(d => d.value));
 
   const getYAxisTicks = (max: number) => {
-    const magnitude = Math.pow(10, Math.floor(Math.log10(max)));
+    const magnitude = Math.pow(10, Math.floor(Math.log10(max || 1)));
     const normalized = max / magnitude;
     let step;
     if (normalized <= 1) step = 0.2 * magnitude;
@@ -50,17 +56,18 @@ const LineChart: React.FC<LineChartProps> = ({
   const yTicks = getYAxisTicks(maxValue);
   const longestTick = Math.max(...yTicks.map(t => t.toLocaleString('en-IN').length));
   const paddingSide = Math.max(65, longestTick * 9 + 16);
-  const chartWidth = svgWidth - paddingSide * 2;
-  const chartHeight = height - paddingTop - paddingBottom;
-
+  const chartWidth = (svgWidth || 600) - paddingSide * 2;
+  
   const sectionWidth = chartWidth / (data.length - 1 || 1);
   const estCharWidth = 10 * scale * 0.6;
   const maxLabelLen = Math.max(...data.map(d => d.label.length));
   const needsRotation = maxLabelLen * estCharWidth > sectionWidth;
-  const rotatedLabelHeight = needsRotation ? maxLabelLen * estCharWidth * 0.7 : 20;
+  const rotatedLabelHeight = needsRotation ? maxLabelLen * estCharWidth * 1.2 : 20;
+  const bottomSpace = needsRotation ? rotatedLabelHeight + 20 : paddingBottom;
+  const chartHeight = Math.max(resolvedHeight - paddingTop - bottomSpace, 50);
 
   const points = data.map((point, index) => {
-    const x = paddingSide + (chartWidth / (data.length - 1)) * index;
+    const x = paddingSide + (chartWidth / (data.length - 1 || 1)) * index;
     const y = paddingTop + chartHeight - (point.value / (yTicks[yTicks.length - 1] || 1)) * chartHeight;
     return { x, y, ...point };
   });
@@ -68,23 +75,29 @@ const LineChart: React.FC<LineChartProps> = ({
   const pathData = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
 
   return (
-    <div ref={ref} style={{
-      backgroundColor: '#ffffff',
+    <div ref={ref} className={className} style={{
+      backgroundColor: 'var(--chart-bg, #ffffff)',
       borderRadius: '16px',
       padding: '12px',
       paddingBottom: '24px',
       fontFamily: 'Arial, sans-serif',
       boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
       width: '100%',
+      height: isResponsive ? '100%' : 'auto',
+      minHeight: isResponsive ? '250px' : undefined,
       boxSizing: 'border-box'
     }}>
       {title && (
-        <h6 style={{ margin: '0 0 20px 0', fontSize: fs(12), fontWeight: 'bold', color: '#003357' }}>
+        <h6 style={{ margin: '0 0 20px 0', fontSize: fs(12), lineHeight: 1.5, fontWeight: 'bold', color: 'var(--chart-text-strong, #003357)' }}>
           {title}
         </h6>
       )}
       {svgWidth > 0 && (
-        <svg width={svgWidth} height={height + paddingBottom + (needsRotation ? rotatedLabelHeight - 20 : 0)}>
+        <svg
+          width={svgWidth}
+          height={resolvedHeight}
+          style={{ overflow: 'visible' }}
+        >
           {showGrid && (
             <g>
               {yTicks.map((tickValue, i) => {
@@ -128,7 +141,7 @@ const LineChart: React.FC<LineChartProps> = ({
                 x={point.x}
                 y={paddingTop + chartHeight + 8}
                 fontSize={fs(10)}
-                fill="#666"
+                fill="#000000"
                 textAnchor="end"
                 transform={`rotate(-40, ${point.x}, ${paddingTop + chartHeight + 8})`}
               >
@@ -143,7 +156,7 @@ const LineChart: React.FC<LineChartProps> = ({
                 )}
               </text>
             ) : (
-              <text key={index} x={point.x} y={paddingTop + chartHeight + 20} textAnchor="middle" fontSize={fs(10)} fill="#666">
+              <text key={index} x={point.x} y={paddingTop + chartHeight + 20} textAnchor="middle" fontSize={fs(10)} fill="#000000">
                 {point.label.includes(' | ') ? (
                   point.label.split(' | ').map((line, lineIdx) => (
                     <tspan key={lineIdx} x={point.x} dy={lineIdx === 0 ? 0 : 12}>

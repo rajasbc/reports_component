@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import { 
     AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, 
-    ResponsiveContainer, LabelList 
+    ResponsiveContainer 
 } from 'recharts';
 
 // SVG Icons
@@ -45,12 +45,7 @@ const defaultMetricsConfig: Record<string, any> = {
     Therapy_Tests: { label: 'Therapy Tests', shortLabel: 'Therapy', color: '#ec4899', icon: FileText }
 };
 
-const defaultDaysInMonthMap: Record<string, number> = {
-    'Aug 25': 31, 'Sep 25': 30, 'Oct 25': 31, 'Nov 25': 30, 'Dec 25': 31,
-    'Jan 26': 31, 'Feb 26': 28, 'Mar 26': 31, 'Apr 26': 30, 'May 26': 31,
-    'Jun 26': 30, 'Jul 26': 31, 'Aug 26': 31, 'Sep 26': 30, 'Oct 26': 31,
-    'Nov 26': 30, 'Dec 26': 31
-};
+
 
 /** Abbreviate large numbers so Y-axis labels always fit (e.g. 1373060 → "1.4M") */
 function formatYAxisTick(value: number): string {
@@ -91,6 +86,8 @@ export interface TrendLinechartProps {
     referenceLineValue?: number;
     referenceLineLabel?: string;
     daysInMonthMap?: Record<string, number>;
+    className?: string;
+    height?: number | string;
 }
 
 const CustomTooltip = ({ active, payload, label, metricsConfig }: any) => {
@@ -104,8 +101,8 @@ const CustomTooltip = ({ active, payload, label, metricsConfig }: any) => {
         });
 
         return (
-            <div style={{ backgroundColor: '#ffffff', border: '1px solid #e2e8f0', padding: '12px', borderRadius: '8px', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)', zIndex: 50, position: 'relative', color: '#0f172a' }}>
-                <p style={{ margin: '0 0 8px 0', fontWeight: 600, borderBottom: '1px solid #f1f5f9', paddingBottom: '4px', fontSize: '14px', color: '#1e293b' }}>{label}</p>
+            <div style={{ backgroundColor: 'var(--chart-bg, #ffffff)', border: '1px solid var(--chart-border, #e2e8f0)', padding: '12px', borderRadius: '8px', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1)', zIndex: 50, position: 'relative', color: 'var(--chart-text, #0f172a)' }}>
+                <p style={{ margin: '0 0 8px 0', fontWeight: 600, borderBottom: '1px solid var(--chart-border-light, #f1f5f9)', paddingBottom: '4px', fontSize: '14px', color: 'var(--chart-text-strong, #1e293b)' }}>{label}</p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                     {filteredPayload.map((entry: any, index: number) => {
                         const isProj = entry.dataKey.endsWith('_Proj');
@@ -123,11 +120,11 @@ const CustomTooltip = ({ active, payload, label, metricsConfig }: any) => {
                             <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '24px' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                     <div style={{ width: '10px', height: '10px', borderRadius: '9999px', backgroundColor: entry.color }} />
-                                    <span style={{ color: '#475569', fontSize: '12px', fontWeight: 500 }}>
-                                        {config.label} {isProj && <span style={{ color: '#94a3b8', fontSize: '10px', fontStyle: 'italic', marginLeft: '2px' }}>(Projected)</span>}
+                                    <span style={{ color: 'var(--chart-text-muted, #475569)', fontSize: '12px', fontWeight: 500 }}>
+                                        {config.label} {isProj && <span style={{ color: 'var(--chart-text-lighter, #94a3b8)', fontSize: '10px', fontStyle: 'italic', marginLeft: '2px' }}>(Projected)</span>}
                                     </span>
                                 </div>
-                                <span style={{ color: '#0f172a', fontWeight: 700, fontSize: '14px', display: 'flex', alignItems: 'baseline', gap: '6px' }}>
+                                <span style={{ color: 'var(--chart-text, #0f172a)', fontWeight: 700, fontSize: '14px', display: 'flex', alignItems: 'baseline', gap: '6px' }}>
                                     {entry.value}
                                     {avgLabel}
                                 </span>
@@ -143,14 +140,13 @@ const CustomTooltip = ({ active, payload, label, metricsConfig }: any) => {
 
 const TrendLinechart: React.FC<TrendLinechartProps> = ({ 
     title = 'Annual Patient Trends',
-    // subtitle = 'Aug 2025 - Dec 2026 Volume & Projections',
-    // dateRangeBadge = 'Aug 25 - Dec 26',
+    subtitle,
+    dateRangeBadge,
     data: dataProp = defaultData,
     xAxisKey = 'month',
     metricsConfig = defaultMetricsConfig,
-    // referenceLineValue = 200,
-    // referenceLineLabel = 'Beds (200)',
-    daysInMonthMap = defaultDaysInMonthMap
+    className,
+    height
 }) => {
     const data = dataProp ?? defaultData;
     const [activeMetrics, setActiveMetrics] = useState<Record<string, boolean>>(() => {
@@ -167,20 +163,21 @@ const TrendLinechart: React.FC<TrendLinechartProps> = ({
     };
 
     return (
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', fontFamily: 'sans-serif', boxSizing: 'border-box' }}>
-            <div style={{ width: '100%', maxWidth: '1400px', backgroundColor: '#ffffff', color: '#0f172a', border: '1px solid #e2e8f0', borderRadius: '12px', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+        <div className={className} style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'center', fontFamily: 'sans-serif', boxSizing: 'border-box', height: height === '100%' ? '100%' : 'auto' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%', backgroundColor: 'var(--chart-bg, #ffffff)', borderRadius: '12px', border: '1px solid var(--chart-border, #e2e8f0)', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)', overflow: 'hidden' }}>
                 
                 {/* Header Section */}
-                <div style={{ padding: '16px', borderBottom: '1px solid #e2e8f0', display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+                <div style={{ padding: '20px 24px', borderBottom: '1px solid var(--chart-border-light, #f1f5f9)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
                     <div>
-                        <h1 style={{ margin: 0, fontSize: '24px', fontWeight: 700, color: '#0f172a' }}>
+                        <h2 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 4px 0', color: 'var(--chart-text-strong, #0f172a)', letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: '8px' }}>
                             {title}
-                        </h1>
-                        {/* {subtitle && (
-                            <p style={{ margin: '4px 0 0 0', color: '#64748b', fontSize: '14px' }}>
-                                {subtitle}
-                            </p>
-                        )} */}
+                            {dateRangeBadge && (
+                                <span style={{ fontSize: '11px', fontWeight: 500, color: 'var(--chart-text-muted, #64748b)', backgroundColor: 'var(--chart-bg-light, #f1f5f9)', padding: '2px 8px', borderRadius: '12px', letterSpacing: '0' }}>
+                                    {dateRangeBadge}
+                                </span>
+                            )}
+                        </h2>
+                        {subtitle && <p style={{ fontSize: '13px', color: 'var(--chart-text-muted, #64748b)', margin: 0 }}>{subtitle}</p>}
                     </div>
                     
                     {/* Interactive Toggles */}
@@ -196,8 +193,8 @@ const TrendLinechart: React.FC<TrendLinechartProps> = ({
                                     style={{ 
                                         display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px', borderRadius: '9999px', fontSize: '12px', fontWeight: 500, cursor: 'pointer', border: '1px solid',
                                         backgroundColor: isActive ? `${config.color}18` : 'transparent',
-                                        color: isActive ? config.color : '#64748b',
-                                        borderColor: isActive ? config.color : '#e2e8f0',
+                                        color: isActive ? config.color : 'var(--chart-text-muted, #64748b)',
+                                        borderColor: isActive ? config.color : 'var(--chart-border, #e2e8f0)',
                                         transition: 'all 0.2s ease-out'
                                     }}
                                 >
@@ -215,8 +212,8 @@ const TrendLinechart: React.FC<TrendLinechartProps> = ({
                 </div>
 
                 {/* Chart Area */}
-                <div style={{ padding: '16px', minHeight: 320, flexShrink: 0, width: '100%', boxSizing: 'border-box' }}>
-                    <ResponsiveContainer width="99%" height={320}>
+                <div style={{ padding: '16px', minHeight: height === '100%' ? 250 : 320, flex: 1, width: '100%', boxSizing: 'border-box' }}>
+                    <ResponsiveContainer width="99%" height="100%" minHeight={320}>
                         <AreaChart
                             data={data}
                             margin={{ top: 20, right: 30, left: calcYAxisWidth(data, metricsConfig) - 40, bottom: 0 }}
@@ -229,35 +226,23 @@ const TrendLinechart: React.FC<TrendLinechartProps> = ({
                                     </linearGradient>
                                 ))}
                             </defs>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--chart-grid, #e2e8f0)" />
                             <XAxis 
                                 dataKey={xAxisKey} 
-                                stroke="#64748b" 
-                                tick={{ fill: '#64748b', fontSize: 10 }}
-                                tickMargin={8}
-                                axisLine={false}
-                                tickLine={false}
+                                axisLine={false} 
+                                tickLine={false} 
+                                tick={{ fontSize: 11, fill: 'var(--chart-text-muted, #64748b)', fontWeight: 500 }} 
+                                dy={10}
                             />
                             <YAxis 
-                                stroke="#64748b" 
-                                tick={{ fill: '#64748b', fontSize: 10 }}
-                                tickMargin={8}
-                                axisLine={false}
-                                tickLine={false}
-                                width={calcYAxisWidth(data, metricsConfig)}
+                                axisLine={false} 
+                                tickLine={false} 
+                                tick={{ fontSize: 11, fill: 'var(--chart-text-muted, #64748b)', fontWeight: 500 }} 
                                 tickFormatter={formatYAxisTick}
+                                dx={-10}
+                                width={calcYAxisWidth(data, metricsConfig)}
                             />
-                            <Tooltip content={<CustomTooltip metricsConfig={metricsConfig} daysInMonthMap={daysInMonthMap} />} />
-                            
-                            {/* Threshold Lines */}
-                            {/* {Number.isFinite(referenceLineValue) && (
-                                <ReferenceLine 
-                                    y={referenceLineValue} 
-                                    stroke="#ef4444" 
-                                    strokeDasharray="4 4" 
-                                    label={referenceLineLabel ? { position: 'insideTopLeft', value: referenceLineLabel, fill: '#ef4444', fontSize: 10, fontWeight: 600, offset: 5 } : undefined} 
-                                />
-                            )} */}
+                            <Tooltip content={<CustomTooltip metricsConfig={metricsConfig} />} />
                             
                             {/* Render lines based on active toggles */}
                             {Object.entries(metricsConfig as Record<string, any>).map(([key, config]: [string, any]) => (
@@ -274,9 +259,7 @@ const TrendLinechart: React.FC<TrendLinechartProps> = ({
                                             activeDot={{ r: 5, strokeWidth: 0, fill: config.color }}
                                             animationDuration={1000}
                                             animationEasing="ease-in-out"
-                                        >
-                                            <LabelList dataKey={key} position="top" offset={6} style={{ fill: '#64748b', fontSize: 9, fontWeight: 600 }} />
-                                        </Area>
+                                        />
                                         <Area
                                             type="monotone"
                                             dataKey={`${key}_Proj`}
@@ -289,29 +272,7 @@ const TrendLinechart: React.FC<TrendLinechartProps> = ({
                                             activeDot={{ r: 5, strokeWidth: 0, fill: config.color }}
                                             animationDuration={1000}
                                             animationEasing="ease-in-out"
-                                        >
-                                            <LabelList dataKey={`${key}_Proj`} position="top" offset={6} style={{ fill: '#94a3b8', fontSize: 9, fontWeight: 500 }} />
-                                            <LabelList 
-                                                content={(props: any) => {
-                                                    const { x, y, index } = props;
-                                                    if (index === data.length - 1) {
-                                                        return (
-                                                            <text 
-                                                                x={x + 10} 
-                                                                y={y} 
-                                                                fill={config.color} 
-                                                                fontSize={11} 
-                                                                fontWeight={700} 
-                                                                alignmentBaseline="middle"
-                                                            >
-                                                                {config.shortLabel}
-                                                            </text>
-                                                        );
-                                                    }
-                                                    return null;
-                                                }} 
-                                            />
-                                        </Area>
+                                        />
                                     </Fragment>
                                 )
                             ))}
@@ -321,20 +282,12 @@ const TrendLinechart: React.FC<TrendLinechartProps> = ({
 
                 {/* Annual Trend Table Section */}
                 {data.length > 0 && (
-                    <div style={{ padding: '16px', borderTop: '1px solid #e2e8f0', color: '#0f172a' }}>
-                        <h2 style={{ fontSize: '14px', fontWeight: 700, margin: '0 0 8px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            {title}
-                            {/* {dateRangeBadge && (
-                                <span style={{ fontSize: '9px', fontWeight: 400, color: '#64748b', backgroundColor: '#f1f5f9', padding: '2px 6px', borderRadius: '4px' }}>
-                                    {dateRangeBadge}
-                                </span>
-                            )} */}
-                        </h2>
-                        <div style={{ overflowX: 'auto', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', border: '1px solid #e2e8f0', borderRadius: '8px' }}>
+                    <div style={{ padding: '16px', borderTop: '1px solid var(--chart-border, #e2e8f0)', color: 'var(--chart-text, #0f172a)' }}>
+                        <div style={{ overflowX: 'auto', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', border: '1px solid var(--chart-border, #e2e8f0)', borderRadius: '8px' }}>
                             <table style={{ width: '100%', fontSize: '12px', textAlign: 'left', whiteSpace: 'nowrap', borderCollapse: 'collapse', tableLayout: 'fixed' }}>
-                                <thead style={{ fontSize: '10px', color: '#64748b', textTransform: 'uppercase', backgroundColor: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
+                                <thead style={{ fontSize: '10px', color: 'var(--chart-text-muted, #64748b)', textTransform: 'uppercase', backgroundColor: 'var(--chart-bg-light, #f8fafc)', borderBottom: '1px solid var(--chart-border, #e2e8f0)' }}>
                                     <tr>
-                                        <th style={{ padding: '6px 8px', fontWeight: 600, borderRight: '1px solid #e2e8f0', width: '80px', position: 'sticky', left: 0, backgroundColor: '#f8fafc', zIndex: 10 }}>
+                                        <th style={{ padding: '6px 8px', fontWeight: 600, borderRight: '1px solid var(--chart-border, #e2e8f0)', width: '80px', position: 'sticky', left: 0, backgroundColor: 'var(--chart-bg-light, #f8fafc)', zIndex: 10 }}>
                                             Metric
                                         </th>
                                         {data.map((row, idx) => {
@@ -360,8 +313,8 @@ const TrendLinechart: React.FC<TrendLinechartProps> = ({
                                         if (!activeMetrics[key]) return null;
                                         
                                         return (
-                                            <tr key={key} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                                                <td style={{ padding: '4px 8px', fontWeight: 500, color: '#0f172a', borderRight: '1px solid #e2e8f0', position: 'sticky', left: 0, backgroundColor: '#ffffff', zIndex: 10 }}>
+                                            <tr key={key} style={{ borderBottom: '1px solid var(--chart-border-light, #f1f5f9)' }}>
+                                                <td style={{ padding: '4px 8px', fontWeight: 500, color: 'var(--chart-text, #0f172a)', borderRight: '1px solid var(--chart-border, #e2e8f0)', position: 'sticky', left: 0, backgroundColor: 'var(--chart-bg, #ffffff)', zIndex: 10 }}>
                                                     {config.shortLabel}
                                                 </td>
                                                 {data.map((row, idx) => {
@@ -369,7 +322,7 @@ const TrendLinechart: React.FC<TrendLinechartProps> = ({
                                                     const isProjected = !row.hasOwnProperty(key) && row.hasOwnProperty(`${key}_Proj`);
                                                     
                                                     return (
-                                                        <td key={idx} style={{ padding: '4px 2px', textAlign: 'center', color: isProjected ? '#64748b' : '#0f172a', backgroundColor: isProjected ? 'rgba(248, 250, 252, 0.3)' : 'transparent', fontWeight: isProjected ? 400 : 500 }}>
+                                                        <td key={idx} style={{ padding: '4px 2px', textAlign: 'center', color: isProjected ? 'var(--chart-text-muted, #64748b)' : 'var(--chart-text, #0f172a)', backgroundColor: isProjected ? 'var(--chart-bg-proj, rgba(248, 250, 252, 0.3))' : 'transparent', fontWeight: isProjected ? 400 : 500 }}>
                                                             {val !== undefined ? val : '-'}
                                                         </td>
                                                     );
@@ -377,8 +330,8 @@ const TrendLinechart: React.FC<TrendLinechartProps> = ({
                                             </tr>
                                         );
                                     })}
-                                    <tr style={{ borderTop: '2px solid #e2e8f0', backgroundColor: '#f8fafc', fontWeight: 700 }}>
-                                        <td style={{ padding: '4px 8px', color: '#0f172a', borderRight: '1px solid #e2e8f0', position: 'sticky', left: 0, backgroundColor: '#f8fafc', zIndex: 10 }}>
+                                    <tr style={{ borderTop: '2px solid var(--chart-border, #e2e8f0)', backgroundColor: 'var(--chart-bg-light, #f8fafc)', fontWeight: 700 }}>
+                                        <td style={{ padding: '4px 8px', color: 'var(--chart-text, #0f172a)', borderRight: '1px solid var(--chart-border, #e2e8f0)', position: 'sticky', left: 0, backgroundColor: 'var(--chart-bg-light, #f8fafc)', zIndex: 10 }}>
                                             Total
                                         </td>
                                         {data.map((row, idx) => {
@@ -388,7 +341,7 @@ const TrendLinechart: React.FC<TrendLinechartProps> = ({
                                             }, 0);
                                             const isProjected = Object.keys(metricsConfig).every(k => !row.hasOwnProperty(k) && row.hasOwnProperty(`${k}_Proj`));
                                             return (
-                                                <td key={idx} style={{ padding: '4px 2px', textAlign: 'center', color: isProjected ? '#64748b' : '#0f172a' }}>
+                                                <td key={idx} style={{ padding: '4px 2px', textAlign: 'center', color: isProjected ? 'var(--chart-text-muted, #64748b)' : 'var(--chart-text, #0f172a)' }}>
                                                     {total || '-'}
                                                 </td>
                                             );

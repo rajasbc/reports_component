@@ -6,11 +6,12 @@ interface DataPoint {
 }
 export interface BarChartProps {
     data: DataPoint[];
-    height?: number;
+    height?: number | string;
     defaultColor?: string;
     showValues?: boolean;
     showGrid?: boolean;
     title?: string;
+    className?: string;
 }
 declare const BarChart: React.FC<BarChartProps>;
 export default BarChart;
