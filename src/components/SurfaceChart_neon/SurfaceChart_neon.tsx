@@ -159,7 +159,7 @@ const SurfaceChart_neon: React.FC<SurfaceChartProps> = ({
         <ReactECharts 
           option={option} 
           style={{ height: '100%', width: '100%' }}
-          opts={{ renderer: 'webgl' }}
+          opts={{ renderer: 'canvas' }}
         />
       </div>
     </div>
