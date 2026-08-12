@@ -106,7 +106,7 @@ const GroupedBars_neon: React.FC<GroupedBarsNeonProps> = ({
           )}
         </div>
       )}
-      <div className="flex-1 w-full min-h-0" style={{ marginTop: (title || totalAmount !== undefined) ? "60px" : "0px" }}>
+      <div className="flex-1 w-full min-h-0" style={{ marginTop: (title || totalAmount !== undefined) ? "60px" : "0px", height: "calc(100% - 60px)" }}>
         <ReactECharts 
           option={option} 
         style={{ height: '100%', width: '100%' }} 

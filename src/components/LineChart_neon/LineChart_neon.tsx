@@ -21,8 +21,6 @@ export interface LineChartProps {
 }
 
 const LineChart_neon: React.FC<LineChartProps> = ({
-  totalAmount,
-  onHeadingClick,
   data,
   height = 200,
   defaultColor = '#00f3ff', // Cyan neon default
@@ -30,7 +28,9 @@ const LineChart_neon: React.FC<LineChartProps> = ({
   showDots = true,
   showGrid = true,
   title,
-  className
+  className,
+  totalAmount,
+  onHeadingClick
 }) => {
   const { ref, width: svgWidth, height: containerHeight, fs, scale } = useContainerSize();
   const [tooltip, setTooltip] = useState<{ x: number; y: number; label: string; value: number } | null>(null);
@@ -39,7 +39,7 @@ const LineChart_neon: React.FC<LineChartProps> = ({
   const paddingOffset = isResponsive ? (title ? 48 : 0) : 0; 
   const resolvedHeight = isResponsive ? (containerHeight > 0 ? containerHeight - paddingOffset : 200) : (height as number);
   
-  const paddingTop = 20;
+  const paddingTop = (title || (totalAmount !== undefined && totalAmount !== null)) ? 70 : 20;
   const paddingBottom = 15;
 
   const maxValue = Math.max(...data.map(d => d.value), 1);
@@ -82,11 +82,24 @@ const LineChart_neon: React.FC<LineChartProps> = ({
     : '';
 
   return (
-
-    <div className={className} style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden', background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', boxSizing: 'border-box' }}>
+    <div ref={ref} className={className} style={{
+      background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%)',
+      backdropFilter: 'blur(10px)',
+      border: '1px solid rgba(255,255,255,0.1)',
+      borderRadius: '16px',
+      padding: '12px',
+      paddingBottom: '24px',
+      fontFamily: 'Arial, sans-serif',
+      boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.3)',
+      width: '100%',
+      height: isResponsive ? '100%' : 'auto',
+      minHeight: isResponsive ? '250px' : undefined,
+      boxSizing: 'border-box',
+      overflow: 'hidden'
+    }}>
       {(title || (totalAmount !== undefined && totalAmount !== null)) && (
         <div 
-          className="flex flex-col items-start justify-center px-4 pt-3 pb-1 z-10 transition-colors duration-200 cursor-pointer group w-full absolute top-0 left-0 bg-transparent"
+          className="flex flex-col items-start justify-center z-10 transition-colors duration-200 cursor-pointer group w-full absolute top-0 left-0 bg-transparent px-4 pt-3 pb-1"
           style={{ height: '60px' }}
           onClick={onHeadingClick}
         >
@@ -96,119 +109,124 @@ const LineChart_neon: React.FC<LineChartProps> = ({
           )}
         </div>
       )}
-      <div className="flex-1 w-full min-h-0" style={{ marginTop: (title || totalAmount !== undefined) ? "60px" : "0px", height: "calc(100% - 60px)" }}>
-        <div ref={ref} style={{ width: '100%', height: '100%', position: 'relative' }}>
-          {svgWidth > 0 && data.length > 0 && (
-            <svg width={svgWidth} height={resolvedHeight} style={{ overflow: 'visible' }}>
-              <defs>
-                <filter id="neon-glow-line" x="-50%" y="-50%" width="200%" height="200%">
-                  <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                  <feMerge>
-                    <feMergeNode in="coloredBlur"/>
-                    <feMergeNode in="SourceGraphic"/>
-                  </feMerge>
-                </filter>
-                <linearGradient id="neon-fill-line" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor={defaultColor} stopOpacity="0.4" />
-                  <stop offset="100%" stopColor={defaultColor} stopOpacity="0.0" />
-                </linearGradient>
-              </defs>
-              
-              {showGrid && (
-                <g>
-                  {yTicks.map((tickValue, i) => {
-                    const y = paddingTop + chartHeight - (tickValue / (yTicks[yTicks.length - 1] || 1)) * chartHeight;
-                    return (
-                      <g key={i}>
-                        <line x1={paddingSide} y1={y} x2={svgWidth - paddingSide} y2={y} stroke="rgba(255, 255, 255, 0.1)" strokeWidth="1" strokeDasharray="4 4" />
-                        <text x={paddingSide - 6} y={y + 4} textAnchor="end" fontSize={fs(9)} fill="rgba(255, 255, 255, 0.5)">
-                          {tickValue.toLocaleString('en-IN')}
-                        </text>
-                      </g>
-                    );
-                  })}
-                </g>
-              )}
+      {svgWidth > 0 && data.length > 0 && (
+        <svg
+          width={svgWidth}
+          height={resolvedHeight}
+          style={{ overflow: 'visible' }}
+        >
+          <defs>
+            <filter id="neon-glow-line" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+            <linearGradient id="neon-fill-line" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor={defaultColor} stopOpacity="0.4" />
+              <stop offset="100%" stopColor={defaultColor} stopOpacity="0.0" />
+            </linearGradient>
+          </defs>
+          
+          {showGrid && (
+            <g>
+              {yTicks.map((tickValue, i) => {
+                const y = paddingTop + chartHeight - (tickValue / (yTicks[yTicks.length - 1] || 1)) * chartHeight;
+                return (
+                  <g key={i}>
+                    <line x1={paddingSide} y1={y} x2={svgWidth - paddingSide} y2={y} stroke="rgba(255, 255, 255, 0.1)" strokeWidth="1" strokeDasharray="4 4" />
+                    <text x={paddingSide - 6} y={y + 4} textAnchor="end" fontSize={fs(9)} fill="rgba(255, 255, 255, 0.5)">
+                      {tickValue.toLocaleString('en-IN')}
+                    </text>
+                  </g>
+                );
+              })}
+            </g>
+          )}
 
-              <path d={fillPathData} fill="url(#neon-fill-line)" />
-              <path d={pathData} fill="none" stroke={defaultColor} strokeWidth={strokeWidth} filter="url(#neon-glow-line)" />
-              <path d={pathData} fill="none" stroke="#fff" strokeWidth={strokeWidth / 2} opacity={0.6} />
+          {/* Area Fill */}
+          <path d={fillPathData} fill="url(#neon-fill-line)" />
+          
+          {/* Main Line with Glow */}
+          <path d={pathData} fill="none" stroke={defaultColor} strokeWidth={strokeWidth} filter="url(#neon-glow-line)" />
+          
+          {/* Inner bright core line */}
+          <path d={pathData} fill="none" stroke="#fff" strokeWidth={strokeWidth / 2} opacity={0.6} />
 
-              {showDots && points.map((point, index) => (
-                <g key={index}>
-                  <circle
-                    cx={point.x} cy={point.y} r="5"
-                    fill="#fff"
-                    stroke={defaultColor}
-                    strokeWidth="2"
-                    filter="url(#neon-glow-line)"
-                    style={{ cursor: 'pointer' }}
-                    onMouseEnter={e => setTooltip({ x: e.clientX, y: e.clientY, label: point.label, value: point.value })}
-                    onMouseMove={e => setTooltip(t => t ? { ...t, x: e.clientX, y: e.clientY } : null)}
-                    onMouseLeave={() => setTooltip(null)}
-                  />
-                  <text
-                    x={index === 0 ? point.x + 4 : index === points.length - 1 ? point.x - 4 : point.x}
-                    y={point.y - 12}
-                    textAnchor={index === 0 ? 'start' : index === points.length - 1 ? 'end' : 'middle'}
-                    fontSize={fs(9)} fill="rgba(255,255,255,0.7)" pointerEvents="none"
-                  >
-                    {point.value.toLocaleString('en-IN')}
-                  </text>
-                </g>
-              ))}
-              {points.map((point, index) => (
-                needsRotation ? (
-                  <text
-                    key={index}
-                    x={point.x}
-                    y={paddingTop + chartHeight + 12}
-                    fontSize={fs(10)}
-                    fill="rgba(255, 255, 255, 0.5)"
-                    textAnchor="end"
-                    transform={`rotate(-40, ${point.x}, ${paddingTop + chartHeight + 12})`}
-                  >
-                    {point.label.includes(' | ') ? (
-                      point.label.split(' | ').map((line, lineIdx) => (
-                        <tspan key={lineIdx} x={point.x} dy={lineIdx === 0 ? 0 : 12}>
-                          {line}
-                        </tspan>
-                      ))
-                    ) : (
-                      point.label
-                    )}
-                  </text>
+          {showDots && points.map((point, index) => (
+            <g key={index}>
+              <circle
+                cx={point.x} cy={point.y} r="5"
+                fill="#fff"
+                stroke={defaultColor}
+                strokeWidth="2"
+                filter="url(#neon-glow-line)"
+                style={{ cursor: 'pointer' }}
+                onMouseEnter={e => setTooltip({ x: e.clientX, y: e.clientY, label: point.label, value: point.value })}
+                onMouseMove={e => setTooltip(t => t ? { ...t, x: e.clientX, y: e.clientY } : null)}
+                onMouseLeave={() => setTooltip(null)}
+              />
+              <text
+                x={index === 0 ? point.x + 4 : index === points.length - 1 ? point.x - 4 : point.x}
+                y={point.y - 12}
+                textAnchor={index === 0 ? 'start' : index === points.length - 1 ? 'end' : 'middle'}
+                fontSize={fs(9)} fill="rgba(255,255,255,0.7)" pointerEvents="none"
+              >
+                {point.value.toLocaleString('en-IN')}
+              </text>
+            </g>
+          ))}
+          {points.map((point, index) => (
+            needsRotation ? (
+              <text
+                key={index}
+                x={point.x}
+                y={paddingTop + chartHeight + 12}
+                fontSize={fs(10)}
+                fill="rgba(255, 255, 255, 0.5)"
+                textAnchor="end"
+                transform={`rotate(-40, ${point.x}, ${paddingTop + chartHeight + 12})`}
+              >
+                {point.label.includes(' | ') ? (
+                  point.label.split(' | ').map((line, lineIdx) => (
+                    <tspan key={lineIdx} x={point.x} dy={lineIdx === 0 ? 0 : 12}>
+                      {line}
+                    </tspan>
+                  ))
                 ) : (
-                  <text key={index} x={point.x} y={paddingTop + chartHeight + 20} textAnchor="middle" fontSize={fs(10)} fill="rgba(255, 255, 255, 0.5)">
-                    {point.label.includes(' | ') ? (
-                      point.label.split(' | ').map((line, lineIdx) => (
-                        <tspan key={lineIdx} x={point.x} dy={lineIdx === 0 ? 0 : 12}>
-                          {line}
-                        </tspan>
-                      ))
-                    ) : (
-                      point.label
-                    )}
-                  </text>
-                )
-              ))}
-            </svg>
-          )}
-          {tooltip && (
-            <div style={{
-              position: 'fixed', left: tooltip.x + 12, top: tooltip.y - 10,
-              backgroundColor: 'rgba(0,0,0,0.8)', color: '#fff',
-              padding: '8px 12px', borderRadius: '6px', fontSize: fs(12),
-              pointerEvents: 'none', zIndex: 1000, whiteSpace: 'nowrap',
-              border: `1px solid ${defaultColor}`,
-              boxShadow: `0 0 10px ${defaultColor}`
-            }}>
-              <div style={{ fontWeight: 'bold' }}>{tooltip.label}</div>
-              <div>Value: {tooltip.value.toLocaleString('en-IN')}</div>
-            </div>
-          )}
+                  point.label
+                )}
+              </text>
+            ) : (
+              <text key={index} x={point.x} y={paddingTop + chartHeight + 20} textAnchor="middle" fontSize={fs(10)} fill="rgba(255, 255, 255, 0.5)">
+                {point.label.includes(' | ') ? (
+                  point.label.split(' | ').map((line, lineIdx) => (
+                    <tspan key={lineIdx} x={point.x} dy={lineIdx === 0 ? 0 : 12}>
+                      {line}
+                    </tspan>
+                  ))
+                ) : (
+                  point.label
+                )}
+              </text>
+            )
+          ))}
+        </svg>
+      )}
+      {tooltip && (
+        <div style={{
+          position: 'fixed', left: tooltip.x + 12, top: tooltip.y - 10,
+          backgroundColor: 'rgba(0,0,0,0.8)', color: '#fff',
+          padding: '8px 12px', borderRadius: '6px', fontSize: fs(12),
+          pointerEvents: 'none', zIndex: 1000, whiteSpace: 'nowrap',
+          border: `1px solid ${defaultColor}`,
+          boxShadow: `0 0 10px ${defaultColor}`
+        }}>
+          <div style={{ fontWeight: 'bold' }}>{tooltip.label}</div>
+          <div>Value: {tooltip.value.toLocaleString('en-IN')}</div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

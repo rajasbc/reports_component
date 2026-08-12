@@ -27065,30 +27065,30 @@ const Hqe = ({ contacts: e, title: t }) => {
     ] })
   ] });
 }, $qe = ({
-  totalAmount: e,
-  onHeadingClick: t,
-  data: r,
-  height: n = 200,
-  defaultColor: i = "#00f3ff",
+  data: e,
+  height: t = 200,
+  defaultColor: r = "#00f3ff",
   // Cyan neon default
-  strokeWidth: a = 3,
-  showDots: o = !0,
-  showGrid: s = !0,
-  title: l,
-  className: u
+  strokeWidth: n = 3,
+  showDots: i = !0,
+  showGrid: a = !0,
+  title: o,
+  className: s,
+  totalAmount: l,
+  onHeadingClick: u
 }) => {
-  const { ref: c, width: f, height: h, fs: d, scale: v } = dr(), [p, g] = ve(null), m = typeof n == "string", y = m && l ? 48 : 0, x = m ? h > 0 ? h - y : 200 : n, _ = 20, b = 15, w = Math.max(...r.map((j) => j.value), 1), C = ((j) => {
+  const { ref: c, width: f, height: h, fs: d, scale: v } = dr(), [p, g] = ve(null), m = typeof t == "string", y = m && o ? 48 : 0, x = m ? h > 0 ? h - y : 200 : t, _ = o || l != null ? 70 : 20, b = 15, w = Math.max(...e.map((j) => j.value), 1), C = ((j) => {
     const U = Math.pow(10, Math.floor(Math.log10(j || 1))), W = j / U;
     let $;
     W <= 1 ? $ = 0.2 * U : W <= 2 ? $ = 0.5 * U : W <= 5 ? $ = U : $ = 2 * U;
     const ue = [];
     for (let he = 0; he <= Math.ceil(j / $); he++) ue.push(he * $);
     return ue;
-  })(w), A = Math.max(...C.map((j) => j.toLocaleString("en-IN").length)), E = Math.max(65, A * 9 + 16), D = (f || 600) - E * 2, M = D / (r.length - 1 || 1), P = 10 * v * 0.6, O = r.length > 0 ? Math.max(...r.map((j) => j.label.length)) : 0, N = O * P > M, R = N ? O * P * 1.2 : 20, k = N ? R + 20 : b, I = Math.max(x - _ - k, 50), z = r.map((j, U) => {
-    const W = E + D / (r.length - 1 || 1) * U, $ = _ + I - j.value / (C[C.length - 1] || 1) * I;
+  })(w), A = Math.max(...C.map((j) => j.toLocaleString("en-IN").length)), E = Math.max(65, A * 9 + 16), D = (f || 600) - E * 2, M = D / (e.length - 1 || 1), P = 10 * v * 0.6, O = e.length > 0 ? Math.max(...e.map((j) => j.label.length)) : 0, N = O * P > M, R = N ? O * P * 1.2 : 20, k = N ? R + 20 : b, I = Math.max(x - _ - k, 50), z = e.map((j, U) => {
+    const W = E + D / (e.length - 1 || 1) * U, $ = _ + I - j.value / (C[C.length - 1] || 1) * I;
     return { x: W, y: $, ...j };
   }), B = z.map((j, U) => `${U === 0 ? "M" : "L"} ${j.x} ${j.y}`).join(" "), V = z.length > 0 ? `${B} L ${z[z.length - 1].x} ${_ + I} L ${z[0].x} ${_ + I} Z` : "";
-  return /* @__PURE__ */ S.jsxs("div", { ref: c, className: u, style: {
+  return /* @__PURE__ */ S.jsxs("div", { ref: c, className: s, style: {
     background: "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%)",
     backdropFilter: "blur(10px)",
     border: "1px solid rgba(255,255,255,0.1)",
@@ -27100,20 +27100,22 @@ const Hqe = ({ contacts: e, title: t }) => {
     width: "100%",
     height: m ? "100%" : "auto",
     minHeight: m ? "250px" : void 0,
-    boxSizing: "border-box"
+    boxSizing: "border-box",
+    overflow: "hidden"
   }, children: [
-    (l || e != null) && /* @__PURE__ */ S.jsxs(
+    (o || l != null) && /* @__PURE__ */ S.jsxs(
       "div",
       {
-        className: "flex flex-col items-start justify-center pb-2 z-10 transition-colors duration-200 cursor-pointer group w-full",
-        onClick: t,
+        className: "flex flex-col items-start justify-center z-10 transition-colors duration-200 cursor-pointer group w-full absolute top-0 left-0 bg-transparent px-4 pt-3 pb-1",
+        style: { height: "60px" },
+        onClick: u,
         children: [
-          l && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] group-hover:text-[#00f3ff] transition-colors m-0 font-['Inter',sans-serif]", style: { textShadow: "0 0 10px rgba(0, 243, 255, 0.5)" }, children: l }),
-          e != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 group-hover:text-[#00f3ff] transition-colors", style: { textShadow: "0 0 10px rgba(0, 243, 255, 0.5)" }, children: e.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
+          o && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] group-hover:text-[#00f3ff] transition-colors m-0 font-['Inter',sans-serif]", style: { textShadow: "0 0 10px rgba(0, 243, 255, 0.5)" }, children: o }),
+          l != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 group-hover:text-[#00f3ff] transition-colors", style: { textShadow: "0 0 10px rgba(0, 243, 255, 0.5)" }, children: l.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
         ]
       }
     ),
-    f > 0 && r.length > 0 && /* @__PURE__ */ S.jsxs(
+    f > 0 && e.length > 0 && /* @__PURE__ */ S.jsxs(
       "svg",
       {
         width: f,
@@ -27129,11 +27131,11 @@ const Hqe = ({ contacts: e, title: t }) => {
               ] })
             ] }),
             /* @__PURE__ */ S.jsxs("linearGradient", { id: "neon-fill-line", x1: "0%", y1: "0%", x2: "0%", y2: "100%", children: [
-              /* @__PURE__ */ S.jsx("stop", { offset: "0%", stopColor: i, stopOpacity: "0.4" }),
-              /* @__PURE__ */ S.jsx("stop", { offset: "100%", stopColor: i, stopOpacity: "0.0" })
+              /* @__PURE__ */ S.jsx("stop", { offset: "0%", stopColor: r, stopOpacity: "0.4" }),
+              /* @__PURE__ */ S.jsx("stop", { offset: "100%", stopColor: r, stopOpacity: "0.0" })
             ] })
           ] }),
-          s && /* @__PURE__ */ S.jsx("g", { children: C.map((j, U) => {
+          a && /* @__PURE__ */ S.jsx("g", { children: C.map((j, U) => {
             const W = _ + I - j / (C[C.length - 1] || 1) * I;
             return /* @__PURE__ */ S.jsxs("g", { children: [
               /* @__PURE__ */ S.jsx("line", { x1: E, y1: W, x2: f - E, y2: W, stroke: "rgba(255, 255, 255, 0.1)", strokeWidth: "1", strokeDasharray: "4 4" }),
@@ -27141,9 +27143,9 @@ const Hqe = ({ contacts: e, title: t }) => {
             ] }, U);
           }) }),
           /* @__PURE__ */ S.jsx("path", { d: V, fill: "url(#neon-fill-line)" }),
-          /* @__PURE__ */ S.jsx("path", { d: B, fill: "none", stroke: i, strokeWidth: a, filter: "url(#neon-glow-line)" }),
-          /* @__PURE__ */ S.jsx("path", { d: B, fill: "none", stroke: "#fff", strokeWidth: a / 2, opacity: 0.6 }),
-          o && z.map((j, U) => /* @__PURE__ */ S.jsxs("g", { children: [
+          /* @__PURE__ */ S.jsx("path", { d: B, fill: "none", stroke: r, strokeWidth: n, filter: "url(#neon-glow-line)" }),
+          /* @__PURE__ */ S.jsx("path", { d: B, fill: "none", stroke: "#fff", strokeWidth: n / 2, opacity: 0.6 }),
+          i && z.map((j, U) => /* @__PURE__ */ S.jsxs("g", { children: [
             /* @__PURE__ */ S.jsx(
               "circle",
               {
@@ -27151,7 +27153,7 @@ const Hqe = ({ contacts: e, title: t }) => {
                 cy: j.y,
                 r: "5",
                 fill: "#fff",
-                stroke: i,
+                stroke: r,
                 strokeWidth: "2",
                 filter: "url(#neon-glow-line)",
                 style: { cursor: "pointer" },
@@ -27201,8 +27203,8 @@ const Hqe = ({ contacts: e, title: t }) => {
       pointerEvents: "none",
       zIndex: 1e3,
       whiteSpace: "nowrap",
-      border: `1px solid ${i}`,
-      boxShadow: `0 0 10px ${i}`
+      border: `1px solid ${r}`,
+      boxShadow: `0 0 10px ${r}`
     }, children: [
       /* @__PURE__ */ S.jsx("div", { style: { fontWeight: "bold" }, children: p.label }),
       /* @__PURE__ */ S.jsxs("div", { children: [
@@ -27220,19 +27222,19 @@ function NCe(e, t) {
   return Math.max(30, r.length * t + 10);
 }
 const Yqe = ({
-  totalAmount: e,
-  onHeadingClick: t,
-  data: r,
-  height: n = 200,
-  defaultColor: i = "#bd00ff",
+  data: e,
+  height: t = 200,
+  defaultColor: r = "#bd00ff",
   // Neon purple
-  showValues: a = !0,
-  showGrid: o = !0,
-  title: s,
-  className: l
+  showValues: n = !0,
+  showGrid: i = !0,
+  title: a,
+  className: o,
+  totalAmount: s,
+  onHeadingClick: l
 }) => {
-  const { ref: u, width: c, height: f, fs: h, scale: d } = dr(), [v, p] = ve(null), g = 20, m = 15, y = 10, x = typeof n == "string", _ = x && s ? 48 : 0, b = x ? f > 0 ? f - _ : 200 : n, w = r.length > 0 ? Math.max(...r.map((B) => B.value), 0) : 1, T = Math.max(6, 8 * d), C = NCe(w, T), A = c || 600, E = A - C - y, D = 10 * d * 0.6, M = r.length > 0 ? Math.max(...r.map((B) => B.label.length)) : 0, P = E / (r.length || 1), O = M * D > P, N = O ? M * D * 1.2 : 20, R = O ? N + 20 : m, k = Math.max(b - g - R, 50), I = E / (r.length || 1) * 0.5, z = [0, 0.25, 0.5, 0.75, 1];
-  return /* @__PURE__ */ S.jsxs("div", { ref: u, className: l, style: {
+  const { ref: u, width: c, height: f, fs: h, scale: d } = dr(), [v, p] = ve(null), g = a || s != null ? 70 : 20, m = 15, y = 10, x = typeof t == "string", _ = x && a ? 48 : 0, b = x ? f > 0 ? f - _ : 200 : t, w = e.length > 0 ? Math.max(...e.map((B) => B.value), 0) : 1, T = Math.max(6, 8 * d), C = NCe(w, T), A = c || 600, E = A - C - y, D = 10 * d * 0.6, M = e.length > 0 ? Math.max(...e.map((B) => B.label.length)) : 0, P = E / (e.length || 1), O = M * D > P, N = O ? M * D * 1.2 : 20, R = O ? N + 20 : m, k = Math.max(b - g - R, 50), I = E / (e.length || 1) * 0.5, z = [0, 0.25, 0.5, 0.75, 1];
+  return /* @__PURE__ */ S.jsxs("div", { ref: u, className: o, style: {
     background: "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%)",
     backdropFilter: "blur(10px)",
     border: "1px solid rgba(255,255,255,0.1)",
@@ -27246,18 +27248,19 @@ const Yqe = ({
     minHeight: x ? "250px" : void 0,
     boxSizing: "border-box"
   }, children: [
-    (s || e != null) && /* @__PURE__ */ S.jsxs(
+    (a || s != null) && /* @__PURE__ */ S.jsxs(
       "div",
       {
-        className: "flex flex-col items-start justify-center pb-2 z-10 transition-colors duration-200 cursor-pointer group w-full",
-        onClick: t,
+        className: "flex flex-col items-start justify-center z-10 transition-colors duration-200 cursor-pointer group w-full absolute top-0 left-0 bg-transparent px-4 pt-3 pb-1",
+        style: { height: "60px" },
+        onClick: l,
         children: [
-          s && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] group-hover:text-[#00f3ff] transition-colors m-0 font-['Inter',sans-serif]", style: { textShadow: "0 0 10px rgba(0, 243, 255, 0.5)" }, children: s }),
-          e != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 group-hover:text-[#00f3ff] transition-colors", style: { textShadow: "0 0 10px rgba(0, 243, 255, 0.5)" }, children: e.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
+          a && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] group-hover:text-[#00f3ff] transition-colors m-0 font-['Inter',sans-serif]", style: { textShadow: "0 0 10px rgba(0, 243, 255, 0.5)" }, children: a }),
+          s != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 group-hover:text-[#00f3ff] transition-colors", style: { textShadow: "0 0 10px rgba(0, 243, 255, 0.5)" }, children: s.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
         ]
       }
     ),
-    A > 0 && r.length > 0 && /* @__PURE__ */ S.jsxs(
+    A > 0 && e.length > 0 && /* @__PURE__ */ S.jsxs(
       "svg",
       {
         width: A,
@@ -27281,15 +27284,15 @@ const Yqe = ({
               /* @__PURE__ */ S.jsx("stop", { offset: "100%", stopColor: "#481fff", stopOpacity: "0.9" })
             ] })
           ] }),
-          o && /* @__PURE__ */ S.jsx("g", { children: z.map((B, V) => {
+          i && /* @__PURE__ */ S.jsx("g", { children: z.map((B, V) => {
             const j = w * B, U = g + k - B * k;
             return /* @__PURE__ */ S.jsxs("g", { children: [
               /* @__PURE__ */ S.jsx("line", { x1: C, y1: U, x2: A - y, y2: U, stroke: "rgba(255, 255, 255, 0.1)", strokeWidth: "1", strokeDasharray: "4 4" }),
               /* @__PURE__ */ S.jsx("text", { x: C - 8, y: U + 4, textAnchor: "end", fontSize: h(9), fill: "rgba(255, 255, 255, 0.5)", children: IP(j) })
             ] }, V);
           }) }),
-          r.map((B, V) => {
-            const j = C + E / r.length * V + (E / r.length - I) / 2, U = B.value / (w || 1) * k, W = g + k - U;
+          e.map((B, V) => {
+            const j = C + E / e.length * V + (E / e.length - I) / 2, U = B.value / (w || 1) * k, W = g + k - U;
             return /* @__PURE__ */ S.jsxs("g", { children: [
               /* @__PURE__ */ S.jsx(
                 "rect",
@@ -27312,7 +27315,7 @@ const Yqe = ({
                   }
                 }
               ),
-              a && B.value > 0 && U > 15 && /* @__PURE__ */ S.jsx(
+              n && B.value > 0 && U > 15 && /* @__PURE__ */ S.jsx(
                 "text",
                 {
                   x: j + I / 2,
@@ -27363,8 +27366,8 @@ const Yqe = ({
       pointerEvents: "none",
       zIndex: 1e3,
       whiteSpace: "nowrap",
-      border: `1px solid ${i}`,
-      boxShadow: `0 0 10px ${i}`
+      border: `1px solid ${r}`,
+      boxShadow: `0 0 10px ${r}`
     }, children: [
       /* @__PURE__ */ S.jsx("div", { style: { fontWeight: "bold" }, children: v.label }),
       /* @__PURE__ */ S.jsxs("div", { children: [
@@ -102465,44 +102468,46 @@ const jXe = () => {
 }, Xqe = ({
   data: e,
   title: t,
-  className: r
+  totalAmount: r,
+  onHeadingClick: n,
+  className: i
 }) => {
-  const n = ca(() => {
+  const a = ca(() => {
     if (!e || e.length === 0)
       return jXe();
-    const s = [];
-    return e.forEach((l, u) => {
-      const c = Number(l.patient_count || l.value || l.IP_Count || 0);
-      for (let f = -10; f <= 10; f += 1) {
-        const h = Math.cos(f / 3) * (c * 0.15);
-        s.push([u, f, c + h]);
+    const u = [];
+    return e.forEach((c, f) => {
+      const h = Number(c.patient_count || c.value || c.IP_Count || 0);
+      for (let d = -10; d <= 10; d += 1) {
+        const v = Math.cos(d / 3) * (h * 0.15);
+        u.push([f, d, h + v]);
       }
-    }), s;
-  }, [e]), i = ca(() => !e || e.length === 0 ? [] : e.map((s) => s.day || s.label || s.date || ""), [e]), a = e && e.length > 0, o = {
+    }), u;
+  }, [e]), o = ca(() => !e || e.length === 0 ? [] : e.map((u) => u.day || u.label || u.date || ""), [e]), s = e && e.length > 0, l = {
     tooltip: {},
     backgroundColor: "transparent",
     visualMap: {
       show: !1,
       dimension: 2,
       min: 0,
-      max: a ? Math.max(...n.map((s) => s[2])) : 30,
+      max: s ? Math.max(...a.map((u) => u[2])) : 30,
       inRange: {
         color: ["#00f3ff", "#bd00ff", "#f48bff"]
       }
     },
     xAxis3D: {
-      type: a ? "category" : "value",
-      data: a ? i : void 0,
-      name: a ? "" : "Condition",
+      type: s ? "category" : "value",
+      data: s ? o : void 0,
+      name: s ? "" : "Condition",
       axisLine: { lineStyle: { color: "rgba(255,255,255,0.3)" } },
       axisLabel: { textStyle: { color: "rgba(255,255,255,0.5)" } }
     },
     yAxis3D: {
       type: "value",
-      name: a ? "" : "Age (100)",
-      axisLine: { show: !a, lineStyle: { color: "rgba(255,255,255,0.3)" } },
-      axisLabel: { show: !a, textStyle: { color: "rgba(255,255,255,0.5)" } },
-      splitLine: { show: !a }
+      name: s ? "" : "Age (100)",
+      axisLine: { show: !s, lineStyle: { color: "rgba(255,255,255,0.3)" } },
+      axisLabel: { show: !s, textStyle: { color: "rgba(255,255,255,0.5)" } },
+      splitLine: { show: !s }
     },
     zAxis3D: {
       type: "value",
@@ -102543,15 +102548,15 @@ const jXe = () => {
         color: "rgba(0,0,0,0.8)"
         // Keep the surface dark, wireframe bright
       },
-      data: n
+      data: a
     }]
   };
-  return /* @__PURE__ */ S.jsxs("div", { className: r, style: {
+  return /* @__PURE__ */ S.jsxs("div", { className: i, style: {
     background: "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%)",
     backdropFilter: "blur(10px)",
     border: "1px solid rgba(255,255,255,0.1)",
     borderRadius: "16px",
-    padding: "12px",
+    padding: "0px",
     fontFamily: "Arial, sans-serif",
     boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.3)",
     width: "100%",
@@ -102559,14 +102564,27 @@ const jXe = () => {
     minHeight: "300px",
     display: "flex",
     flexDirection: "column",
-    boxSizing: "border-box"
+    boxSizing: "border-box",
+    position: "relative",
+    overflow: "hidden"
   }, children: [
-    t && /* @__PURE__ */ S.jsx("h6", { style: { margin: "0 0 10px 0", fontSize: "12px", lineHeight: 1.5, fontWeight: "bold", color: "rgba(255, 255, 255, 0.9)", zIndex: 10 }, children: t }),
-    /* @__PURE__ */ S.jsx("div", { style: { flex: 1, position: "relative", width: "100%" }, children: /* @__PURE__ */ S.jsx(
+    (t || r != null) && /* @__PURE__ */ S.jsxs(
+      "div",
+      {
+        className: "flex flex-col items-start justify-center px-4 pt-3 pb-1 z-10 transition-colors duration-200 cursor-pointer group w-full absolute top-0 left-0 bg-transparent",
+        style: { height: "60px" },
+        onClick: n,
+        children: [
+          t && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] group-hover:text-[#00f3ff] transition-colors m-0 font-['Inter',sans-serif]", style: { textShadow: "0 0 10px rgba(0, 243, 255, 0.5)" }, children: t }),
+          r != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 group-hover:text-[#00f3ff] transition-colors", style: { textShadow: "0 0 10px rgba(0, 243, 255, 0.5)" }, children: r.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
+        ]
+      }
+    ),
+    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { marginTop: t || r !== void 0 ? "60px" : "0px", height: "calc(100% - 60px)" }, children: /* @__PURE__ */ S.jsx(
       rc,
       {
-        option: o,
-        style: { height: "100%", width: "100%", position: "absolute", top: 0, left: 0 },
+        option: l,
+        style: { height: "100%", width: "100%" },
         opts: { renderer: "canvas" }
       }
     ) })
@@ -102702,7 +102720,7 @@ const jXe = () => {
         ]
       }
     ),
-    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { marginTop: r || e !== void 0 ? "60px" : "0px" }, children: /* @__PURE__ */ S.jsx(
+    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { marginTop: r || e !== void 0 ? "60px" : "0px", height: "calc(100% - 60px)" }, children: /* @__PURE__ */ S.jsx(
       rc,
       {
         option: l,
@@ -102813,7 +102831,7 @@ const jXe = () => {
         ]
       }
     ),
-    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { marginTop: r || e !== void 0 ? "60px" : "0px" }, children: /* @__PURE__ */ S.jsx(
+    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { marginTop: r || e !== void 0 ? "60px" : "0px", height: "calc(100% - 60px)" }, children: /* @__PURE__ */ S.jsx(
       rc,
       {
         option: u,
@@ -103007,7 +103025,7 @@ const jXe = () => {
         ]
       }
     ),
-    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { marginTop: r || e !== void 0 ? "60px" : "0px" }, children: /* @__PURE__ */ S.jsx(
+    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { marginTop: r || e !== void 0 ? "60px" : "0px", height: "calc(100% - 60px)" }, children: /* @__PURE__ */ S.jsx(
       rc,
       {
         option: l,
@@ -103100,7 +103118,7 @@ const jXe = () => {
         ]
       }
     ),
-    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { marginTop: r || e !== void 0 ? "60px" : "0px" }, children: /* @__PURE__ */ S.jsx(
+    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { marginTop: r || e !== void 0 ? "60px" : "0px", height: "calc(100% - 60px)" }, children: /* @__PURE__ */ S.jsx(
       rc,
       {
         option: l,
@@ -103182,7 +103200,7 @@ const jXe = () => {
         ]
       }
     ),
-    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { marginTop: r || e !== void 0 ? "60px" : "0px" }, children: /* @__PURE__ */ S.jsx(
+    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { marginTop: r || e !== void 0 ? "60px" : "0px", height: "calc(100% - 60px)" }, children: /* @__PURE__ */ S.jsx(
       rc,
       {
         option: l,
@@ -103277,7 +103295,7 @@ const jXe = () => {
         ]
       }
     ),
-    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { marginTop: r || e !== void 0 ? "60px" : "0px" }, children: /* @__PURE__ */ S.jsx(
+    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { marginTop: r || e !== void 0 ? "60px" : "0px", height: "calc(100% - 60px)" }, children: /* @__PURE__ */ S.jsx(
       rc,
       {
         option: l,
@@ -103372,7 +103390,7 @@ const jXe = () => {
         ]
       }
     ),
-    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { marginTop: r || e !== void 0 ? "60px" : "0px" }, children: /* @__PURE__ */ S.jsx(
+    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { marginTop: r || e !== void 0 ? "60px" : "0px", height: "calc(100% - 60px)" }, children: /* @__PURE__ */ S.jsx(
       rc,
       {
         option: l,
