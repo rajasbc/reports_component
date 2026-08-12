@@ -64,8 +64,21 @@ const DonutChart_neon: React.FC<DonutChartNeonProps> = ({
           }
         })),
         label: {
-          show: false,
-          position: 'center'
+          show: true,
+          position: 'outside',
+          formatter: (params: any) => `${params.name}: ${params.value.toLocaleString('en-IN')}`,
+          color: '#fff',
+          fontWeight: 'bold',
+          textShadowBlur: 5,
+          textShadowColor: 'rgba(0,0,0,0.8)'
+        },
+        labelLine: {
+          show: true,
+          length: 15,
+          length2: 10,
+          lineStyle: {
+            width: 1.5
+          }
         },
         emphasis: {
           label: {

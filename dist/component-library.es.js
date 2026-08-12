@@ -103150,9 +103150,8 @@ const jXe = () => {
       {
         name: r || "Data",
         type: "pie",
-        radius: "75%",
-        center: ["50%", r || e != null ? "60%" : "50%"],
-        roseType: "radius",
+        radius: "80%",
+        center: ["50%", "50%"],
         data: n.map((u) => ({
           name: u.label,
           value: u.value,
@@ -103201,7 +103200,7 @@ const jXe = () => {
         ]
       }
     ),
-    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { height: "100%" }, children: /* @__PURE__ */ S.jsx(
+    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { marginTop: r || e !== void 0 ? "60px" : "0px", height: "calc(100% - 60px)" }, children: /* @__PURE__ */ S.jsx(
       rc,
       {
         option: l,
@@ -103233,8 +103232,8 @@ const jXe = () => {
       {
         name: r || "Data",
         type: "pie",
-        radius: ["55%", "85%"],
-        center: ["50%", r || e != null ? "60%" : "50%"],
+        radius: ["60%", "80%"],
+        center: ["50%", "50%"],
         avoidLabelOverlap: !1,
         itemStyle: {
           borderRadius: 10,
@@ -103296,7 +103295,7 @@ const jXe = () => {
         ]
       }
     ),
-    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { height: "100%" }, children: /* @__PURE__ */ S.jsx(
+    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { marginTop: r || e !== void 0 ? "60px" : "0px", height: "calc(100% - 60px)" }, children: /* @__PURE__ */ S.jsx(
       rc,
       {
         option: l,

@@ -58,11 +58,20 @@ const PieChart_neon: React.FC<PieChartNeonProps> = ({
           }
         })),
         label: {
-          color: 'rgba(255,255,255,0.7)'
+          show: true,
+          position: 'outside',
+          formatter: (params: any) => `${params.name}: ${params.value.toLocaleString('en-IN')}`,
+          color: '#fff',
+          fontWeight: 'bold',
+          textShadowBlur: 5,
+          textShadowColor: 'rgba(0,0,0,0.8)'
         },
         labelLine: {
+          show: true,
+          length: 15,
+          length2: 10,
           lineStyle: {
-            color: 'rgba(255,255,255,0.2)'
+            width: 1.5
           }
         }
       }
