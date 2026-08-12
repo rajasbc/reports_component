@@ -43,8 +43,8 @@ const DonutChart_neon: React.FC<DonutChartNeonProps> = ({
       {
         name: title || 'Data',
         type: 'pie',
-        radius: ['40%', '70%'],
-        center: ['50%', '55%'],
+        radius: ['55%', '85%'],
+        center: ['50%', (title || (totalAmount !== undefined && totalAmount !== null)) ? '60%' : '50%'],
         avoidLabelOverlap: false,
         itemStyle: {
           borderRadius: 10,
@@ -109,7 +109,7 @@ const DonutChart_neon: React.FC<DonutChartNeonProps> = ({
           )}
         </div>
       )}
-      <div className="flex-1 w-full min-h-0" style={{ marginTop: (title || totalAmount !== undefined) ? "60px" : "0px", height: "calc(100% - 60px)" }}>
+      <div className="flex-1 w-full min-h-0" style={{ height: "100%" }}>
         <ReactECharts 
           option={option} 
         style={{ height: '100%', width: '100%' }} 
