@@ -5,6 +5,8 @@ import 'echarts-gl';
 export interface SurfaceChartProps {
   data?: any[]; // Typically we might just generate demo data for the surface if none provided
   title?: string;
+  totalAmount?: number | null;
+  onHeadingClick?: () => void;
   className?: string;
 }
 
@@ -25,6 +27,8 @@ const generateData = () => {
 const SurfaceChart_neon: React.FC<SurfaceChartProps> = ({
   data,
   title,
+  totalAmount,
+  onHeadingClick,
   className
 }) => {
   const surfaceData = useMemo(() => {
@@ -127,7 +131,7 @@ const SurfaceChart_neon: React.FC<SurfaceChartProps> = ({
       backdropFilter: 'blur(10px)',
       border: '1px solid rgba(255,255,255,0.1)',
       borderRadius: '16px',
-      padding: '12px',
+      padding: '0px',
       fontFamily: 'Arial, sans-serif',
       boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.3)',
       width: '100%',
@@ -135,20 +139,28 @@ const SurfaceChart_neon: React.FC<SurfaceChartProps> = ({
       minHeight: '300px',
       display: 'flex',
       flexDirection: 'column',
-      boxSizing: 'border-box'
+      boxSizing: 'border-box',
+      position: 'relative',
+      overflow: 'hidden'
     }}>
-      {title && (
-        <h6 style={{ margin: '0 0 10px 0', fontSize: '12px', lineHeight: 1.5, fontWeight: 'bold', color: 'rgba(255, 255, 255, 0.9)', zIndex: 10 }}>
-          {title}
-        </h6>
+      {(title || (totalAmount !== undefined && totalAmount !== null)) && (
+        <div 
+          className="flex flex-col items-start justify-center px-4 pt-3 pb-1 z-10 transition-colors duration-200 cursor-pointer group w-full absolute top-0 left-0 bg-transparent"
+          style={{ height: '60px' }}
+          onClick={onHeadingClick}
+        >
+          {title && <h3 className="text-[14px] font-bold text-[rgba(255,255,255,0.9)] group-hover:text-[#00f3ff] transition-colors m-0 font-['Inter',sans-serif]" style={{ textShadow: '0 0 10px rgba(0, 243, 255, 0.5)' }}>{title}</h3>}
+          {totalAmount !== undefined && totalAmount !== null && (
+            <div className="text-[22px] font-bold text-white mt-0 group-hover:text-[#00f3ff] transition-colors" style={{ textShadow: '0 0 10px rgba(0, 243, 255, 0.5)' }}>{totalAmount.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</div>
+          )}
+        </div>
       )}
-      <div style={{ flex: 1, position: 'relative', width: '100%' }}>
+      <div className="flex-1 w-full min-h-0" style={{ marginTop: (title || totalAmount !== undefined) ? "60px" : "0px", height: "calc(100% - 60px)" }}>
         <ReactECharts 
           option={option} 
-          style={{ height: '100%', width: '100%', position: 'absolute', top: 0, left: 0 }}
-          opts={{ renderer: 'canvas' }}
+          style={{ height: '100%', width: '100%' }}
+          opts={{ renderer: 'webgl' }}
         />
-      </div>
     </div>
   );
 };

@@ -96,16 +96,10 @@ const LineChart_neon: React.FC<LineChartProps> = ({
       minHeight: isResponsive ? '250px' : undefined,
       boxSizing: 'border-box'
     }}>
-      {(title || (totalAmount !== undefined && totalAmount !== null)) && (
-        <div 
-          className="flex flex-col items-start justify-center pb-2 z-10 transition-colors duration-200 cursor-pointer group w-full"
-          onClick={onHeadingClick}
-        >
-          {title && <h3 className="text-[14px] font-bold text-[rgba(255,255,255,0.9)] group-hover:text-[#00f3ff] transition-colors m-0 font-['Inter',sans-serif]" style={{ textShadow: '0 0 10px rgba(0, 243, 255, 0.5)' }}>{title}</h3>}
-          {totalAmount !== undefined && totalAmount !== null && (
-            <div className="text-[22px] font-bold text-white mt-0 group-hover:text-[#00f3ff] transition-colors" style={{ textShadow: '0 0 10px rgba(0, 243, 255, 0.5)' }}>{totalAmount.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</div>
-          )}
-        </div>
+      {title && (
+        <h6 style={{ margin: '0 0 20px 0', fontSize: fs(12), lineHeight: 1.5, fontWeight: 'bold', color: 'rgba(255, 255, 255, 0.9)' }}>
+          {title}
+        </h6>
       )}
       {svgWidth > 0 && data.length > 0 && (
         <svg
