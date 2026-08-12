@@ -43,9 +43,8 @@ const PieChart_neon: React.FC<PieChartNeonProps> = ({
       {
         name: title || 'Data',
         type: 'pie',
-        radius: '75%',
-        center: ['50%', (title || (totalAmount !== undefined && totalAmount !== null)) ? '60%' : '50%'],
-        roseType: 'radius',
+        radius: '80%',
+        center: ['50%', '50%'],
         data: data.map((d) => ({
           name: d.label,
           value: d.value,
@@ -97,7 +96,7 @@ const PieChart_neon: React.FC<PieChartNeonProps> = ({
           )}
         </div>
       )}
-      <div className="flex-1 w-full min-h-0" style={{ height: "100%" }}>
+      <div className="flex-1 w-full min-h-0" style={{ marginTop: (title || totalAmount !== undefined) ? "60px" : "0px", height: "calc(100% - 60px)" }}>
         <ReactECharts 
           option={option} 
         style={{ height: '100%', width: '100%' }} 
