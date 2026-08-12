@@ -76,7 +76,7 @@ const BarChart_neon: React.FC<BarChartProps> = ({
   const yRatios = [0, 0.25, 0.5, 0.75, 1];
 
   return (
-    <div ref={ref} className={className} style={{
+
     <div className={className} style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
       {(title || (totalAmount !== undefined && totalAmount !== null)) && (
         <div 

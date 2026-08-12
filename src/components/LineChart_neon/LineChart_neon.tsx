@@ -82,7 +82,7 @@ const LineChart_neon: React.FC<LineChartProps> = ({
     : '';
 
   return (
-    <div ref={ref} className={className} style={{
+
     <div className={className} style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden', background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '16px', boxSizing: 'border-box' }}>
       {(title || (totalAmount !== undefined && totalAmount !== null)) && (
         <div 
