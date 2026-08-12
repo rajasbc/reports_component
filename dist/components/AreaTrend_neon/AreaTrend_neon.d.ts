@@ -9,6 +9,8 @@ export interface AreaTrendNeonProps {
     color?: string;
     height?: number | string;
     className?: string;
+    totalAmount?: number | null;
+    onHeadingClick?: () => void;
 }
 declare const AreaTrend_neon: React.FC<AreaTrendNeonProps>;
 export default AreaTrend_neon;

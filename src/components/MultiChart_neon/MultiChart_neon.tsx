@@ -13,9 +13,13 @@ export interface MultiChartNeonProps {
   color?: string;
   height?: number | string;
   className?: string;
+  totalAmount?: number | null;
+  onHeadingClick?: () => void;
 }
 
 const MultiChart_neon: React.FC<MultiChartNeonProps> = ({
+  totalAmount,
+  onHeadingClick,
   title,
   data,
   color = '#00f3ff',
@@ -26,17 +30,7 @@ const MultiChart_neon: React.FC<MultiChartNeonProps> = ({
 
   const option = {
     backgroundColor: 'transparent',
-    title: title ? {
-      text: title,
-      textStyle: {
-        color: 'rgba(255,255,255,0.9)',
-        fontSize: 14,
-        fontWeight: 'bold',
-        fontFamily: "'Inter', sans-serif"
-      },
-      top: 10,
-      left: 15
-    } : undefined,
+    title: undefined,
     tooltip: {
       trigger: 'axis',
       backgroundColor: 'rgba(10,14,23,0.9)',
@@ -101,11 +95,26 @@ const MultiChart_neon: React.FC<MultiChartNeonProps> = ({
       overflow: 'hidden',
       position: 'relative'
     }}>
-      <ReactECharts 
-        option={option} 
+      
+      {(title || (totalAmount !== undefined && totalAmount !== null)) && (
+        <div 
+          className="flex flex-col items-start justify-center px-4 pt-3 pb-1 z-10 transition-colors duration-200 cursor-pointer group w-full absolute top-0 left-0 bg-transparent"
+          style={{ height: '60px' }}
+          onClick={onHeadingClick}
+        >
+          {title && <h3 className="text-[14px] font-bold text-[rgba(255,255,255,0.9)] group-hover:text-[#00f3ff] transition-colors m-0 font-['Inter',sans-serif]" style={{ textShadow: '0 0 10px rgba(0, 243, 255, 0.5)' }}>{title}</h3>}
+          {totalAmount !== undefined && totalAmount !== null && (
+            <div className="text-[22px] font-bold text-white mt-0 group-hover:text-[#00f3ff] transition-colors" style={{ textShadow: '0 0 10px rgba(0, 243, 255, 0.5)' }}>{totalAmount.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</div>
+          )}
+        </div>
+      )}
+      <div className="flex-1 w-full min-h-0" style={{ marginTop: (title || totalAmount !== undefined) ? "60px" : "0px" }}>
+        <ReactECharts 
+          option={option} 
         style={{ height: '100%', width: '100%' }} 
         opts={{ renderer: 'canvas' }} 
-      />
+        />
+      </div>
     </div>
   );
 };

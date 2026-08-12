@@ -9,6 +9,8 @@ export interface MultiChartNeonProps {
     color?: string;
     height?: number | string;
     className?: string;
+    totalAmount?: number | null;
+    onHeadingClick?: () => void;
 }
 declare const MultiChart_neon: React.FC<MultiChartNeonProps>;
 export default MultiChart_neon;

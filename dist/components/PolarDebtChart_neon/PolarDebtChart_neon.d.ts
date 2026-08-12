@@ -9,6 +9,8 @@ export interface PolarDebtChartProps {
     color?: string;
     height?: number | string;
     className?: string;
+    totalAmount?: number | null;
+    onHeadingClick?: () => void;
 }
 declare const PolarDebtChart_neon: React.FC<PolarDebtChartProps>;
 export default PolarDebtChart_neon;

@@ -10,6 +10,8 @@ export interface PieChartNeonProps {
     color?: string;
     height?: number | string;
     className?: string;
+    totalAmount?: number | null;
+    onHeadingClick?: () => void;
 }
 declare const PieChart_neon: React.FC<PieChartNeonProps>;
 export default PieChart_neon;

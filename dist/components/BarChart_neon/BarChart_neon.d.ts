@@ -12,6 +12,8 @@ export interface BarChartProps {
     showGrid?: boolean;
     title?: string;
     className?: string;
+    totalAmount?: number | null;
+    onHeadingClick?: () => void;
 }
 declare const BarChart_neon: React.FC<BarChartProps>;
 export default BarChart_neon;

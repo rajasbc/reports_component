@@ -9,6 +9,8 @@ export interface GroupedBarsNeonProps {
     color?: string;
     height?: number | string;
     className?: string;
+    totalAmount?: number | null;
+    onHeadingClick?: () => void;
 }
 declare const GroupedBars_neon: React.FC<GroupedBarsNeonProps>;
 export default GroupedBars_neon;

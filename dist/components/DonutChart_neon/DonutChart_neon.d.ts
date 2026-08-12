@@ -10,6 +10,8 @@ export interface DonutChartNeonProps {
     color?: string;
     height?: number | string;
     className?: string;
+    totalAmount?: number | null;
+    onHeadingClick?: () => void;
 }
 declare const DonutChart_neon: React.FC<DonutChartNeonProps>;
 export default DonutChart_neon;

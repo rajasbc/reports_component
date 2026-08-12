@@ -9,6 +9,8 @@ export interface GlowingAreaChartProps {
     color?: string;
     height?: number | string;
     className?: string;
+    totalAmount?: number | null;
+    onHeadingClick?: () => void;
 }
 declare const GlowingAreaChart_neon: React.FC<GlowingAreaChartProps>;
 export default GlowingAreaChart_neon;

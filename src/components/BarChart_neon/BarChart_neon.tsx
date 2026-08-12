@@ -15,6 +15,8 @@ export interface BarChartProps {
   showGrid?: boolean;
   title?: string;
   className?: string;
+  totalAmount?: number | null;
+  onHeadingClick?: () => void;
 }
 
 /** Abbreviate large numbers for axis labels (e.g. 1373060 → "1.4M") */
@@ -32,6 +34,8 @@ function calcYAxisPadding(maxValue: number, charWidth: number): number {
 }
 
 const BarChart_neon: React.FC<BarChartProps> = ({
+  totalAmount,
+  onHeadingClick,
   data,
   height = 200,
   defaultColor = '#bd00ff', // Neon purple
@@ -86,10 +90,16 @@ const BarChart_neon: React.FC<BarChartProps> = ({
       minHeight: isResponsive ? '250px' : undefined,
       boxSizing: 'border-box'
     }}>
-      {title && (
-        <h6 style={{ margin: '0 0 20px 0', fontSize: fs(12), lineHeight: 1.5, fontWeight: 'bold', color: 'rgba(255, 255, 255, 0.9)' }}>
-          {title}
-        </h6>
+      {(title || (totalAmount !== undefined && totalAmount !== null)) && (
+        <div 
+          className="flex flex-col items-start justify-center pb-2 z-10 transition-colors duration-200 cursor-pointer group w-full"
+          onClick={onHeadingClick}
+        >
+          {title && <h3 className="text-[14px] font-bold text-[rgba(255,255,255,0.9)] group-hover:text-[#00f3ff] transition-colors m-0 font-['Inter',sans-serif]" style={{ textShadow: '0 0 10px rgba(0, 243, 255, 0.5)' }}>{title}</h3>}
+          {totalAmount !== undefined && totalAmount !== null && (
+            <div className="text-[22px] font-bold text-white mt-0 group-hover:text-[#00f3ff] transition-colors" style={{ textShadow: '0 0 10px rgba(0, 243, 255, 0.5)' }}>{totalAmount.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</div>
+          )}
+        </div>
       )}
       {svgWidth > 0 && data.length > 0 && (
         <svg

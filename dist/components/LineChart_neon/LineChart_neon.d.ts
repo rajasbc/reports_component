@@ -13,6 +13,8 @@ export interface LineChartProps {
     showGrid?: boolean;
     title?: string;
     className?: string;
+    totalAmount?: number | null;
+    onHeadingClick?: () => void;
 }
 declare const LineChart_neon: React.FC<LineChartProps>;
 export default LineChart_neon;
