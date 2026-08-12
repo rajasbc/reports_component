@@ -161,6 +161,7 @@ const SurfaceChart_neon: React.FC<SurfaceChartProps> = ({
           style={{ height: '100%', width: '100%' }}
           opts={{ renderer: 'webgl' }}
         />
+      </div>
     </div>
   );
 };
