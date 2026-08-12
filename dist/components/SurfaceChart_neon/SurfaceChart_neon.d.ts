@@ -1,4 +1,5 @@
-import { default as React } from 'react';
+import React from 'react';
+import 'echarts-gl';
 export interface SurfaceChartProps {
     data?: any[];
     title?: string;

@@ -88,9 +88,6 @@ const DonutChart_neon: React.FC<DonutChartNeonProps> = ({
             color: '#fff'
           }
         },
-        labelLine: {
-          show: false
-        }
       }
     ]
   };

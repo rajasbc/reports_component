@@ -1,4 +1,4 @@
-import { default as React } from 'react';
+import React from 'react';
 export interface ContactData {
     id: string | number;
     name: string;
