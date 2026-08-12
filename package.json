@@ -1,6 +1,6 @@
 {
   "name": "component-library",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "private": false,
   "type": "module",
   "main": "./dist/component-library.cjs.js",
