@@ -44,9 +44,9 @@ const DonutChart_neon: React.FC<DonutChartNeonProps> = ({
       {
         name: title || 'Data',
         type: 'pie',
-        radius: ['35%', '55%'],
+        radius: ['20%', '40%'],
         center: ['50%', '50%'],
-        minAngle: 10,
+        minAngle: 5,
         itemStyle: {
           borderRadius: 10,
           borderColor: 'rgba(10,10,10,0.8)',
@@ -71,6 +71,7 @@ const DonutChart_neon: React.FC<DonutChartNeonProps> = ({
           edgeDistance: '5%',
           formatter: (params: any) => `${params.name}: ${params.value.toLocaleString('en-IN')}`,
           color: '#fff',
+          fontSize: 10,
           fontWeight: 'bold',
           textShadowBlur: 5,
           textShadowColor: 'rgba(0,0,0,0.8)'

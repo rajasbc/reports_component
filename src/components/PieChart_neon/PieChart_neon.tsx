@@ -44,9 +44,9 @@ const PieChart_neon: React.FC<PieChartNeonProps> = ({
       {
         name: title || 'Data',
         type: 'pie',
-        radius: '55%',
+        radius: '40%',
         center: ['50%', '50%'],
-        minAngle: 10,
+        minAngle: 5,
         data: data.map((d) => ({
           name: d.label,
           value: d.value,
@@ -66,6 +66,7 @@ const PieChart_neon: React.FC<PieChartNeonProps> = ({
           edgeDistance: '5%',
           formatter: (params: any) => `${params.name}: ${params.value.toLocaleString('en-IN')}`,
           color: '#fff',
+          fontSize: 10,
           fontWeight: 'bold',
           textShadowBlur: 5,
           textShadowColor: 'rgba(0,0,0,0.8)'

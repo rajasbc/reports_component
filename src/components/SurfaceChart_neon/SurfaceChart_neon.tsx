@@ -152,9 +152,9 @@ const SurfaceChart_neon: React.FC<SurfaceChartProps> = ({
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {title && <h3 className="text-[14px] font-bold text-[rgba(255,255,255,0.9)] transition-colors m-0 font-['Inter',sans-serif]" style={{ color: isHovered ? '#00f3ff' : 'rgba(255,255,255,0.9)', textShadow: isHovered ? '0 0 10px #00f3ff' : 'none' }}>{title}</h3>}
+          {title && <h3 className="text-[14px] font-bold text-[rgba(255,255,255,0.9)] transition-colors m-0 font-['Inter',sans-serif]" style={{ color: isHovered ? defaultColor : 'rgba(255,255,255,0.9)', textShadow: isHovered ? `0 0 10px ${defaultColor}` : 'none' }}>{title}</h3>}
           {totalAmount !== undefined && totalAmount !== null && (
-            <div className="text-[22px] font-bold text-white mt-0 transition-colors" style={{ color: isHovered ? '#00f3ff' : 'white', textShadow: isHovered ? '0 0 10px #00f3ff' : 'none' }}>{totalAmount.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</div>
+            <div className="text-[22px] font-bold text-white mt-0 transition-colors" style={{ color: isHovered ? defaultColor : 'white', textShadow: isHovered ? `0 0 10px ${defaultColor}` : 'none' }}>{totalAmount.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</div>
           )}
         </div>
       )}

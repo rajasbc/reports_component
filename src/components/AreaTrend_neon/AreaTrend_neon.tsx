@@ -110,9 +110,9 @@ const AreaTrend_neon: React.FC<AreaTrendNeonProps> = ({
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {title && <h3 className="text-[14px] font-bold text-[rgba(255,255,255,0.9)] transition-colors m-0 font-['Inter',sans-serif]" style={{ color: isHovered ? '#00f3ff' : 'rgba(255,255,255,0.9)', textShadow: isHovered ? '0 0 10px #00f3ff' : 'none' }}>{title}</h3>}
+          {title && <h3 className="text-[14px] font-bold text-[rgba(255,255,255,0.9)] transition-colors m-0 font-['Inter',sans-serif]" style={{ color: isHovered ? color : 'rgba(255,255,255,0.9)', textShadow: isHovered ? `0 0 10px ${color}` : 'none' }}>{title}</h3>}
           {totalAmount !== undefined && totalAmount !== null && (
-            <div className="text-[22px] font-bold text-white mt-0 transition-colors" style={{ color: isHovered ? '#00f3ff' : 'white', textShadow: isHovered ? '0 0 10px #00f3ff' : 'none' }}>{totalAmount.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</div>
+            <div className="text-[22px] font-bold text-white mt-0 transition-colors" style={{ color: isHovered ? color : 'white', textShadow: isHovered ? `0 0 10px ${color}` : 'none' }}>{totalAmount.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</div>
           )}
         </div>
       )}
