@@ -103150,7 +103150,7 @@ const jXe = () => {
       {
         name: r || "Data",
         type: "pie",
-        radius: "80%",
+        radius: "70%",
         center: ["50%", "50%"],
         data: n.map((u) => ({
           name: u.label,
@@ -103241,7 +103241,7 @@ const jXe = () => {
       {
         name: r || "Data",
         type: "pie",
-        radius: ["60%", "80%"],
+        radius: ["50%", "70%"],
         center: ["50%", "50%"],
         avoidLabelOverlap: !1,
         itemStyle: {
