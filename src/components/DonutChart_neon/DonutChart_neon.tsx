@@ -66,6 +66,8 @@ const DonutChart_neon: React.FC<DonutChartNeonProps> = ({
         label: {
           show: true,
           position: 'outside',
+          alignTo: 'edge',
+          edgeDistance: '5%',
           formatter: (params: any) => `${params.name}: ${params.value.toLocaleString('en-IN')}`,
           color: '#fff',
           fontWeight: 'bold',
@@ -88,6 +90,9 @@ const DonutChart_neon: React.FC<DonutChartNeonProps> = ({
             color: '#fff'
           }
         },
+        labelLayout: {
+          hideOverlap: false
+        }
       }
     ]
   };

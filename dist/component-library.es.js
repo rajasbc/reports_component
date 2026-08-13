@@ -103136,7 +103136,7 @@ const jXe = () => {
   height: a = 300,
   className: o
 }) => {
-  const s = typeof a == "string", l = {
+  const s = typeof a == "string", [l, u] = ve(!1), c = {
     backgroundColor: "transparent",
     title: void 0,
     tooltip: {
@@ -103150,121 +103150,26 @@ const jXe = () => {
       {
         name: r || "Data",
         type: "pie",
-        radius: "70%",
+        radius: "55%",
         center: ["50%", "50%"],
-        data: n.map((u) => ({
-          name: u.label,
-          value: u.value,
+        data: n.map((f) => ({
+          name: f.label,
+          value: f.value,
           itemStyle: {
             color: new to(0, 0, 1, 1, [
-              { offset: 0, color: u.color || i },
-              { offset: 1, color: u.color ? `${u.color}66` : `${i}66` }
+              { offset: 0, color: f.color || i },
+              { offset: 1, color: f.color ? `${f.color}66` : `${i}66` }
             ]),
             shadowBlur: 15,
-            shadowColor: u.color || i
+            shadowColor: f.color || i
           }
         })),
         label: {
           show: !0,
           position: "outside",
-          formatter: (u) => `${u.name}: ${u.value.toLocaleString("en-IN")}`,
-          color: "#fff",
-          fontWeight: "bold",
-          textShadowBlur: 5,
-          textShadowColor: "rgba(0,0,0,0.8)"
-        },
-        labelLine: {
-          show: !0,
-          length: 15,
-          length2: 10,
-          lineStyle: {
-            width: 1.5
-          }
-        }
-      }
-    ]
-  };
-  return /* @__PURE__ */ S.jsxs("div", { className: o, style: {
-    background: "linear-gradient(135deg, rgba(10,10,10,0.8) 0%, rgba(20,20,20,0.95) 100%)",
-    backdropFilter: "blur(10px)",
-    border: `1px solid ${i}40`,
-    borderRadius: "16px",
-    boxShadow: `0 0 15px ${i}33, inset 0 0 20px ${i}1a`,
-    width: "100%",
-    height: s ? "100%" : a,
-    minHeight: s ? "250px" : void 0,
-    boxSizing: "border-box",
-    overflow: "hidden",
-    position: "relative"
-  }, children: [
-    (r || e != null) && /* @__PURE__ */ S.jsxs(
-      "div",
-      {
-        className: "flex flex-col items-start justify-center px-4 pt-3 pb-1 z-10 transition-colors duration-200 cursor-pointer group w-full absolute top-0 left-0 bg-transparent",
-        style: { height: "60px" },
-        onClick: t,
-        children: [
-          r && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] group-hover:text-[#00f3ff] transition-colors m-0 font-['Inter',sans-serif]", style: { textShadow: "0 0 10px rgba(0, 243, 255, 0.5)" }, children: r }),
-          e != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 group-hover:text-[#00f3ff] transition-colors", style: { textShadow: "0 0 10px rgba(0, 243, 255, 0.5)" }, children: e.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
-        ]
-      }
-    ),
-    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { marginTop: r || e !== void 0 ? "60px" : "0px", height: "calc(100% - 60px)" }, children: /* @__PURE__ */ S.jsx(
-      rc,
-      {
-        option: l,
-        style: { height: "100%", width: "100%" },
-        opts: { renderer: "canvas" }
-      }
-    ) })
-  ] });
-}, tZe = ({
-  totalAmount: e,
-  onHeadingClick: t,
-  title: r,
-  data: n,
-  color: i = "#00f3ff",
-  height: a = 300,
-  className: o
-}) => {
-  const s = typeof a == "string", l = {
-    backgroundColor: "transparent",
-    title: void 0,
-    tooltip: {
-      trigger: "item",
-      backgroundColor: "rgba(10,14,23,0.9)",
-      borderColor: `${i}66`,
-      borderWidth: 1,
-      textStyle: { color: "#fff" }
-    },
-    series: [
-      {
-        name: r || "Data",
-        type: "pie",
-        radius: ["50%", "70%"],
-        center: ["50%", "50%"],
-        avoidLabelOverlap: !1,
-        itemStyle: {
-          borderRadius: 10,
-          borderColor: "rgba(10,10,10,0.8)",
-          borderWidth: 2
-        },
-        data: n.map((u) => ({
-          name: u.label,
-          value: u.value,
-          itemStyle: {
-            color: new to(0, 0, 1, 1, [
-              { offset: 0, color: u.color || i },
-              { offset: 1, color: u.color ? `${u.color}66` : `${i}66` }
-            ]),
-            shadowBlur: 15,
-            shadowColor: u.color || i
-          }
-        })),
-        label: {
-          show: !0,
-          position: "outside",
-          formatter: (u) => `${u.name}: ${u.value.toLocaleString("en-IN")}`,
+          alignTo: "edge",
+          edgeDistance: "5%",
+          formatter: (f) => `${f.name}: ${f.value.toLocaleString("en-IN")}`,
           color: "#fff",
           fontWeight: "bold",
           textShadowBlur: 5,
@@ -103285,6 +103190,9 @@ const jXe = () => {
             fontWeight: "bold",
             color: "#fff"
           }
+        },
+        labelLayout: {
+          hideOverlap: !1
         }
       }
     ]
@@ -103305,19 +103213,132 @@ const jXe = () => {
     (r || e != null) && /* @__PURE__ */ S.jsxs(
       "div",
       {
-        className: "flex flex-col items-start justify-center px-4 pt-3 pb-1 z-10 transition-colors duration-200 cursor-pointer group w-full absolute top-0 left-0 bg-transparent",
+        className: "flex flex-col items-start justify-center px-4 pt-3 pb-1 z-10 transition-colors duration-200 cursor-pointer w-full absolute top-0 left-0 bg-transparent",
         style: { height: "60px" },
         onClick: t,
+        onMouseEnter: () => u(!0),
+        onMouseLeave: () => u(!1),
         children: [
-          r && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] group-hover:text-[#00f3ff] transition-colors m-0 font-['Inter',sans-serif]", style: { textShadow: "0 0 10px rgba(0, 243, 255, 0.5)" }, children: r }),
-          e != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 group-hover:text-[#00f3ff] transition-colors", style: { textShadow: "0 0 10px rgba(0, 243, 255, 0.5)" }, children: e.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
+          r && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold transition-colors m-0 font-['Inter',sans-serif]", style: { color: l ? i : "rgba(255,255,255,0.9)", textShadow: l ? `0 0 10px ${i}` : "none" }, children: r }),
+          e != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold mt-0 transition-colors", style: { color: l ? i : "white", textShadow: l ? `0 0 10px ${i}` : "none" }, children: e.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
         ]
       }
     ),
     /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { marginTop: r || e !== void 0 ? "60px" : "0px", height: "calc(100% - 60px)" }, children: /* @__PURE__ */ S.jsx(
       rc,
       {
-        option: l,
+        option: c,
+        style: { height: "100%", width: "100%" },
+        opts: { renderer: "canvas" }
+      }
+    ) })
+  ] });
+}, tZe = ({
+  totalAmount: e,
+  onHeadingClick: t,
+  title: r,
+  data: n,
+  color: i = "#00f3ff",
+  height: a = 300,
+  className: o
+}) => {
+  const s = typeof a == "string", [l, u] = ve(!1), c = {
+    backgroundColor: "transparent",
+    title: void 0,
+    tooltip: {
+      trigger: "item",
+      backgroundColor: "rgba(10,14,23,0.9)",
+      borderColor: `${i}66`,
+      borderWidth: 1,
+      textStyle: { color: "#fff" }
+    },
+    series: [
+      {
+        name: r || "Data",
+        type: "pie",
+        radius: ["35%", "55%"],
+        center: ["50%", "50%"],
+        itemStyle: {
+          borderRadius: 10,
+          borderColor: "rgba(10,10,10,0.8)",
+          borderWidth: 2
+        },
+        data: n.map((f) => ({
+          name: f.label,
+          value: f.value,
+          itemStyle: {
+            color: new to(0, 0, 1, 1, [
+              { offset: 0, color: f.color || i },
+              { offset: 1, color: f.color ? `${f.color}66` : `${i}66` }
+            ]),
+            shadowBlur: 15,
+            shadowColor: f.color || i
+          }
+        })),
+        label: {
+          show: !0,
+          position: "outside",
+          alignTo: "edge",
+          edgeDistance: "5%",
+          formatter: (f) => `${f.name}: ${f.value.toLocaleString("en-IN")}`,
+          color: "#fff",
+          fontWeight: "bold",
+          textShadowBlur: 5,
+          textShadowColor: "rgba(0,0,0,0.8)"
+        },
+        labelLine: {
+          show: !0,
+          length: 15,
+          length2: 10,
+          lineStyle: {
+            width: 1.5
+          }
+        },
+        emphasis: {
+          label: {
+            show: !0,
+            fontSize: 20,
+            fontWeight: "bold",
+            color: "#fff"
+          }
+        },
+        labelLayout: {
+          hideOverlap: !1
+        }
+      }
+    ]
+  };
+  return /* @__PURE__ */ S.jsxs("div", { className: o, style: {
+    background: "linear-gradient(135deg, rgba(10,10,10,0.8) 0%, rgba(20,20,20,0.95) 100%)",
+    backdropFilter: "blur(10px)",
+    border: `1px solid ${i}40`,
+    borderRadius: "16px",
+    boxShadow: `0 0 15px ${i}33, inset 0 0 20px ${i}1a`,
+    width: "100%",
+    height: s ? "100%" : a,
+    minHeight: s ? "250px" : void 0,
+    boxSizing: "border-box",
+    overflow: "hidden",
+    position: "relative"
+  }, children: [
+    (r || e != null) && /* @__PURE__ */ S.jsxs(
+      "div",
+      {
+        className: "flex flex-col items-start justify-center px-4 pt-3 pb-1 z-10 transition-colors duration-200 cursor-pointer w-full absolute top-0 left-0 bg-transparent",
+        style: { height: "60px" },
+        onClick: t,
+        onMouseEnter: () => u(!0),
+        onMouseLeave: () => u(!1),
+        children: [
+          r && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold transition-colors m-0 font-['Inter',sans-serif]", style: { color: l ? i : "rgba(255,255,255,0.9)", textShadow: l ? `0 0 10px ${i}` : "none" }, children: r }),
+          e != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold mt-0 transition-colors", style: { color: l ? i : "white", textShadow: l ? `0 0 10px ${i}` : "none" }, children: e.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
+        ]
+      }
+    ),
+    /* @__PURE__ */ S.jsx("div", { className: "flex-1 w-full min-h-0", style: { marginTop: r || e !== void 0 ? "60px" : "0px", height: "calc(100% - 60px)" }, children: /* @__PURE__ */ S.jsx(
+      rc,
+      {
+        option: c,
         style: { height: "100%", width: "100%" },
         opts: { renderer: "canvas" }
       }

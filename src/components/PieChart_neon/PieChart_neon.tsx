@@ -61,6 +61,8 @@ const PieChart_neon: React.FC<PieChartNeonProps> = ({
         label: {
           show: true,
           position: 'outside',
+          alignTo: 'edge',
+          edgeDistance: '5%',
           formatter: (params: any) => `${params.name}: ${params.value.toLocaleString('en-IN')}`,
           color: '#fff',
           fontWeight: 'bold',
@@ -74,6 +76,17 @@ const PieChart_neon: React.FC<PieChartNeonProps> = ({
           lineStyle: {
             width: 1.5
           }
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: 20,
+            fontWeight: 'bold',
+            color: '#fff'
+          }
+        },
+        labelLayout: {
+          hideOverlap: false
         }
       }
     ]
