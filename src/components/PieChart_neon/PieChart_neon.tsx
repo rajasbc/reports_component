@@ -43,7 +43,7 @@ const PieChart_neon: React.FC<PieChartNeonProps> = ({
       {
         name: title || 'Data',
         type: 'pie',
-        radius: '80%',
+        radius: '70%',
         center: ['50%', '50%'],
         data: data.map((d) => ({
           name: d.label,

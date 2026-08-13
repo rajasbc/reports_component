@@ -103165,11 +103165,20 @@ const jXe = () => {
           }
         })),
         label: {
-          color: "rgba(255,255,255,0.7)"
+          show: !0,
+          position: "outside",
+          formatter: (u) => `${u.name}: ${u.value.toLocaleString("en-IN")}`,
+          color: "#fff",
+          fontWeight: "bold",
+          textShadowBlur: 5,
+          textShadowColor: "rgba(0,0,0,0.8)"
         },
         labelLine: {
+          show: !0,
+          length: 15,
+          length2: 10,
           lineStyle: {
-            color: "rgba(255,255,255,0.2)"
+            width: 1.5
           }
         }
       }
@@ -103253,8 +103262,21 @@ const jXe = () => {
           }
         })),
         label: {
-          show: !1,
-          position: "center"
+          show: !0,
+          position: "outside",
+          formatter: (u) => `${u.name}: ${u.value.toLocaleString("en-IN")}`,
+          color: "#fff",
+          fontWeight: "bold",
+          textShadowBlur: 5,
+          textShadowColor: "rgba(0,0,0,0.8)"
+        },
+        labelLine: {
+          show: !0,
+          length: 15,
+          length2: 10,
+          lineStyle: {
+            width: 1.5
+          }
         },
         emphasis: {
           label: {
@@ -103263,9 +103285,6 @@ const jXe = () => {
             fontWeight: "bold",
             color: "#fff"
           }
-        },
-        labelLine: {
-          show: !1
         }
       }
     ]

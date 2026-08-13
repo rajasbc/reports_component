@@ -43,7 +43,7 @@ const DonutChart_neon: React.FC<DonutChartNeonProps> = ({
       {
         name: title || 'Data',
         type: 'pie',
-        radius: ['60%', '80%'],
+        radius: ['50%', '70%'],
         center: ['50%', '50%'],
         avoidLabelOverlap: false,
         itemStyle: {

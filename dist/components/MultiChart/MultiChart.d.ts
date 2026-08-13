@@ -1,4 +1,4 @@
-import React from 'react';
+import { default as React } from 'react';
 type ChartType = 'bar' | 'line' | 'pie' | 'donut';
 interface DataPoint {
     label: string;

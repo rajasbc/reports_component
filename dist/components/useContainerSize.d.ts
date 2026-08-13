@@ -3,6 +3,6 @@ export declare function useContainerSize(): {
     scale: number;
     width: number;
     height: number;
-    ref: import("react").RefObject<HTMLDivElement>;
+    ref: import('react').RefObject<HTMLDivElement>;
 };
 //# sourceMappingURL=useContainerSize.d.ts.map
