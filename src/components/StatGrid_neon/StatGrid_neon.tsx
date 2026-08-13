@@ -1,4 +1,4 @@
-import React, { useId } from 'react';
+import React, { useState }, { useId } from 'react';
 import { useContainerSize } from '../useContainerSize';
 
 export interface StatItemNeon {

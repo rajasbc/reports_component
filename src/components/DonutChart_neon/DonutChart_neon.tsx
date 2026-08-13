@@ -46,6 +46,7 @@ const DonutChart_neon: React.FC<DonutChartNeonProps> = ({
         type: 'pie',
         radius: ['35%', '55%'],
         center: ['50%', '50%'],
+        minAngle: 10,
         itemStyle: {
           borderRadius: 10,
           borderColor: 'rgba(10,10,10,0.8)',
