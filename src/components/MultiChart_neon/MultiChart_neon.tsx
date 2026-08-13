@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactECharts from 'echarts-for-react';
 
 
@@ -26,6 +26,7 @@ const MultiChart_neon: React.FC<MultiChartNeonProps> = ({
   height = 300,
   className
 }) => {
+  const [isHovered, setIsHovered] = useState(false);
   const isResponsive = typeof height === 'string';
 
   const option = {
@@ -98,13 +99,15 @@ const MultiChart_neon: React.FC<MultiChartNeonProps> = ({
       
       {(title || (totalAmount !== undefined && totalAmount !== null)) && (
         <div 
-          className="flex flex-col items-start justify-center px-4 pt-3 pb-1 z-10 transition-colors duration-200 cursor-pointer group w-full absolute top-0 left-0 bg-transparent"
+          className="flex flex-col items-start justify-center px-4 pt-3 pb-1 z-10 transition-colors duration-200 cursor-pointer w-full absolute top-0 left-0 bg-transparent"
           style={{ height: '60px' }}
           onClick={onHeadingClick}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
-          {title && <h3 className="text-[14px] font-bold text-[rgba(255,255,255,0.9)] group-hover:text-[#00f3ff] transition-colors m-0 font-['Inter',sans-serif]" style={{ textShadow: '0 0 10px rgba(0, 243, 255, 0.5)' }}>{title}</h3>}
+          {title && <h3 className="text-[14px] font-bold text-[rgba(255,255,255,0.9)] transition-colors m-0 font-['Inter',sans-serif]" style={{ color: isHovered ? '#00f3ff' : 'rgba(255,255,255,0.9)', textShadow: isHovered ? '0 0 10px #00f3ff' : 'none' }}>{title}</h3>}
           {totalAmount !== undefined && totalAmount !== null && (
-            <div className="text-[22px] font-bold text-white mt-0 group-hover:text-[#00f3ff] transition-colors" style={{ textShadow: '0 0 10px rgba(0, 243, 255, 0.5)' }}>{totalAmount.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</div>
+            <div className="text-[22px] font-bold text-white mt-0 transition-colors" style={{ color: isHovered ? '#00f3ff' : 'white', textShadow: isHovered ? '0 0 10px #00f3ff' : 'none' }}>{totalAmount.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</div>
           )}
         </div>
       )}

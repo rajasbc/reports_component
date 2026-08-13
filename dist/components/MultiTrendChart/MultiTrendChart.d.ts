@@ -1,4 +1,4 @@
-import { default as React, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 export interface MultiTrendMetricConfig {
     label: string;
     shortLabel: string;
