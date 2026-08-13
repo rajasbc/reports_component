@@ -1,4 +1,4 @@
-import React from 'react';
+import { default as React } from 'react';
 export interface FilterOption {
     label: string;
     value: string | number;
