@@ -27112,8 +27112,8 @@ const Hqe = ({ contacts: e, title: t }) => {
         onMouseEnter: () => f(!0),
         onMouseLeave: () => f(!1),
         children: [
-          o && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] transition-colors m-0 font-['Inter',sans-serif]", style: { color: c ? "#00f3ff" : "rgba(255,255,255,0.9)", textShadow: c ? "0 0 10px #00f3ff" : "none" }, children: o }),
-          l != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 transition-colors", style: { color: c ? "#00f3ff" : "white", textShadow: c ? "0 0 10px #00f3ff" : "none" }, children: l.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
+          o && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] transition-colors m-0 font-['Inter',sans-serif]", style: { color: c ? r : "rgba(255,255,255,0.9)", textShadow: c ? `0 0 10px ${r}` : "none" }, children: o }),
+          l != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 transition-colors", style: { color: c ? r : "white", textShadow: c ? `0 0 10px ${r}` : "none" }, children: l.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
         ]
       }
     ),
@@ -27259,8 +27259,8 @@ const Yqe = ({
         onMouseEnter: () => c(!0),
         onMouseLeave: () => c(!1),
         children: [
-          a && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] transition-colors m-0 font-['Inter',sans-serif]", style: { color: u ? "#00f3ff" : "rgba(255,255,255,0.9)", textShadow: u ? "0 0 10px #00f3ff" : "none" }, children: a }),
-          s != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 transition-colors", style: { color: u ? "#00f3ff" : "white", textShadow: u ? "0 0 10px #00f3ff" : "none" }, children: s.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
+          a && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] transition-colors m-0 font-['Inter',sans-serif]", style: { color: u ? r : "rgba(255,255,255,0.9)", textShadow: u ? `0 0 10px ${r}` : "none" }, children: a }),
+          s != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 transition-colors", style: { color: u ? r : "white", textShadow: u ? `0 0 10px ${r}` : "none" }, children: s.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
         ]
       }
     ),
@@ -102723,8 +102723,8 @@ const jXe = () => {
         onMouseEnter: () => l(!0),
         onMouseLeave: () => l(!1),
         children: [
-          r && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] transition-colors m-0 font-['Inter',sans-serif]", style: { color: s ? "#00f3ff" : "rgba(255,255,255,0.9)", textShadow: s ? "0 0 10px #00f3ff" : "none" }, children: r }),
-          e != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 transition-colors", style: { color: s ? "#00f3ff" : "white", textShadow: s ? "0 0 10px #00f3ff" : "none" }, children: e.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
+          r && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] transition-colors m-0 font-['Inter',sans-serif]", style: { color: s ? i : "rgba(255,255,255,0.9)", textShadow: s ? `0 0 10px ${i}` : "none" }, children: r }),
+          e != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 transition-colors", style: { color: s ? i : "white", textShadow: s ? `0 0 10px ${i}` : "none" }, children: e.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
         ]
       }
     ),
@@ -102836,8 +102836,8 @@ const jXe = () => {
         onMouseEnter: () => l(!0),
         onMouseLeave: () => l(!1),
         children: [
-          r && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] transition-colors m-0 font-['Inter',sans-serif]", style: { color: s ? "#00f3ff" : "rgba(255,255,255,0.9)", textShadow: s ? "0 0 10px #00f3ff" : "none" }, children: r }),
-          e != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 transition-colors", style: { color: s ? "#00f3ff" : "white", textShadow: s ? "0 0 10px #00f3ff" : "none" }, children: e.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
+          r && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] transition-colors m-0 font-['Inter',sans-serif]", style: { color: s ? i : "rgba(255,255,255,0.9)", textShadow: s ? `0 0 10px ${i}` : "none" }, children: r }),
+          e != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 transition-colors", style: { color: s ? i : "white", textShadow: s ? `0 0 10px ${i}` : "none" }, children: e.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
         ]
       }
     ),
@@ -103032,8 +103032,8 @@ const jXe = () => {
         onMouseEnter: () => l(!0),
         onMouseLeave: () => l(!1),
         children: [
-          r && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] transition-colors m-0 font-['Inter',sans-serif]", style: { color: s ? "#00f3ff" : "rgba(255,255,255,0.9)", textShadow: s ? "0 0 10px #00f3ff" : "none" }, children: r }),
-          e != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 transition-colors", style: { color: s ? "#00f3ff" : "white", textShadow: s ? "0 0 10px #00f3ff" : "none" }, children: e.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
+          r && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] transition-colors m-0 font-['Inter',sans-serif]", style: { color: s ? i : "rgba(255,255,255,0.9)", textShadow: s ? `0 0 10px ${i}` : "none" }, children: r }),
+          e != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 transition-colors", style: { color: s ? i : "white", textShadow: s ? `0 0 10px ${i}` : "none" }, children: e.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
         ]
       }
     ),
@@ -103127,8 +103127,8 @@ const jXe = () => {
         onMouseEnter: () => l(!0),
         onMouseLeave: () => l(!1),
         children: [
-          r && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] transition-colors m-0 font-['Inter',sans-serif]", style: { color: s ? "#00f3ff" : "rgba(255,255,255,0.9)", textShadow: s ? "0 0 10px #00f3ff" : "none" }, children: r }),
-          e != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 transition-colors", style: { color: s ? "#00f3ff" : "white", textShadow: s ? "0 0 10px #00f3ff" : "none" }, children: e.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
+          r && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] transition-colors m-0 font-['Inter',sans-serif]", style: { color: s ? i : "rgba(255,255,255,0.9)", textShadow: s ? `0 0 10px ${i}` : "none" }, children: r }),
+          e != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 transition-colors", style: { color: s ? i : "white", textShadow: s ? `0 0 10px ${i}` : "none" }, children: e.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
         ]
       }
     ),
@@ -103164,9 +103164,9 @@ const jXe = () => {
       {
         name: r || "Data",
         type: "pie",
-        radius: "55%",
+        radius: "40%",
         center: ["50%", "50%"],
-        minAngle: 10,
+        minAngle: 5,
         data: n.map((f) => ({
           name: f.label,
           value: f.value,
@@ -103186,6 +103186,7 @@ const jXe = () => {
           edgeDistance: "5%",
           formatter: (f) => `${f.name}: ${f.value.toLocaleString("en-IN")}`,
           color: "#fff",
+          fontSize: 10,
           fontWeight: "bold",
           textShadowBlur: 5,
           textShadowColor: "rgba(0,0,0,0.8)"
@@ -103271,9 +103272,9 @@ const jXe = () => {
       {
         name: r || "Data",
         type: "pie",
-        radius: ["35%", "55%"],
+        radius: ["20%", "40%"],
         center: ["50%", "50%"],
-        minAngle: 10,
+        minAngle: 5,
         itemStyle: {
           borderRadius: 10,
           borderColor: "rgba(10,10,10,0.8)",
@@ -103298,6 +103299,7 @@ const jXe = () => {
           edgeDistance: "5%",
           formatter: (f) => `${f.name}: ${f.value.toLocaleString("en-IN")}`,
           color: "#fff",
+          fontSize: 10,
           fontWeight: "bold",
           textShadowBlur: 5,
           textShadowColor: "rgba(0,0,0,0.8)"
@@ -103443,8 +103445,8 @@ const jXe = () => {
         onMouseEnter: () => l(!0),
         onMouseLeave: () => l(!1),
         children: [
-          r && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] transition-colors m-0 font-['Inter',sans-serif]", style: { color: s ? "#00f3ff" : "rgba(255,255,255,0.9)", textShadow: s ? "0 0 10px #00f3ff" : "none" }, children: r }),
-          e != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 transition-colors", style: { color: s ? "#00f3ff" : "white", textShadow: s ? "0 0 10px #00f3ff" : "none" }, children: e.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
+          r && /* @__PURE__ */ S.jsx("h3", { className: "text-[14px] font-bold text-[rgba(255,255,255,0.9)] transition-colors m-0 font-['Inter',sans-serif]", style: { color: s ? i : "rgba(255,255,255,0.9)", textShadow: s ? `0 0 10px ${i}` : "none" }, children: r }),
+          e != null && /* @__PURE__ */ S.jsx("div", { className: "text-[22px] font-bold text-white mt-0 transition-colors", style: { color: s ? i : "white", textShadow: s ? `0 0 10px ${i}` : "none" }, children: e.toLocaleString("en-IN", { maximumFractionDigits: 2 }) })
         ]
       }
     ),
