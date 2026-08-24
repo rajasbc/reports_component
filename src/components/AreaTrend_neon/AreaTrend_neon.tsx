@@ -64,7 +64,7 @@ const AreaTrend_neon: React.FC<AreaTrendNeonProps> = ({
     },
     series: [
       {
-        name: 'Value',
+        name: title || 'Value',
         type: 'line',
         smooth: true,
         showSymbol: false,

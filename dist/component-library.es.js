@@ -102986,7 +102986,7 @@ const jXe = () => {
     },
     series: [
       {
-        name: "Value",
+        name: r || "Value",
         type: "line",
         smooth: !0,
         showSymbol: !1,
