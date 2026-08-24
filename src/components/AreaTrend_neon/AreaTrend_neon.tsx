@@ -5,6 +5,8 @@ import * as echarts from 'echarts';
 interface DataPoint {
   label: string;
   value: number;
+  secondaryLabel?: string;
+  secondaryValue?: number;
 }
 
 export interface AreaTrendNeonProps {
@@ -38,7 +40,33 @@ const AreaTrend_neon: React.FC<AreaTrendNeonProps> = ({
       borderColor: `${color}66`,
       borderWidth: 1,
       textStyle: { color: '#fff' },
-      axisPointer: { type: 'line', lineStyle: { color: color, type: 'dashed' } }
+      axisPointer: { type: 'line', lineStyle: { color: color, type: 'dashed' } },
+      formatter: (params: any) => {
+        const item = params[0];
+        const dataPoint = data[item.dataIndex];
+        if (!dataPoint) return '';
+        let tooltipHTML = `<div style="padding: 4px;">`;
+        tooltipHTML += `<div style="font-size: 13px; font-weight: bold; margin-bottom: 6px;">${dataPoint.label}</div>`;
+        tooltipHTML += `<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">`;
+        tooltipHTML += `  <div style="display: flex; align-items: center; gap: 6px;">`;
+        tooltipHTML += `    <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:${item.color};"></span>`;
+        tooltipHTML += `    <span style="color: #ccc;">${item.seriesName}</span>`;
+        tooltipHTML += `  </div>`;
+        tooltipHTML += `  <span style="font-weight: bold;">${dataPoint.value.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>`;
+        tooltipHTML += `</div>`;
+        
+        if (dataPoint.secondaryLabel && dataPoint.secondaryValue !== undefined) {
+          tooltipHTML += `<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 4px;">`;
+          tooltipHTML += `  <div style="display: flex; align-items: center; gap: 6px;">`;
+          tooltipHTML += `    <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#ccc;"></span>`;
+          tooltipHTML += `    <span style="color: #ccc;">${dataPoint.secondaryLabel}</span>`;
+          tooltipHTML += `  </div>`;
+          tooltipHTML += `  <span style="font-weight: bold;">${dataPoint.secondaryValue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</span>`;
+          tooltipHTML += `</div>`;
+        }
+        tooltipHTML += `</div>`;
+        return tooltipHTML;
+      }
     },
     grid: {
       left: '3%',

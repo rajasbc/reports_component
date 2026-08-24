@@ -102960,7 +102960,13 @@ const jXe = () => {
       borderColor: `${i}66`,
       borderWidth: 1,
       textStyle: { color: "#fff" },
-      axisPointer: { type: "line", lineStyle: { color: i, type: "dashed" } }
+      axisPointer: { type: "line", lineStyle: { color: i, type: "dashed" } },
+      formatter: (f) => {
+        const h = f[0], d = n[h.dataIndex];
+        if (!d) return "";
+        let v = '<div style="padding: 4px;">';
+        return v += `<div style="font-size: 13px; font-weight: bold; margin-bottom: 6px;">${d.label}</div>`, v += '<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">', v += '  <div style="display: flex; align-items: center; gap: 6px;">', v += `    <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:${h.color};"></span>`, v += `    <span style="color: #ccc;">${h.seriesName}</span>`, v += "  </div>", v += `  <span style="font-weight: bold;">${d.value.toLocaleString("en-IN", { maximumFractionDigits: 2 })}</span>`, v += "</div>", d.secondaryLabel && d.secondaryValue !== void 0 && (v += '<div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 4px;">', v += '  <div style="display: flex; align-items: center; gap: 6px;">', v += '    <span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#ccc;"></span>', v += `    <span style="color: #ccc;">${d.secondaryLabel}</span>`, v += "  </div>", v += `  <span style="font-weight: bold;">${d.secondaryValue.toLocaleString("en-IN", { maximumFractionDigits: 2 })}</span>`, v += "</div>"), v += "</div>", v;
+      }
     },
     grid: {
       left: "3%",

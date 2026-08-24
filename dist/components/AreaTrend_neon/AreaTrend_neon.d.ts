@@ -2,6 +2,8 @@ import { default as React } from 'react';
 interface DataPoint {
     label: string;
     value: number;
+    secondaryLabel?: string;
+    secondaryValue?: number;
 }
 export interface AreaTrendNeonProps {
     title?: string;
