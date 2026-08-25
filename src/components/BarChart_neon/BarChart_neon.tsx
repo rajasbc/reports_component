@@ -78,6 +78,7 @@ const BarChart_neon: React.FC<BarChartProps> = ({
 
   return (
     <div ref={ref} className={className} style={{
+      position: 'relative',
       background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%)',
       backdropFilter: 'blur(10px)',
       border: '1px solid rgba(255,255,255,0.1)',
@@ -164,9 +165,8 @@ const BarChart_neon: React.FC<BarChartProps> = ({
                   style={{ cursor: 'pointer', transition: 'all 0.2s' }}
                   onMouseEnter={e => {
                     (e.target as SVGRectElement).setAttribute('fill', 'url(#neon-bar-fill-hover)');
-                    setTooltip({ x: e.clientX, y: e.clientY, label: point.label, value: point.value });
+                    setTooltip({ x: x + barWidth / 2, y: y, label: point.label, value: point.value });
                   }}
-                  onMouseMove={e => setTooltip(t => t ? { ...t, x: e.clientX, y: e.clientY } : null)}
                   onMouseLeave={e => {
                     (e.target as SVGRectElement).setAttribute('fill', point.color || 'url(#neon-bar-fill)');
                     setTooltip(null);
@@ -229,7 +229,10 @@ const BarChart_neon: React.FC<BarChartProps> = ({
       )}
       {tooltip && (
         <div style={{
-          position: 'fixed', left: tooltip.x + 12, top: tooltip.y - 10,
+          position: 'absolute', 
+          left: tooltip.x + 12, 
+          top: tooltip.y + 12 - 10,
+          transform: 'translate(-50%, -100%)',
           backgroundColor: 'rgba(0,0,0,0.8)', color: '#fff',
           padding: '8px 12px', borderRadius: '6px', fontSize: fs(12),
           pointerEvents: 'none', zIndex: 1000, whiteSpace: 'nowrap',
