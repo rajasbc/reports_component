@@ -28,8 +28,8 @@ const PolarDebtChart_neon: React.FC<PolarDebtChartProps> = ({
   const [isHovered, setIsHovered] = useState(false);
   const isResponsive = typeof height === 'string';
 
-  // Sort data descending to make the largest debts on the outside
-  const sortedData = [...data].sort((a, b) => a.value - b.value);
+  // Use data directly to preserve chronological or original ordering
+  const sortedData = data;
 
   const option = {
     backgroundColor: 'transparent',
