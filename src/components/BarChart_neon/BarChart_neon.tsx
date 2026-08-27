@@ -53,7 +53,7 @@ const BarChart_neon: React.FC<BarChartProps> = ({
   const paddingRight = 10;
 
   const isResponsive = typeof height === 'string';
-  const paddingOffset = isResponsive ? (title ? 48 : 0) : 0; 
+  const paddingOffset = 0; 
   const resolvedHeight = isResponsive ? (containerHeight > 0 ? containerHeight - paddingOffset : 200) : (height as number);
 
   const maxValue = data.length > 0 ? Math.max(...data.map(d => d.value), 0) : 1;
@@ -68,7 +68,7 @@ const BarChart_neon: React.FC<BarChartProps> = ({
   const maxLabelLen = data.length > 0 ? Math.max(...data.map(d => d.label.length)) : 0;
   const barSpacing = chartWidth / (data.length || 1);
   const needsRotation = maxLabelLen * estCharWidth > barSpacing;
-  const rotatedLabelHeight = needsRotation ? maxLabelLen * estCharWidth * 1.2 : 20;
+  const rotatedLabelHeight = needsRotation ? maxLabelLen * estCharWidth * 0.7 : 20;
   
   const bottomSpace = needsRotation ? rotatedLabelHeight + 20 : paddingBottom;
   const chartHeight = Math.max(resolvedHeight - paddingTop - bottomSpace, 50);
