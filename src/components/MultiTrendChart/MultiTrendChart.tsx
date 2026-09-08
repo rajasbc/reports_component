@@ -49,11 +49,11 @@ export interface MultiTrendChartProps {
 }
 
 // --- Icons ---
-const DefaultMetricIcon = ({ color = 'currentColor' }: { color?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
-  </svg>
-);
+// const DefaultMetricIcon = ({ color = 'currentColor' }: { color?: string }) => (
+//   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+//     <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+//   </svg>
+// );
 
 // --- Custom Tooltip ---
 const CustomTooltip = ({ active, payload, label, currentMetrics, daysInMonthMap }: any) => {
@@ -374,14 +374,14 @@ export const MultiTrendChart: React.FC<MultiTrendChartProps> = ({
                     boxShadow: isActive ? '0 1px 2px 0 rgba(0, 0, 0, 0.05)' : 'none'
                   }}
                 >
-                  <span style={{ 
+                  {/* <span style={{ 
                     color: isActive ? config.color : 'currentColor', 
                     opacity: isActive ? 1 : 0.5,
                     display: 'flex',
                     alignItems: 'center'
                   }}>
                     {config.icon || <DefaultMetricIcon />}
-                  </span>
+                  </span> */}
                   {config.shortLabel}
                 </button>
               );
@@ -486,7 +486,7 @@ export const MultiTrendChart: React.FC<MultiTrendChartProps> = ({
             alignItems: 'center',
             gap: '8px'
           }}>
-            YTD & Projections Data Table
+             Data Table
             <span style={{
               fontSize: fs(9),
               fontWeight: 400,
