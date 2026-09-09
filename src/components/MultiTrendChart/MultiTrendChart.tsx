@@ -122,7 +122,7 @@ export const MultiTrendChart: React.FC<MultiTrendChartProps> = ({
   config,
   defaultTab,
   defaultView,
-  subtitle = "Monthly Volume & Projections",
+  subtitle = "Monthly Count & Revenue",
   xAxisKey = "month",
   daysInMonthMap = {}
 }) => {

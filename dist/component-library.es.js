@@ -26172,7 +26172,7 @@ const wCe = ({ active: e, payload: t, label: r, metricsConfig: n }) => {
   config: e,
   defaultTab: t,
   defaultView: r,
-  subtitle: n = "Monthly Volume & Projections",
+  subtitle: n = "Monthly Count & Revenue",
   xAxisKey: i = "month",
   daysInMonthMap: a = {}
 }) => {
