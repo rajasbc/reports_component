@@ -26128,11 +26128,11 @@ const wCe = ({ active: e, payload: t, label: r, metricsConfig: n }) => {
     /* @__PURE__ */ S.jsx("div", { style: { width: "100%", boxSizing: "border-box", flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }, children: d() }),
     /* @__PURE__ */ S.jsx("style", { children: "@keyframes spin { to { transform: rotate(360deg); } }" })
   ] });
-}, MCe = ({ active: e, payload: t, label: r, currentMetrics: n, daysInMonthMap: i }) => {
+}, MCe = ({ active: e, payload: t, label: r, currentMetrics: n }) => {
   if (e && t && t.length) {
-    const a = i?.[r] || 30, o = t.reduce((s, l) => {
-      const u = l.dataKey.replace("_Proj", "");
-      return s.find((f) => f.dataKey.replace("_Proj", "") === u) ? l.dataKey.includes("_Proj") || (s = s.filter((f) => f.dataKey !== `${u}_Proj`), s.push(l)) : s.push(l), s;
+    const i = t.reduce((a, o) => {
+      const s = o.dataKey.replace("_Proj", "");
+      return a.find((u) => u.dataKey.replace("_Proj", "") === s) ? o.dataKey.includes("_Proj") || (a = a.filter((u) => u.dataKey !== `${s}_Proj`), a.push(o)) : a.push(o), a;
     }, []);
     return /* @__PURE__ */ S.jsxs("div", { style: {
       backgroundColor: "rgba(255, 255, 255, 0.95)",
@@ -26145,25 +26145,20 @@ const wCe = ({ active: e, payload: t, label: r, metricsConfig: n }) => {
       fontFamily: "sans-serif"
     }, children: [
       /* @__PURE__ */ S.jsx("p", { style: { fontWeight: "bold", color: "#1e293b", marginBottom: "8px", fontSize: "12px" }, children: r }),
-      o.map((s, l) => {
-        const u = s.dataKey.includes("_Proj"), c = s.dataKey.replace("_Proj", ""), f = n[c];
-        if (!f) return null;
-        const h = f.format || ((p) => p), d = s.value, v = Math.ceil(d / a);
+      i.map((a, o) => {
+        const s = a.dataKey.includes("_Proj"), l = a.dataKey.replace("_Proj", ""), u = n[l];
+        if (!u) return null;
+        const c = u.format || ((h) => h), f = a.value;
         return /* @__PURE__ */ S.jsxs("div", { style: { display: "flex", alignItems: "center", marginBottom: "4px", gap: "6px" }, children: [
-          /* @__PURE__ */ S.jsx("div", { style: { width: "8px", height: "8px", borderRadius: "50%", backgroundColor: s.stroke } }),
+          /* @__PURE__ */ S.jsx("div", { style: { width: "8px", height: "8px", borderRadius: "50%", backgroundColor: a.stroke } }),
           /* @__PURE__ */ S.jsxs("span", { style: { fontWeight: 500 }, children: [
-            f.label,
+            u.label,
             " ",
-            u ? /* @__PURE__ */ S.jsx("span", { style: { fontStyle: "italic", fontSize: "9px", color: "#94a3b8" }, children: "(Proj)" }) : "",
+            s ? /* @__PURE__ */ S.jsx("span", { style: { fontStyle: "italic", fontSize: "9px", color: "#94a3b8" }, children: "(Proj)" }) : "",
             ":"
           ] }),
-          /* @__PURE__ */ S.jsx("span", { style: { fontWeight: "bold", color: "#0f172a" }, children: h(d) }),
-          /* @__PURE__ */ S.jsxs("span", { style: { color: "#64748b", fontSize: "10px" }, children: [
-            "(DA - ",
-            h(v),
-            ")"
-          ] })
-        ] }, `item-${l}`);
+          /* @__PURE__ */ S.jsx("span", { style: { fontWeight: "bold", color: "#0f172a" }, children: c(f) })
+        ] }, `item-${o}`);
       })
     ] });
   }
@@ -26525,24 +26520,12 @@ const wCe = ({ active: e, payload: t, label: r, metricsConfig: n }) => {
             }, children: "Metric" }),
             b.map((A, E) => {
               const D = Object.keys(w)[0], M = A[D] === void 0 && A[`${D}_Proj`] !== void 0;
-              return /* @__PURE__ */ S.jsxs("th", { style: {
-                padding: "6px 2px",
+              return /* @__PURE__ */ S.jsx("th", { style: {
+                padding: "8px 2px",
                 fontWeight: 600,
                 textAlign: "center",
                 backgroundColor: M ? "rgba(241, 245, 249, 0.5)" : "transparent"
-              }, children: [
-                /* @__PURE__ */ S.jsx("div", { style: { letterSpacing: "-0.05em" }, children: A[i] }),
-                /* @__PURE__ */ S.jsx("div", { style: { marginTop: "2px" }, children: /* @__PURE__ */ S.jsx("span", { style: {
-                  padding: "1px 4px",
-                  fontSize: l(8),
-                  textTransform: "uppercase",
-                  letterSpacing: "-0.05em",
-                  fontWeight: 700,
-                  borderRadius: "2px",
-                  backgroundColor: M ? "#e2e8f0" : "#d1fae5",
-                  color: M ? "#64748b" : "#047857"
-                }, children: M ? "Prj" : "Act" }) })
-              ] }, `th-${E}`);
+              }, children: /* @__PURE__ */ S.jsx("div", { style: { letterSpacing: "-0.05em" }, children: A[i] }) }, `th-${E}`);
             })
           ] }) }),
           /* @__PURE__ */ S.jsx("tbody", { children: Object.entries(w).map(([A, E], D) => {
