@@ -56,10 +56,8 @@ export interface MultiTrendChartProps {
 // );
 
 // --- Custom Tooltip ---
-const CustomTooltip = ({ active, payload, label, currentMetrics, daysInMonthMap }: any) => {
+const CustomTooltip = ({ active, payload, label, currentMetrics }: any) => {
   if (active && payload && payload.length) {
-    const daysInMonth = daysInMonthMap?.[label] || 30;
-    
     // Deduplicate actual vs projected if they overlap on the exact same month (the transition month)
     const uniquePayload = payload.reduce((acc: any[], curr: any) => {
       const baseKey = curr.dataKey.replace('_Proj', '');
@@ -98,7 +96,6 @@ const CustomTooltip = ({ active, payload, label, currentMetrics, daysInMonthMap 
 
           const formatFn = config.format || ((val: any) => val);
           const val = entry.value;
-          const dailyAvg = Math.ceil(val / daysInMonth);
 
           return (
             <div key={`item-${index}`} style={{ display: 'flex', alignItems: 'center', marginBottom: '4px', gap: '6px' }}>
@@ -107,7 +104,6 @@ const CustomTooltip = ({ active, payload, label, currentMetrics, daysInMonthMap 
                 {config.label} {isProj ? <span style={{ fontStyle: 'italic', fontSize: '9px', color: '#94a3b8' }}>(Proj)</span> : ''}:
               </span>
               <span style={{ fontWeight: 'bold', color: '#0f172a' }}>{formatFn(val)}</span>
-              <span style={{ color: '#64748b', fontSize: '10px' }}>(DA - {formatFn(dailyAvg)})</span>
             </div>
           );
         })}
@@ -543,26 +539,12 @@ export const MultiTrendChart: React.FC<MultiTrendChartProps> = ({
                     
                     return (
                       <th key={`th-${i}`} style={{
-                        padding: '6px 2px',
+                        padding: '8px 2px',
                         fontWeight: 600,
                         textAlign: 'center',
                         backgroundColor: isProjected ? 'rgba(241, 245, 249, 0.5)' : 'transparent'
                       }}>
                         <div style={{ letterSpacing: '-0.05em' }}>{row[xAxisKey]}</div>
-                        <div style={{ marginTop: '2px' }}>
-                          <span style={{
-                            padding: '1px 4px',
-                            fontSize: fs(8),
-                            textTransform: 'uppercase',
-                            letterSpacing: '-0.05em',
-                            fontWeight: 700,
-                            borderRadius: '2px',
-                            backgroundColor: isProjected ? '#e2e8f0' : '#d1fae5',
-                            color: isProjected ? '#64748b' : '#047857'
-                          }}>
-                            {isProjected ? 'Prj' : 'Act'}
-                          </span>
-                        </div>
                       </th>
                     );
                   })}
