@@ -46,6 +46,7 @@ export interface MultiTrendChartProps {
   subtitle?: string;
   xAxisKey?: string;
   daysInMonthMap?: Record<string, number>;
+  onMonthClick?: (month: string, tabId: string, viewMode: string, metricKey?: string) => void;
 }
 
 // --- Icons ---
@@ -120,7 +121,8 @@ export const MultiTrendChart: React.FC<MultiTrendChartProps> = ({
   defaultView,
   subtitle = "Monthly Count & Revenue",
   xAxisKey = "month",
-  daysInMonthMap = {}
+  daysInMonthMap = {},
+  onMonthClick
 }) => {
   const { ref, width, fs } = useContainerSize();
   const isMobile = width < 768;
@@ -301,7 +303,7 @@ export const MultiTrendChart: React.FC<MultiTrendChartProps> = ({
         </div>
       </div>
 
-      {/* Main Card */}
+        {/* Main Card */}
       <div style={{
         width: '100%',
         backgroundColor: '#ffffff',
@@ -370,14 +372,6 @@ export const MultiTrendChart: React.FC<MultiTrendChartProps> = ({
                     boxShadow: isActive ? '0 1px 2px 0 rgba(0, 0, 0, 0.05)' : 'none'
                   }}
                 >
-                  {/* <span style={{ 
-                    color: isActive ? config.color : 'currentColor', 
-                    opacity: isActive ? 1 : 0.5,
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}>
-                    {config.icon || <DefaultMetricIcon />}
-                  </span> */}
                   {config.shortLabel}
                 </button>
               );
@@ -388,7 +382,16 @@ export const MultiTrendChart: React.FC<MultiTrendChartProps> = ({
         {/* Chart Area */}
         <div style={{ padding: isMobile ? '12px' : '16px', height: '320px', width: '100%', position: 'relative' }}>
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={currentData} margin={{ top: 15, right: 25, left: 0, bottom: 0 }}>
+            <AreaChart 
+              data={currentData} 
+              margin={{ top: 15, right: 25, left: 0, bottom: 0 }}
+              onClick={(e: any) => {
+                if (e && e.activeLabel) {
+                  onMonthClick?.(String(e.activeLabel), activeTab, viewMode);
+                }
+              }}
+              style={{ cursor: 'pointer' }}
+            >
               <defs>
                 {Object.entries(currentMetrics).map(([key, config]) => (
                   <React.Fragment key={`grad-${key}`}>
@@ -408,8 +411,29 @@ export const MultiTrendChart: React.FC<MultiTrendChartProps> = ({
                 dataKey={xAxisKey} 
                 axisLine={false} 
                 tickLine={false} 
-                tick={{ fill: '#64748b', fontSize: fs(10), fontFamily: 'sans-serif' }}
-                dy={10}
+                tick={(props: any) => {
+                  const { x, y, payload } = props;
+                  return (
+                    <g transform={`translate(${x},${y})`}>
+                      <text
+                        x={0}
+                        y={0}
+                        dy={10}
+                        textAnchor="middle"
+                        fill="#64748b"
+                        fontSize={fs(10)}
+                        fontFamily="sans-serif"
+                        style={{ cursor: 'pointer', transition: 'fill 0.2s', fontWeight: 500 }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onMonthClick?.(String(payload.value), activeTab, viewMode);
+                        }}
+                      >
+                        {payload.value}
+                      </text>
+                    </g>
+                  );
+                }}
               />
               <YAxis 
                 axisLine={false} 
@@ -450,7 +474,17 @@ export const MultiTrendChart: React.FC<MultiTrendChartProps> = ({
                       strokeWidth={3}
                       fillOpacity={1}
                       fill={`url(#color-${key}-actual)`}
-                      activeDot={{ r: 5, strokeWidth: 2, stroke: config.color, fill: '#fff' } as any}
+                      activeDot={{ 
+                        r: 6, 
+                        strokeWidth: 2, 
+                        stroke: config.color, 
+                        fill: '#fff',
+                        style: { cursor: 'pointer' },
+                        onClick: (_: any, event: any) => {
+                          const monthVal = currentData[event?.index]?.[xAxisKey] || '';
+                          onMonthClick?.(String(monthVal), activeTab, viewMode, key);
+                        }
+                      } as any}
                       isAnimationActive={true}
                     />
                     <Area
@@ -461,7 +495,17 @@ export const MultiTrendChart: React.FC<MultiTrendChartProps> = ({
                       strokeDasharray="5 5"
                       fillOpacity={1}
                       fill={`url(#color-${key}-proj)`}
-                      activeDot={{ r: 5, strokeWidth: 2, stroke: config.color, fill: '#fff' } as any}
+                      activeDot={{ 
+                        r: 6, 
+                        strokeWidth: 2, 
+                        stroke: config.color, 
+                        fill: '#fff',
+                        style: { cursor: 'pointer' },
+                        onClick: (_: any, event: any) => {
+                          const monthVal = currentData[event?.index]?.[xAxisKey] || '';
+                          onMonthClick?.(String(monthVal), activeTab, viewMode, key);
+                        }
+                      } as any}
                       isAnimationActive={true}
                     />
                   </React.Fragment>
@@ -533,18 +577,34 @@ export const MultiTrendChart: React.FC<MultiTrendChartProps> = ({
                   }}>Metric</th>
                   
                   {currentData.map((row, i) => {
-                    // Check if it's purely projected (no base key present for the first active metric)
                     const firstMetricKey = Object.keys(currentMetrics)[0];
                     const isProjected = row[firstMetricKey] === undefined && row[`${firstMetricKey}_Proj`] !== undefined;
+                    const monthVal = row[xAxisKey];
                     
                     return (
-                      <th key={`th-${i}`} style={{
-                        padding: '8px 2px',
-                        fontWeight: 600,
-                        textAlign: 'center',
-                        backgroundColor: isProjected ? 'rgba(241, 245, 249, 0.5)' : 'transparent'
-                      }}>
-                        <div style={{ letterSpacing: '-0.05em' }}>{row[xAxisKey]}</div>
+                      <th 
+                        key={`th-${i}`} 
+                        onClick={() => onMonthClick?.(String(monthVal), activeTab, viewMode)}
+                        title="Click to view details"
+                        style={{
+                          padding: '8px 2px',
+                          fontWeight: 600,
+                          textAlign: 'center',
+                          backgroundColor: isProjected ? 'rgba(241, 245, 249, 0.5)' : 'transparent',
+                          cursor: 'pointer',
+                          userSelect: 'none',
+                          transition: 'background-color 0.15s, color 0.15s'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = '#e0e7ff';
+                          e.currentTarget.style.color = '#3730a3';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = isProjected ? 'rgba(241, 245, 249, 0.5)' : 'transparent';
+                          e.currentTarget.style.color = '#64748b';
+                        }}
+                      >
+                        <div style={{ letterSpacing: '-0.05em' }}>{monthVal}</div>
                       </th>
                     );
                   })}
@@ -579,15 +639,31 @@ export const MultiTrendChart: React.FC<MultiTrendChartProps> = ({
                       {currentData.map((row, colIndex) => {
                         const val = row[key] !== undefined ? row[key] : row[`${key}_Proj`];
                         const isProjected = row[key] === undefined;
+                        const monthVal = row[xAxisKey];
                         
                         return (
-                          <td key={`cell-${rowIndex}-${colIndex}`} style={{
-                            padding: '4px 2px',
-                            textAlign: 'center',
-                            color: isProjected ? '#64748b' : '#0f172a',
-                            fontWeight: isProjected ? 400 : 500,
-                            backgroundColor: isProjected ? 'rgba(248, 250, 252, 0.3)' : 'transparent'
-                          }}>
+                          <td 
+                            key={`cell-${rowIndex}-${colIndex}`} 
+                            onClick={() => onMonthClick?.(String(monthVal), activeTab, viewMode, key)}
+                            title="Click to view details"
+                            style={{
+                              padding: '4px 2px',
+                              textAlign: 'center',
+                              color: isProjected ? '#64748b' : '#0f172a',
+                              fontWeight: isProjected ? 400 : 500,
+                              backgroundColor: isProjected ? 'rgba(248, 250, 252, 0.3)' : 'transparent',
+                              cursor: 'pointer',
+                              transition: 'background-color 0.15s, color 0.15s'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.backgroundColor = '#eef2ff';
+                              e.currentTarget.style.color = '#4338ca';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.backgroundColor = isProjected ? 'rgba(248, 250, 252, 0.3)' : 'transparent';
+                              e.currentTarget.style.color = isProjected ? '#64748b' : '#0f172a';
+                            }}
+                          >
                             {val !== undefined ? formatFn(val) : '-'}
                           </td>
                         );

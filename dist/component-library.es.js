@@ -26169,52 +26169,53 @@ const wCe = ({ active: e, payload: t, label: r, metricsConfig: n }) => {
   defaultView: r,
   subtitle: n = "Monthly Count & Revenue",
   xAxisKey: i = "month",
-  daysInMonthMap: a = {}
+  daysInMonthMap: a = {},
+  onMonthClick: o
 }) => {
-  const { ref: o, width: s, fs: l } = dr(), u = s < 768, c = Object.keys(e), [f, h] = de(t || c[0] || ""), [d, v] = de(r || "count"), [p, g] = de({});
+  const { ref: s, width: l, fs: u } = dr(), c = l < 768, f = Object.keys(e), [h, d] = de(t || f[0] || ""), [v, p] = de(r || "count"), [g, m] = de({});
   Wt(() => {
-    const A = {};
-    Object.entries(e).forEach(([E, D]) => {
-      A[E] = {}, Object.entries(D.views).forEach(([M, P]) => {
-        A[E][M] = {}, Object.keys(P.metrics).forEach((O) => {
-          A[E][M][O] = !0;
+    const E = {};
+    Object.entries(e).forEach(([D, M]) => {
+      E[D] = {}, Object.entries(M.views).forEach(([P, O]) => {
+        E[D][P] = {}, Object.keys(O.metrics).forEach((I) => {
+          E[D][P][I] = !0;
         });
       });
-    }), g(A);
+    }), m(E);
   }, [e]);
-  const m = (A) => {
-    g((E) => ({
-      ...E,
-      [f]: {
-        ...E[f],
-        [d]: {
-          ...E[f][d],
-          [A]: !E[f][d][A]
+  const y = (E) => {
+    m((D) => ({
+      ...D,
+      [h]: {
+        ...D[h],
+        [v]: {
+          ...D[h][v],
+          [E]: !D[h][v][E]
         }
       }
     }));
-  }, y = e[f], x = y?.views[d], _ = p[f]?.[d] || {}, b = x?.data || [], w = x?.metrics || {}, T = (A) => {
-    const E = Object.keys(w).filter((D) => _[D]);
-    if (E.length > 0) {
-      const D = w[E[0]];
-      if (D.format) return D.format(A);
+  }, x = e[h], _ = x?.views[v], b = g[h]?.[v] || {}, w = _?.data || [], T = _?.metrics || {}, C = (E) => {
+    const D = Object.keys(T).filter((M) => b[M]);
+    if (D.length > 0) {
+      const M = T[D[0]];
+      if (M.format) return M.format(E);
     }
-    return A;
-  }, C = () => {
-    if (!b || b.length === 0) return 40;
-    const A = Object.keys(w).filter((M) => _[M]);
-    if (A.length === 0) return 40;
-    let E = 0;
-    b.forEach((M) => {
-      A.forEach((P) => {
-        const O = M[P] !== void 0 ? Number(M[P]) : 0, I = M[`${P}_Proj`] !== void 0 ? Number(M[`${P}_Proj`]) : 0;
-        O > E && (E = O), I > E && (E = I);
+    return E;
+  }, A = () => {
+    if (!w || w.length === 0) return 40;
+    const E = Object.keys(T).filter((P) => b[P]);
+    if (E.length === 0) return 40;
+    let D = 0;
+    w.forEach((P) => {
+      E.forEach((O) => {
+        const I = P[O] !== void 0 ? Number(P[O]) : 0, N = P[`${O}_Proj`] !== void 0 ? Number(P[`${O}_Proj`]) : 0;
+        I > D && (D = I), N > D && (D = N);
       });
     });
-    const D = T(E);
-    return Math.max(40, D.toString().length * (u ? 6 : 7));
+    const M = C(D);
+    return Math.max(40, M.toString().length * (c ? 6 : 7));
   };
-  return !y || !x ? null : /* @__PURE__ */ S.jsxs("div", { ref: o, style: {
+  return !x || !_ ? null : /* @__PURE__ */ S.jsxs("div", { ref: s, style: {
     width: "100%",
     backgroundColor: "#f8fafc",
     fontFamily: "sans-serif",
@@ -26224,9 +26225,9 @@ const wCe = ({ active: e, payload: t, label: r, metricsConfig: n }) => {
       width: "100%",
       marginBottom: "16px",
       display: "flex",
-      flexDirection: u ? "column" : "row",
+      flexDirection: c ? "column" : "row",
       justifyContent: "space-between",
-      alignItems: u ? "stretch" : "center",
+      alignItems: c ? "stretch" : "center",
       gap: "16px"
     }, children: [
       /* @__PURE__ */ S.jsx("div", { style: {
@@ -26238,28 +26239,28 @@ const wCe = ({ active: e, payload: t, label: r, metricsConfig: n }) => {
         borderRadius: "12px",
         boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
         border: "1px solid #e2e8f0"
-      }, children: c.map((A) => {
-        const E = A === f;
+      }, children: f.map((E) => {
+        const D = E === h;
         return /* @__PURE__ */ S.jsx(
           "button",
           {
-            onClick: () => h(A),
+            onClick: () => d(E),
             style: {
-              flex: u ? "1" : "none",
+              flex: c ? "1" : "none",
               padding: "8px 16px",
               borderRadius: "8px",
-              fontSize: l(14),
+              fontSize: u(14),
               fontWeight: 600,
               transition: "all 0.2s",
               border: "none",
               cursor: "pointer",
-              backgroundColor: E ? "#1e293b" : "transparent",
-              color: E ? "#ffffff" : "#64748b",
-              boxShadow: E ? "0 4px 6px -1px rgba(0, 0, 0, 0.1)" : "none"
+              backgroundColor: D ? "#1e293b" : "transparent",
+              color: D ? "#ffffff" : "#64748b",
+              boxShadow: D ? "0 4px 6px -1px rgba(0, 0, 0, 0.1)" : "none"
             },
-            children: e[A].tabTitle
+            children: e[E].tabTitle
           },
-          A
+          E
         );
       }) }),
       /* @__PURE__ */ S.jsxs("div", { style: {
@@ -26274,17 +26275,17 @@ const wCe = ({ active: e, payload: t, label: r, metricsConfig: n }) => {
         /* @__PURE__ */ S.jsx(
           "button",
           {
-            onClick: () => v("count"),
+            onClick: () => p("count"),
             style: {
-              flex: u ? "1" : "none",
+              flex: c ? "1" : "none",
               padding: "6px 24px",
               borderRadius: "4px",
-              fontSize: l(12),
+              fontSize: u(12),
               fontWeight: 700,
-              border: d === "count" ? "1px solid #e0e7ff" : "1px solid transparent",
-              backgroundColor: d === "count" ? "#eef2ff" : "transparent",
-              color: d === "count" ? "#4338ca" : "#64748b",
-              boxShadow: d === "count" ? "0 1px 2px rgba(0,0,0,0.05)" : "none",
+              border: v === "count" ? "1px solid #e0e7ff" : "1px solid transparent",
+              backgroundColor: v === "count" ? "#eef2ff" : "transparent",
+              color: v === "count" ? "#4338ca" : "#64748b",
+              boxShadow: v === "count" ? "0 1px 2px rgba(0,0,0,0.05)" : "none",
               cursor: "pointer",
               transition: "all 0.2s"
             },
@@ -26294,17 +26295,17 @@ const wCe = ({ active: e, payload: t, label: r, metricsConfig: n }) => {
         /* @__PURE__ */ S.jsx(
           "button",
           {
-            onClick: () => v("revenue"),
+            onClick: () => p("revenue"),
             style: {
-              flex: u ? "1" : "none",
+              flex: c ? "1" : "none",
               padding: "6px 24px",
               borderRadius: "4px",
-              fontSize: l(12),
+              fontSize: u(12),
               fontWeight: 700,
-              border: d === "revenue" ? "1px solid #d1fae5" : "1px solid transparent",
-              backgroundColor: d === "revenue" ? "#ecfdf5" : "transparent",
-              color: d === "revenue" ? "#047857" : "#64748b",
-              boxShadow: d === "revenue" ? "0 1px 2px rgba(0,0,0,0.05)" : "none",
+              border: v === "revenue" ? "1px solid #d1fae5" : "1px solid transparent",
+              backgroundColor: v === "revenue" ? "#ecfdf5" : "transparent",
+              color: v === "revenue" ? "#047857" : "#64748b",
+              boxShadow: v === "revenue" ? "0 1px 2px rgba(0,0,0,0.05)" : "none",
               cursor: "pointer",
               transition: "all 0.2s"
             },
@@ -26324,145 +26325,194 @@ const wCe = ({ active: e, payload: t, label: r, metricsConfig: n }) => {
       flexDirection: "column"
     }, children: [
       /* @__PURE__ */ S.jsxs("div", { style: {
-        padding: u ? "12px" : "16px",
+        padding: c ? "12px" : "16px",
         borderBottom: "1px solid #e2e8f0",
         display: "flex",
-        flexDirection: u ? "column" : "row",
+        flexDirection: c ? "column" : "row",
         justifyContent: "space-between",
-        alignItems: u ? "flex-start" : "center",
+        alignItems: c ? "flex-start" : "center",
         gap: "12px"
       }, children: [
         /* @__PURE__ */ S.jsxs("div", { children: [
           /* @__PURE__ */ S.jsxs("div", { style: { display: "flex", alignItems: "center", gap: "12px" }, children: [
-            /* @__PURE__ */ S.jsx("h1", { style: { margin: 0, fontSize: l(24), fontWeight: 700, color: "#0f172a", letterSpacing: "-0.025em" }, children: y.title }),
+            /* @__PURE__ */ S.jsx("h1", { style: { margin: 0, fontSize: u(24), fontWeight: 700, color: "#0f172a", letterSpacing: "-0.025em" }, children: x.title }),
             /* @__PURE__ */ S.jsx("span", { style: {
               padding: "4px 8px",
               borderRadius: "4px",
-              fontSize: l(10),
+              fontSize: u(10),
               fontWeight: 700,
-              border: `1px solid ${d === "revenue" ? "#a7f3d0" : "#c7d2fe"}`,
-              backgroundColor: d === "revenue" ? "#ecfdf5" : "#eef2ff",
-              color: d === "revenue" ? "#047857" : "#4338ca",
+              border: `1px solid ${v === "revenue" ? "#a7f3d0" : "#c7d2fe"}`,
+              backgroundColor: v === "revenue" ? "#ecfdf5" : "#eef2ff",
+              color: v === "revenue" ? "#047857" : "#4338ca",
               boxShadow: "0 1px 2px 0 rgba(0, 0, 0, 0.05)"
-            }, children: d === "revenue" ? "Revenue View" : "Count View" })
+            }, children: v === "revenue" ? "Revenue View" : "Count View" })
           ] }),
-          /* @__PURE__ */ S.jsx("p", { style: { margin: "4px 0 0 0", color: "#64748b", fontSize: l(14) }, children: n })
+          /* @__PURE__ */ S.jsx("p", { style: { margin: "4px 0 0 0", color: "#64748b", fontSize: u(14) }, children: n })
         ] }),
-        /* @__PURE__ */ S.jsx("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px" }, children: Object.entries(w).map(([A, E]) => {
-          const D = _[A];
+        /* @__PURE__ */ S.jsx("div", { style: { display: "flex", flexWrap: "wrap", gap: "8px" }, children: Object.entries(T).map(([E, D]) => {
+          const M = b[E];
           return /* @__PURE__ */ S.jsx(
             "button",
             {
-              onClick: () => m(A),
+              onClick: () => y(E),
               style: {
                 display: "flex",
                 alignItems: "center",
                 gap: "6px",
                 padding: "6px 12px",
                 borderRadius: "9999px",
-                fontSize: l(12),
+                fontSize: u(12),
                 fontWeight: 500,
-                border: D ? "1px solid #cbd5e1" : "1px solid #e2e8f0",
-                backgroundColor: D ? "#f1f5f9" : "transparent",
-                color: D ? "#0f172a" : "#64748b",
+                border: M ? "1px solid #cbd5e1" : "1px solid #e2e8f0",
+                backgroundColor: M ? "#f1f5f9" : "transparent",
+                color: M ? "#0f172a" : "#64748b",
                 cursor: "pointer",
                 transition: "all 0.2s",
-                boxShadow: D ? "0 1px 2px 0 rgba(0, 0, 0, 0.05)" : "none"
+                boxShadow: M ? "0 1px 2px 0 rgba(0, 0, 0, 0.05)" : "none"
               },
-              children: E.shortLabel
+              children: D.shortLabel
             },
-            A
+            E
           );
         }) })
       ] }),
-      /* @__PURE__ */ S.jsx("div", { style: { padding: u ? "12px" : "16px", height: "320px", width: "100%", position: "relative" }, children: /* @__PURE__ */ S.jsx(MI, { width: "100%", height: "100%", children: /* @__PURE__ */ S.jsxs(BK, { data: b, margin: { top: 15, right: 25, left: 0, bottom: 0 }, children: [
-        /* @__PURE__ */ S.jsx("defs", { children: Object.entries(w).map(([A, E]) => /* @__PURE__ */ S.jsxs(wr.Fragment, { children: [
-          /* @__PURE__ */ S.jsxs("linearGradient", { id: `color-${A}-actual`, x1: "0", y1: "0", x2: "0", y2: "1", children: [
-            /* @__PURE__ */ S.jsx("stop", { offset: "5%", stopColor: E.color, stopOpacity: 0.25 }),
-            /* @__PURE__ */ S.jsx("stop", { offset: "95%", stopColor: E.color, stopOpacity: 0 })
-          ] }),
-          /* @__PURE__ */ S.jsxs("linearGradient", { id: `color-${A}-proj`, x1: "0", y1: "0", x2: "0", y2: "1", children: [
-            /* @__PURE__ */ S.jsx("stop", { offset: "5%", stopColor: E.color, stopOpacity: 0.05 }),
-            /* @__PURE__ */ S.jsx("stop", { offset: "95%", stopColor: E.color, stopOpacity: 0 })
-          ] })
-        ] }, `grad-${A}`)) }),
-        /* @__PURE__ */ S.jsx(d2, { strokeDasharray: "3 3", vertical: !1, stroke: "#e2e8f0" }),
-        /* @__PURE__ */ S.jsx(
-          v2,
-          {
-            dataKey: i,
-            axisLine: !1,
-            tickLine: !1,
-            tick: { fill: "#64748b", fontSize: l(10), fontFamily: "sans-serif" },
-            dy: 10
-          }
-        ),
-        /* @__PURE__ */ S.jsx(
-          p2,
-          {
-            axisLine: !1,
-            tickLine: !1,
-            tick: { fill: "#64748b", fontSize: l(10), fontFamily: "sans-serif" },
-            width: C(),
-            tickFormatter: T,
-            dx: -10
-          }
-        ),
-        /* @__PURE__ */ S.jsx(
-          LN,
-          {
-            content: /* @__PURE__ */ S.jsx(MCe, { currentMetrics: w, daysInMonthMap: a })
-          }
-        ),
-        x.threshold && /* @__PURE__ */ S.jsx(
-          iK,
-          {
-            y: x.threshold.value,
-            stroke: x.threshold.color,
-            strokeDasharray: "6 6",
-            strokeWidth: 1.5,
-            label: {
-              position: "insideTopLeft",
-              value: x.threshold.label,
-              fill: x.threshold.color,
-              fontSize: 9,
-              fontWeight: "bold"
-            }
-          }
-        ),
-        Object.entries(w).map(([A, E]) => _[A] ? /* @__PURE__ */ S.jsxs(wr.Fragment, { children: [
-          /* @__PURE__ */ S.jsx(
-            ey,
-            {
-              type: "monotone",
-              dataKey: A,
-              stroke: E.color,
-              strokeWidth: 3,
-              fillOpacity: 1,
-              fill: `url(#color-${A}-actual)`,
-              activeDot: { r: 5, strokeWidth: 2, stroke: E.color, fill: "#fff" },
-              isAnimationActive: !0
-            }
-          ),
-          /* @__PURE__ */ S.jsx(
-            ey,
-            {
-              type: "monotone",
-              dataKey: `${A}_Proj`,
-              stroke: E.color,
-              strokeWidth: 3,
-              strokeDasharray: "5 5",
-              fillOpacity: 1,
-              fill: `url(#color-${A}-proj)`,
-              activeDot: { r: 5, strokeWidth: 2, stroke: E.color, fill: "#fff" },
-              isAnimationActive: !0
-            }
-          )
-        ] }, `series-${A}`) : null)
-      ] }) }) }),
-      /* @__PURE__ */ S.jsxs("div", { style: { padding: u ? "12px" : "16px", borderTop: "1px solid #e2e8f0" }, children: [
+      /* @__PURE__ */ S.jsx("div", { style: { padding: c ? "12px" : "16px", height: "320px", width: "100%", position: "relative" }, children: /* @__PURE__ */ S.jsx(MI, { width: "100%", height: "100%", children: /* @__PURE__ */ S.jsxs(
+        BK,
+        {
+          data: w,
+          margin: { top: 15, right: 25, left: 0, bottom: 0 },
+          onClick: (E) => {
+            E && E.activeLabel && o?.(String(E.activeLabel), h, v);
+          },
+          style: { cursor: "pointer" },
+          children: [
+            /* @__PURE__ */ S.jsx("defs", { children: Object.entries(T).map(([E, D]) => /* @__PURE__ */ S.jsxs(wr.Fragment, { children: [
+              /* @__PURE__ */ S.jsxs("linearGradient", { id: `color-${E}-actual`, x1: "0", y1: "0", x2: "0", y2: "1", children: [
+                /* @__PURE__ */ S.jsx("stop", { offset: "5%", stopColor: D.color, stopOpacity: 0.25 }),
+                /* @__PURE__ */ S.jsx("stop", { offset: "95%", stopColor: D.color, stopOpacity: 0 })
+              ] }),
+              /* @__PURE__ */ S.jsxs("linearGradient", { id: `color-${E}-proj`, x1: "0", y1: "0", x2: "0", y2: "1", children: [
+                /* @__PURE__ */ S.jsx("stop", { offset: "5%", stopColor: D.color, stopOpacity: 0.05 }),
+                /* @__PURE__ */ S.jsx("stop", { offset: "95%", stopColor: D.color, stopOpacity: 0 })
+              ] })
+            ] }, `grad-${E}`)) }),
+            /* @__PURE__ */ S.jsx(d2, { strokeDasharray: "3 3", vertical: !1, stroke: "#e2e8f0" }),
+            /* @__PURE__ */ S.jsx(
+              v2,
+              {
+                dataKey: i,
+                axisLine: !1,
+                tickLine: !1,
+                tick: (E) => {
+                  const { x: D, y: M, payload: P } = E;
+                  return /* @__PURE__ */ S.jsx("g", { transform: `translate(${D},${M})`, children: /* @__PURE__ */ S.jsx(
+                    "text",
+                    {
+                      x: 0,
+                      y: 0,
+                      dy: 10,
+                      textAnchor: "middle",
+                      fill: "#64748b",
+                      fontSize: u(10),
+                      fontFamily: "sans-serif",
+                      style: { cursor: "pointer", transition: "fill 0.2s", fontWeight: 500 },
+                      onClick: (O) => {
+                        O.stopPropagation(), o?.(String(P.value), h, v);
+                      },
+                      children: P.value
+                    }
+                  ) });
+                }
+              }
+            ),
+            /* @__PURE__ */ S.jsx(
+              p2,
+              {
+                axisLine: !1,
+                tickLine: !1,
+                tick: { fill: "#64748b", fontSize: u(10), fontFamily: "sans-serif" },
+                width: A(),
+                tickFormatter: C,
+                dx: -10
+              }
+            ),
+            /* @__PURE__ */ S.jsx(
+              LN,
+              {
+                content: /* @__PURE__ */ S.jsx(MCe, { currentMetrics: T, daysInMonthMap: a })
+              }
+            ),
+            _.threshold && /* @__PURE__ */ S.jsx(
+              iK,
+              {
+                y: _.threshold.value,
+                stroke: _.threshold.color,
+                strokeDasharray: "6 6",
+                strokeWidth: 1.5,
+                label: {
+                  position: "insideTopLeft",
+                  value: _.threshold.label,
+                  fill: _.threshold.color,
+                  fontSize: 9,
+                  fontWeight: "bold"
+                }
+              }
+            ),
+            Object.entries(T).map(([E, D]) => b[E] ? /* @__PURE__ */ S.jsxs(wr.Fragment, { children: [
+              /* @__PURE__ */ S.jsx(
+                ey,
+                {
+                  type: "monotone",
+                  dataKey: E,
+                  stroke: D.color,
+                  strokeWidth: 3,
+                  fillOpacity: 1,
+                  fill: `url(#color-${E}-actual)`,
+                  activeDot: {
+                    r: 6,
+                    strokeWidth: 2,
+                    stroke: D.color,
+                    fill: "#fff",
+                    style: { cursor: "pointer" },
+                    onClick: (M, P) => {
+                      const O = w[P?.index]?.[i] || "";
+                      o?.(String(O), h, v, E);
+                    }
+                  },
+                  isAnimationActive: !0
+                }
+              ),
+              /* @__PURE__ */ S.jsx(
+                ey,
+                {
+                  type: "monotone",
+                  dataKey: `${E}_Proj`,
+                  stroke: D.color,
+                  strokeWidth: 3,
+                  strokeDasharray: "5 5",
+                  fillOpacity: 1,
+                  fill: `url(#color-${E}-proj)`,
+                  activeDot: {
+                    r: 6,
+                    strokeWidth: 2,
+                    stroke: D.color,
+                    fill: "#fff",
+                    style: { cursor: "pointer" },
+                    onClick: (M, P) => {
+                      const O = w[P?.index]?.[i] || "";
+                      o?.(String(O), h, v, E);
+                    }
+                  },
+                  isAnimationActive: !0
+                }
+              )
+            ] }, `series-${E}`) : null)
+          ]
+        }
+      ) }) }),
+      /* @__PURE__ */ S.jsxs("div", { style: { padding: c ? "12px" : "16px", borderTop: "1px solid #e2e8f0" }, children: [
         /* @__PURE__ */ S.jsxs("h2", { style: {
-          fontSize: l(14),
+          fontSize: u(14),
           fontWeight: 700,
           color: "#0f172a",
           margin: "0 0 8px 0",
@@ -26472,7 +26522,7 @@ const wCe = ({ active: e, payload: t, label: r, metricsConfig: n }) => {
         }, children: [
           "Data Table",
           /* @__PURE__ */ S.jsxs("span", { style: {
-            fontSize: l(9),
+            fontSize: u(9),
             fontWeight: 400,
             color: "#64748b",
             backgroundColor: "#f1f5f9",
@@ -26480,9 +26530,9 @@ const wCe = ({ active: e, payload: t, label: r, metricsConfig: n }) => {
             borderRadius: "4px",
             textTransform: "uppercase"
           }, children: [
-            f,
+            h,
             " - ",
-            d
+            v
           ] })
         ] }),
         /* @__PURE__ */ S.jsx("div", { style: {
@@ -26493,14 +26543,14 @@ const wCe = ({ active: e, payload: t, label: r, metricsConfig: n }) => {
           borderRadius: "8px"
         }, children: /* @__PURE__ */ S.jsxs("table", { style: {
           width: "100%",
-          fontSize: l(12),
+          fontSize: u(12),
           textAlign: "left",
           whiteSpace: "nowrap",
           borderCollapse: "collapse",
           tableLayout: "fixed"
         }, children: [
           /* @__PURE__ */ S.jsx("thead", { style: {
-            fontSize: l(10),
+            fontSize: u(10),
             color: "#64748b",
             textTransform: "uppercase",
             backgroundColor: "#f8fafc",
@@ -26514,23 +26564,41 @@ const wCe = ({ active: e, payload: t, label: r, metricsConfig: n }) => {
               backgroundColor: "#f8fafc",
               zIndex: 10,
               borderRight: "1px solid #e2e8f0",
-              width: u ? "80px" : "112px",
+              width: c ? "80px" : "112px",
               verticalAlign: "bottom",
               boxShadow: "1px 0 0 0 #e2e8f0"
             }, children: "Metric" }),
-            b.map((A, E) => {
-              const D = Object.keys(w)[0], M = A[D] === void 0 && A[`${D}_Proj`] !== void 0;
-              return /* @__PURE__ */ S.jsx("th", { style: {
-                padding: "8px 2px",
-                fontWeight: 600,
-                textAlign: "center",
-                backgroundColor: M ? "rgba(241, 245, 249, 0.5)" : "transparent"
-              }, children: /* @__PURE__ */ S.jsx("div", { style: { letterSpacing: "-0.05em" }, children: A[i] }) }, `th-${E}`);
+            w.map((E, D) => {
+              const M = Object.keys(T)[0], P = E[M] === void 0 && E[`${M}_Proj`] !== void 0, O = E[i];
+              return /* @__PURE__ */ S.jsx(
+                "th",
+                {
+                  onClick: () => o?.(String(O), h, v),
+                  title: "Click to view details",
+                  style: {
+                    padding: "8px 2px",
+                    fontWeight: 600,
+                    textAlign: "center",
+                    backgroundColor: P ? "rgba(241, 245, 249, 0.5)" : "transparent",
+                    cursor: "pointer",
+                    userSelect: "none",
+                    transition: "background-color 0.15s, color 0.15s"
+                  },
+                  onMouseEnter: (I) => {
+                    I.currentTarget.style.backgroundColor = "#e0e7ff", I.currentTarget.style.color = "#3730a3";
+                  },
+                  onMouseLeave: (I) => {
+                    I.currentTarget.style.backgroundColor = P ? "rgba(241, 245, 249, 0.5)" : "transparent", I.currentTarget.style.color = "#64748b";
+                  },
+                  children: /* @__PURE__ */ S.jsx("div", { style: { letterSpacing: "-0.05em" }, children: O })
+                },
+                `th-${D}`
+              );
             })
           ] }) }),
-          /* @__PURE__ */ S.jsx("tbody", { children: Object.entries(w).map(([A, E], D) => {
-            if (!_[A]) return null;
-            const M = E.format || ((P) => P);
+          /* @__PURE__ */ S.jsx("tbody", { children: Object.entries(T).map(([E, D], M) => {
+            if (!b[E]) return null;
+            const P = D.format || ((O) => O);
             return /* @__PURE__ */ S.jsxs("tr", { style: {
               borderBottom: "1px solid #f1f5f9",
               transition: "background-color 0.2s"
@@ -26547,18 +26615,35 @@ const wCe = ({ active: e, payload: t, label: r, metricsConfig: n }) => {
                 boxShadow: "1px 0 0 0 #e2e8f0",
                 overflow: "hidden",
                 textOverflow: "ellipsis"
-              }, children: E.shortLabel }),
-              b.map((P, O) => {
-                const I = P[A] !== void 0 ? P[A] : P[`${A}_Proj`], N = P[A] === void 0;
-                return /* @__PURE__ */ S.jsx("td", { style: {
-                  padding: "4px 2px",
-                  textAlign: "center",
-                  color: N ? "#64748b" : "#0f172a",
-                  fontWeight: N ? 400 : 500,
-                  backgroundColor: N ? "rgba(248, 250, 252, 0.3)" : "transparent"
-                }, children: I !== void 0 ? M(I) : "-" }, `cell-${D}-${O}`);
+              }, children: D.shortLabel }),
+              w.map((O, I) => {
+                const N = O[E] !== void 0 ? O[E] : O[`${E}_Proj`], k = O[E] === void 0, R = O[i];
+                return /* @__PURE__ */ S.jsx(
+                  "td",
+                  {
+                    onClick: () => o?.(String(R), h, v, E),
+                    title: "Click to view details",
+                    style: {
+                      padding: "4px 2px",
+                      textAlign: "center",
+                      color: k ? "#64748b" : "#0f172a",
+                      fontWeight: k ? 400 : 500,
+                      backgroundColor: k ? "rgba(248, 250, 252, 0.3)" : "transparent",
+                      cursor: "pointer",
+                      transition: "background-color 0.15s, color 0.15s"
+                    },
+                    onMouseEnter: (z) => {
+                      z.currentTarget.style.backgroundColor = "#eef2ff", z.currentTarget.style.color = "#4338ca";
+                    },
+                    onMouseLeave: (z) => {
+                      z.currentTarget.style.backgroundColor = k ? "rgba(248, 250, 252, 0.3)" : "transparent", z.currentTarget.style.color = k ? "#64748b" : "#0f172a";
+                    },
+                    children: N !== void 0 ? P(N) : "-"
+                  },
+                  `cell-${M}-${I}`
+                );
               })
-            ] }, `row-${A}`);
+            ] }, `row-${E}`);
           }) })
         ] }) })
       ] })
