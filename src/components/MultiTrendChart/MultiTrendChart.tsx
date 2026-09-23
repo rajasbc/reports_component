@@ -380,8 +380,8 @@ export const MultiTrendChart: React.FC<MultiTrendChartProps> = ({
         </div>
 
         {/* Chart Area */}
-        <div style={{ padding: isMobile ? '12px' : '16px', height: '320px', width: '100%', position: 'relative' }}>
-          <ResponsiveContainer width="100%" height="100%">
+        <div style={{ padding: isMobile ? '12px' : '16px', height: '320px', width: '100%', position: 'relative', outline: 'none' }}>
+          <ResponsiveContainer width="100%" height="100%" style={{ outline: 'none' }}>
             <AreaChart 
               data={currentData} 
               margin={{ top: 15, right: 25, left: 0, bottom: 0 }}
@@ -390,7 +390,7 @@ export const MultiTrendChart: React.FC<MultiTrendChartProps> = ({
                   onMonthClick?.(String(e.activeLabel), activeTab, viewMode);
                 }
               }}
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: 'pointer', outline: 'none', userSelect: 'none' }}
             >
               <defs>
                 {Object.entries(currentMetrics).map(([key, config]) => (
