@@ -26376,7 +26376,7 @@ const wCe = ({ active: e, payload: t, label: r, metricsConfig: n }) => {
           );
         }) })
       ] }),
-      /* @__PURE__ */ S.jsx("div", { style: { padding: c ? "12px" : "16px", height: "320px", width: "100%", position: "relative" }, children: /* @__PURE__ */ S.jsx(MI, { width: "100%", height: "100%", children: /* @__PURE__ */ S.jsxs(
+      /* @__PURE__ */ S.jsx("div", { style: { padding: c ? "12px" : "16px", height: "320px", width: "100%", position: "relative", outline: "none" }, children: /* @__PURE__ */ S.jsx(MI, { width: "100%", height: "100%", style: { outline: "none" }, children: /* @__PURE__ */ S.jsxs(
         BK,
         {
           data: w,
@@ -26384,7 +26384,7 @@ const wCe = ({ active: e, payload: t, label: r, metricsConfig: n }) => {
           onClick: (E) => {
             E && E.activeLabel && o?.(String(E.activeLabel), h, v);
           },
-          style: { cursor: "pointer" },
+          style: { cursor: "pointer", outline: "none", userSelect: "none" },
           children: [
             /* @__PURE__ */ S.jsx("defs", { children: Object.entries(T).map(([E, D]) => /* @__PURE__ */ S.jsxs(wr.Fragment, { children: [
               /* @__PURE__ */ S.jsxs("linearGradient", { id: `color-${E}-actual`, x1: "0", y1: "0", x2: "0", y2: "1", children: [
