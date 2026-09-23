@@ -29,6 +29,7 @@ export interface MultiTrendChartProps {
     subtitle?: string;
     xAxisKey?: string;
     daysInMonthMap?: Record<string, number>;
+    onMonthClick?: (month: string, tabId: string, viewMode: string, metricKey?: string) => void;
 }
 export declare const MultiTrendChart: React.FC<MultiTrendChartProps>;
 //# sourceMappingURL=MultiTrendChart.d.ts.map
